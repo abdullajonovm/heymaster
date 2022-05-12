@@ -15,8 +15,8 @@ import javax.persistence.OneToOne;
 @Entity(name = "orders")
 public class Order extends AbsEntity {
 
-    @ManyToOne
-    private User fromWhom;
+    private Integer fromWhomId;
+
     @ManyToOne
     private User toWhom;
 

@@ -21,6 +21,8 @@ public class Attachment {
 
     private String fileOriginalName;//pdp.jpg
 
+    private boolean isProfilePhoto;
+
     private long size;//1024000
 
     private String contentType;//image/png

@@ -23,6 +23,9 @@ public class User extends AbsEntity {
     private String phoneNumber;
 
     @Column(nullable = false)
+    private String password;
+
+    @Column(nullable = false)
     private RoleEnum role;
 
     private boolean isActive=true;
@@ -32,8 +35,7 @@ public class User extends AbsEntity {
     private Timestamp approximateEndTime;
 
     private Double salary;
-    @OneToOne
-    private Attachment profileAttachment;
+
 
     @OneToMany
     private List<Attachment> attachments;

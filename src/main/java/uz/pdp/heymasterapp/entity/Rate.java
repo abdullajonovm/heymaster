@@ -15,8 +15,8 @@ import javax.persistence.OneToOne;
 @Entity
 public class Rate extends AbsEntity {
 
-    @ManyToOne
-    private User fromWhom;
+    private Integer fromWhom;// Current userdan olinadi
+
     @ManyToOne
     private User toWhom;
 

@@ -14,10 +14,11 @@ import javax.persistence.OneToOne;
 @ToString
 @Entity(name = "notification")
 public class Notification extends AbsEntity {
-    @OneToOne
-    private Order order;
+
     private String text;
 
-    private boolean isAccept;
+    @ManyToOne
+    private User toWhom;
+
 
 }
