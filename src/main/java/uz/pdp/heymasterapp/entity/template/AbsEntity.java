@@ -30,7 +30,6 @@ public abstract class AbsEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private User createdBy;
 
-
     @LastModifiedBy
     @ManyToOne(fetch = FetchType.LAZY)
     private User updatedBy;

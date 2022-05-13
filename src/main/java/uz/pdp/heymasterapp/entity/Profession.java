@@ -3,7 +3,7 @@ package uz.pdp.heymasterapp.entity;
 import lombok.*;
 import uz.pdp.heymasterapp.entity.template.AbsEntity;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -11,6 +11,10 @@ import javax.persistence.Entity;
 @Setter
 @ToString
 @Entity(name = "profession")
-public class Profession extends AbsEntity {
+public class Profession {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer Id;
+    @Column(nullable = false)
     private String name;
 }
