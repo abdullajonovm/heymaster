@@ -11,7 +11,9 @@ import javax.persistence.*;
 @Setter
 @ToString
 @Entity(name = "profession")
-public class Profession {
+public class
+
+Profession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer Id;
