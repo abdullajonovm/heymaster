@@ -16,8 +16,6 @@ import javax.persistence.OneToOne;
 public class Rate extends AbsEntity {
 
     @ManyToOne
-    private User fromWhom;
-    @ManyToOne
     private User toWhom;
 
     private double rating;

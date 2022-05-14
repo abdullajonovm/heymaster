@@ -3,9 +3,7 @@ package uz.pdp.heymasterapp.entity;
 import lombok.*;
 import uz.pdp.heymasterapp.entity.template.AbsEntity;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,10 +12,11 @@ import javax.persistence.OneToOne;
 @ToString
 @Entity(name = "notification")
 public class Notification extends AbsEntity {
-    @OneToOne
-    private Order order;
+
     private String text;
 
-    private boolean isAccept;
+    @ManyToOne
+    private User toWhom;
+
 
 }
