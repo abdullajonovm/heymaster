@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Setter
 @ToString
 @Entity(name = "orders")
-public class Order extends AbsEntity{
+public class Booking extends AbsEntity{
 
     @ManyToOne
     private User toWhom;

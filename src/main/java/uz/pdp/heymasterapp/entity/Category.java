@@ -1,7 +1,6 @@
 package uz.pdp.heymasterapp.entity;
 
 import lombok.*;
-import uz.pdp.heymasterapp.entity.template.AbsEntity;
 
 import javax.persistence.*;
 
@@ -11,15 +10,11 @@ import javax.persistence.*;
 @Setter
 @ToString
 @Entity(name = "profession")
-public class
-
-Profession {
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer Id;
+
     @Column(nullable = false)
     private String name;
-
-    @ManyToOne
-    private Category category;
 }
