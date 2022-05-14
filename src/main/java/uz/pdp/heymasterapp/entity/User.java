@@ -23,7 +23,7 @@ public class User extends AbsEntity {
     private String phoneNumber;
 
     @Column(nullable = false)
-    private String password;
+    private String pinCode;
 
     @Column(nullable = false)
     private RoleEnum role;
