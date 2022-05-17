@@ -9,4 +9,5 @@ public class UserController {
     //TODO GetMapping sendOTP generate OTP
     //TODO PostMapping verify OTP
     //TODO register PostMapping param(String Role) + DTO malumotlari(registerdan otkaziladi)
+
 }
