@@ -16,6 +16,7 @@ import javax.persistence.Id;
 @ToString
 @Entity(name = "location")
 public class Location {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer Id;

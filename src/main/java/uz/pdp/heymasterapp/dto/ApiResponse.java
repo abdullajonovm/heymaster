@@ -1,4 +1,4 @@
-package uz.pdp.heymasterapp.payload;
+package uz.pdp.heymasterapp.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

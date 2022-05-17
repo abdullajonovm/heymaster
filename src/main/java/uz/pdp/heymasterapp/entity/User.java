@@ -45,4 +45,6 @@ public class User extends AbsEntity {
 
     @ManyToMany
     private List<Profession> professionList;
+
+
 }

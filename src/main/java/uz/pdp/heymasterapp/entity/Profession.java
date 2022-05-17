@@ -22,4 +22,6 @@ Profession {
 
     @ManyToOne
     private Category category;
+
+
 }
