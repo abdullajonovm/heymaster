@@ -1,4 +1,5 @@
-package uz.pdp.heymasterapp.entity;
+package uz.pdp.heymasterapp.entity.location;
+
 
 import lombok.*;
 import uz.pdp.heymasterapp.entity.template.AbsEntity;
@@ -10,18 +11,16 @@ import javax.persistence.*;
 @Getter
 @Setter
 @ToString
-@Entity(name = "profession")
-public class
+@Entity(name = "location")
+public class Location {
 
-Profession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer Id;
-    @Column(nullable = false)
-    private String name;
 
     @ManyToOne
-    private Category category;
+    private Region region;
 
-    private Boolean isActive=true;
+    @ManyToOne
+    private District district;
 }

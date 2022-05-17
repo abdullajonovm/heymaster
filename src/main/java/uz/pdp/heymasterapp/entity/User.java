@@ -1,6 +1,7 @@
 package uz.pdp.heymasterapp.entity;
 
 import lombok.*;
+import uz.pdp.heymasterapp.entity.location.Location;
 import uz.pdp.heymasterapp.entity.template.AbsEntity;
 import uz.pdp.heymasterapp.entity.enums.RoleEnum;
 
