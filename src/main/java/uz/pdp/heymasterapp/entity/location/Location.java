@@ -1,13 +1,10 @@
-package uz.pdp.heymasterapp.entity;
+package uz.pdp.heymasterapp.entity.location;
 
 
 import lombok.*;
 import uz.pdp.heymasterapp.entity.template.AbsEntity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,9 +17,11 @@ public class Location {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer Id;
 
-    private String region;
+    @ManyToOne
+    private Region region;
 
-    private String city;
+    @ManyToOne
+    private District district;
 
     private String street;
 
