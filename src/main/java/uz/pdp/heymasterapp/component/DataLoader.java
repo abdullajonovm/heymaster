@@ -6,8 +6,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import uz.pdp.heymasterapp.entity.Category;
 import uz.pdp.heymasterapp.entity.Profession;
+import uz.pdp.heymasterapp.entity.Role;
+import uz.pdp.heymasterapp.entity.enums.RoleEnum;
 import uz.pdp.heymasterapp.repository.CategoryRepository;
 import uz.pdp.heymasterapp.repository.ProfessionRepository;
+import uz.pdp.heymasterapp.repository.RoleRepository;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,16 +23,15 @@ public class DataLoader implements CommandLineRunner {
     @Value("${spring.sql.init.mode}")
     private String mode;
 
-    @Value("${spring.jpa.hibernate.ddl-auto}")
-    private String ddl;
 
     final CategoryRepository categoryRepository;
     final ProfessionRepository professionRepository;
 
+    final RoleRepository roleRepository;
 
     @Override
     public void run(String... args) throws Exception {
-        if (mode.equals("always") && ddl.equals("create")) {
+        if (mode.equals("always") ) {
             Category category = new Category(1,"Quruvchi",true);
             Category category1 = new Category(2,"Mashina ustasi",true);
             Category category2 = new Category(3,"Elektrik",true);
@@ -43,6 +45,10 @@ public class DataLoader implements CommandLineRunner {
             List<Profession>professionList=new ArrayList<>(Arrays.asList(profession,profession1,
                     profession2,profession3,profession4));
             professionRepository.saveAll(professionList);
+
+            Role role = new Role();
+            role.setRoleName(RoleEnum.CLIENT);
+            roleRepository.save(role);
         }
     }
 }
