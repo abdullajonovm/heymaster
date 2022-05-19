@@ -13,6 +13,7 @@ import javax.persistence.*;
 @ToString
 @Entity(name = "location")
 public class Location {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer Id;
@@ -22,9 +23,4 @@ public class Location {
 
     @ManyToOne
     private District district;
-
-    private String street;
-
-    private String homeNumber;
-
 }

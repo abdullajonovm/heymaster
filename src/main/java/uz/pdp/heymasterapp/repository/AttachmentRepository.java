@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import uz.pdp.heymasterapp.entity.Attachment;
 
 @Repository
-public interface AttachmentRepository extends JpaRepository<Attachment,Integer> {
+public interface AttachmentRepository extends JpaRepository<Attachment, Integer> {
 }

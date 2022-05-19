@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uz.pdp.heymasterapp.entity.Category;
-import uz.pdp.heymasterapp.payload.ApiResponse;
+import uz.pdp.heymasterapp.dto.ApiResponse;
 import uz.pdp.heymasterapp.service.CategoryService;
 
 @RequestMapping("/api/category")

@@ -3,7 +3,7 @@ package uz.pdp.heymasterapp.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import uz.pdp.heymasterapp.entity.Category;
-import uz.pdp.heymasterapp.payload.ApiResponse;
+import uz.pdp.heymasterapp.dto.ApiResponse;
 import uz.pdp.heymasterapp.repository.CategoryRepository;
 
 import java.util.List;
