@@ -44,7 +44,7 @@ public class User extends AbsEntity implements UserDetails {
     @OneToMany
     private List<Attachment> attachments;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Location location;
 
     @ManyToMany

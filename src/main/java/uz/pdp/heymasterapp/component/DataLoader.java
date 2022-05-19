@@ -49,6 +49,9 @@ public class DataLoader implements CommandLineRunner {
             Role role = new Role();
             role.setRoleName(RoleEnum.CLIENT);
             roleRepository.save(role);
+            Role role1 = new Role();
+            role1.setRoleName(RoleEnum.MASTER);
+            roleRepository.save(role1);
         }
     }
 }
