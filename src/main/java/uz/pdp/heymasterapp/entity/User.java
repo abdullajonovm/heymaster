@@ -57,7 +57,7 @@ public class User extends AbsEntity implements UserDetails {
     //Quyidagilar UserDetails ning method lari
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles;
+        return this.roles;
     }
     @Override
     public String getPassword() {

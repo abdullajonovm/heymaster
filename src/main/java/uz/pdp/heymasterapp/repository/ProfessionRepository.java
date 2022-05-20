@@ -23,4 +23,7 @@ public interface ProfessionRepository extends JpaRepository<Profession, Integer>
     List<Category> getProfessionByCharacter(@Param("name") String name);
 
     Optional<Profession> findByName(String name);
+
+    @Query("select p from profession p where p.isActive = true")
+    List<Profession>getAllByIsActiveTrue();
 }

@@ -17,8 +17,8 @@ public interface DistrictRepository extends JpaRepository<District, Integer> {
 //
 //    Optional<Category> findByName(String name);
 
-    @Query("select r.nameUz from districts  r ")
-    List<District>getAllUzName();
+    @Query("select r.nameUz from districts r ")
+    List<String>getAllUzName();
 
     @Query("select r.nameUz from districts  r ")
     List<District>getAllRuName();
