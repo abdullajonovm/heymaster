@@ -14,5 +14,5 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
 
     Optional<User> findByPhoneNumber(String number);
-
+    Attachment findByProfilePhoto(Attachment profilePhoto);
 }

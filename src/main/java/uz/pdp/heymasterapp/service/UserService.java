@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import uz.pdp.heymasterapp.dto.ApiResponse;
 import uz.pdp.heymasterapp.dto.RegisterForClientDto;
+import uz.pdp.heymasterapp.entity.Attachment;
 import uz.pdp.heymasterapp.entity.User;
 import uz.pdp.heymasterapp.repository.AttachmentRepository;
 import uz.pdp.heymasterapp.repository.UserRepository;
@@ -21,9 +22,13 @@ public class UserService {
         Optional<User> optionalUser = userRepository.findByPhoneNumber(dto.getPhoneNumber());
         if (!optionalUser.isPresent())  return new ApiResponse("This number already exist ",false);
         user.setFullName(dto.getFullName());
-//        user.setAttachments(Collections.singletonList(attachmentRepository.findByProfilePhoto(true)));
+        Optional<Attachment> attachmentOptional = attachmentRepository.findById(dto.getAttachmentId());
+        if (!attachmentOptional.isPresent()) return new ApiResponse("Profile photo not found ",false);
+        user.setProfilePhoto(attachmentOptional.get());
         user.setPhoneNumber(dto.getPhoneNumber());
         userRepository.save(user);
+
+
         return new ApiResponse("Edited",true);
     }
 }

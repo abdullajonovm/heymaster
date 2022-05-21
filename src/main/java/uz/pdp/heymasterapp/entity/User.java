@@ -39,6 +39,8 @@ public class User extends AbsEntity implements UserDetails {
 
     private Double salary;
 
+    @OneToOne
+    private Attachment profilePhoto;
 
 
     @OneToMany

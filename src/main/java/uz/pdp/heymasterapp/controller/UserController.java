@@ -2,6 +2,7 @@ package uz.pdp.heymasterapp.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import uz.pdp.heymasterapp.dto.ApiResponse;
 import uz.pdp.heymasterapp.dto.RegisterForClientDto;
@@ -21,10 +22,13 @@ public class UserController {
     //TODO register PostMapping param(String Role) + DTO malumotlari(registerdan otkaziladi)
 
     final UserService userService;
+
+    @PreAuthorize(value = "hasAnyRole('CLIENT')")
     @PutMapping("/edit/{id}")
-    public ResponseEntity editeUserProfile(@CurrentUser User user, @RequestBody RegisterForClientDto dto){
-       ApiResponse response=userService.edit(user,dto);
-        return ResponseEntity.status(response.isSuccess()?200:401).body(response);
+    public ResponseEntity editeUserProfile(@CurrentUser User user, @RequestBody RegisterForClientDto dto) {
+        ApiResponse response = userService.edit(user, dto);
+        return ResponseEntity.status(response.isSuccess() ? 200 : 401).body(response);
     }
+
 
 }
