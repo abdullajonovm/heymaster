@@ -1,7 +1,9 @@
 package uz.pdp.heymasterapp.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import uz.pdp.heymasterapp.entity.Attachment;
+import uz.pdp.heymasterapp.entity.Profession;
 import uz.pdp.heymasterapp.entity.User;
 
 import java.util.List;
@@ -15,4 +17,5 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
     Optional<User> findByPhoneNumber(String number);
     Attachment findByProfilePhoto(Attachment profilePhoto);
+
 }

@@ -22,9 +22,9 @@ public class UserService {
         Optional<User> optionalUser = userRepository.findByPhoneNumber(dto.getPhoneNumber());
         if (!optionalUser.isPresent())  return new ApiResponse("This number already exist ",false);
         user.setFullName(dto.getFullName());
-        Optional<Attachment> attachmentOptional = attachmentRepository.findById(dto.getAttachmentId());
-        if (!attachmentOptional.isPresent()) return new ApiResponse("Profile photo not found ",false);
-        user.setProfilePhoto(attachmentOptional.get());
+//        Optional<Attachment> attachmentOptional = attachmentRepository.findById(dto.getAttachmentId());
+//        if (!attachmentOptional.isPresent()) return new ApiResponse("Profile photo not found ",false);
+//        user.setProfilePhoto(attachmentOptional.get());
         user.setPhoneNumber(dto.getPhoneNumber());
         userRepository.save(user);
 

@@ -22,7 +22,6 @@ public class GeneratePasswordForLogin {
     final UserRepository userRepository;
     final PasswordEncoder passwordEncoder;
 
-    @PreAuthorize(value = "hasAnyRole('CLIENT','MASTER','SUPER_ADMIN')")
     @PostMapping()
     public ResponseEntity getPassword(@RequestBody LoginDto loginDto){
         Optional<User> optionalUser = userRepository.findByPhoneNumber(loginDto.getPhoneNumber());

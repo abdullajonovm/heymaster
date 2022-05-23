@@ -1,5 +1,6 @@
 package uz.pdp.heymasterapp.controller;
 
-public class HomeInfoController {
+public class
+HomeInfoController {
     //TODO Get homePageInfo topProfessions+AllProfessions+popularMasters
 }
