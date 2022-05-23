@@ -7,13 +7,16 @@ import org.springframework.stereotype.Component;
 import uz.pdp.heymasterapp.entity.Category;
 import uz.pdp.heymasterapp.entity.Profession;
 import uz.pdp.heymasterapp.entity.Role;
+import uz.pdp.heymasterapp.entity.User;
 import uz.pdp.heymasterapp.entity.enums.RoleEnum;
 import uz.pdp.heymasterapp.repository.CategoryRepository;
 import uz.pdp.heymasterapp.repository.ProfessionRepository;
 import uz.pdp.heymasterapp.repository.RoleRepository;
+import uz.pdp.heymasterapp.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -27,6 +30,7 @@ public class DataLoader implements CommandLineRunner {
     final CategoryRepository categoryRepository;
     final ProfessionRepository professionRepository;
 
+    final UserRepository userRepository;
     final RoleRepository roleRepository;
 
     @Override
@@ -49,6 +53,20 @@ public class DataLoader implements CommandLineRunner {
             Role role = new Role();
             role.setRoleName(RoleEnum.CLIENT);
             roleRepository.save(role);
+            Role role1 = new Role();
+            role1.setRoleName(RoleEnum.MASTER);
+            roleRepository.save(role1);
+            Role role2 = new Role();
+            role2.setRoleName(RoleEnum.SUPER_ADMIN);
+            roleRepository.save(role2);
+
+            User user = new User();
+            user.setPhoneNumber("943234311");
+            user.setFullName("Azizbek Abdulaxatov");
+            Role roleName = roleRepository.findByRoleName(RoleEnum.SUPER_ADMIN);
+            user.setRoles(Collections.singleton(roleName));
+            userRepository.save(user);
+
         }
     }
 }

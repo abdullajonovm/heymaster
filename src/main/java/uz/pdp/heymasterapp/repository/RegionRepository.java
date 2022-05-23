@@ -5,13 +5,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import uz.pdp.heymasterapp.entity.Category;
-import uz.pdp.heymasterapp.entity.Profession;
+import uz.pdp.heymasterapp.entity.location.Region;
 
 import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ProfessionRepository extends JpaRepository<Profession, Integer> {
+public interface RegionRepository extends JpaRepository<Region, Integer> {
 
 //    @Query(value = "select c from category c where c.name LIKE %:name%")
 //    List<Category> getCategoryByNameCharacters(@Param("name") String name);
@@ -19,11 +19,10 @@ public interface ProfessionRepository extends JpaRepository<Profession, Integer>
 //
 //    Optional<Category> findByName(String name);
 
-    @Query(value = "select c from profession c where c.name LIKE %:name%")
-    List<Category> getProfessionByCharacter(@Param("name") String name);
+    @Query("select r.nameUz from regions  r ")
+    List<Region>getAllUzName();
 
-    Optional<Profession> findByName(String name);
+    @Query("select r.nameUz from regions  r ")
+    List<Region>getAllRuName();
 
-    @Query("select p from profession p where p.isActive = true")
-    List<Profession>getAllByIsActiveTrue();
 }
