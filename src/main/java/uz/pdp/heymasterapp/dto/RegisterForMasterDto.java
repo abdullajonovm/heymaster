@@ -13,7 +13,7 @@ public class RegisterForMasterDto {
     @NotNull
     private  String fullName;
     @NotNull
-    private  String experienceYear;
+    private  int experienceYear;
 
     private Double salary;
 

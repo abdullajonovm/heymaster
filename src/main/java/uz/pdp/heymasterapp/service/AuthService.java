@@ -17,13 +17,15 @@ import uz.pdp.heymasterapp.dto.RegisterForMasterDto;
 import uz.pdp.heymasterapp.entity.Role;
 import uz.pdp.heymasterapp.entity.User;
 import uz.pdp.heymasterapp.entity.enums.RoleEnum;
-import uz.pdp.heymasterapp.repository.RoleRepository;
-import uz.pdp.heymasterapp.repository.UserRepository;
+import uz.pdp.heymasterapp.entity.location.District;
+import uz.pdp.heymasterapp.entity.location.Location;
+import uz.pdp.heymasterapp.entity.location.Region;
+import uz.pdp.heymasterapp.repository.*;
 import uz.pdp.heymasterapp.security.JwtProvider;
 
 import javax.validation.Valid;
 import java.util.Collections;
-import java.util.Set;
+import java.util.Optional;
 
 @Service
 public class AuthService implements UserDetailsService {
@@ -33,7 +35,9 @@ public class AuthService implements UserDetailsService {
 
     private final RoleRepository roleRepository;
 
-
+    final LocationRepository locationRepository;
+    final DistrictRepository districtRepository;
+    final RegionRepository regionRepository;
 
     private final AuthenticationManager authenticationManager;
 
@@ -41,14 +45,17 @@ public class AuthService implements UserDetailsService {
 
     public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder,
                        RoleRepository roleRepository,
-                       @Lazy AuthenticationManager authenticationManager,
+                       LocationRepository locationRepository, DistrictRepository districtRepository,
+                       RegionRepository regionRepository, @Lazy AuthenticationManager authenticationManager,
                        JwtProvider jwtProvider) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.locationRepository = locationRepository;
+        this.districtRepository = districtRepository;
+        this.regionRepository = regionRepository;
         this.authenticationManager = authenticationManager;
         this.jwtProvider = jwtProvider;
     }
-
 
     public ApiResponse register(@Valid RegisterForClientDto registerDto) {
 
@@ -89,16 +96,32 @@ public class AuthService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        /*Optional<User> optionalUser = userRepository.findByEmail(username);
-        if (optionalUser.isPresent()) {
-            return optionalUser.get();
-        }throw new UsernameNotFoundException(username+" not found");*/
         return userRepository.findByPhoneNumber(username).orElseThrow(() ->
                 new UsernameNotFoundException(username+" not found"));
     }
 
     public ApiResponse registerForMaster(RegisterForMasterDto registerDto) {
+        Optional<User> optionalUser = userRepository.findByPhoneNumber(registerDto.getPhoneNumber());
+        if (optionalUser.isPresent())return new ApiResponse("This user already exist",false);
 
-   return null;
+        User user = new User();
+        user.setFullName(registerDto.getFullName());
+        user.setPhoneNumber(registerDto.getPhoneNumber());
+        Role role = roleRepository.findByRoleName(RoleEnum.MASTER);
+        user.setRoles(Collections.singleton(role));
+        user.setExperienceYear(registerDto.getExperienceYear());
+        user.setSalary(registerDto.getSalary());
+        Optional<District> districtOptional = districtRepository.findById(registerDto.getDistrictId());
+        if (!districtOptional.isPresent()) return new ApiResponse("District not found",false);
+        Optional<Region> regionOptional = regionRepository.findById(registerDto.getRegionId());
+        if (!regionOptional.isPresent()) return new ApiResponse("Region not found",false);
+        Location location = new Location();
+        location.setDistrict(districtOptional.get());
+        location.setRegion(regionOptional.get());
+        user.setLocation(location);
+        userRepository.save(user);
+
+        return new ApiResponse("Master successfully saved !",true);
+
     }
 }

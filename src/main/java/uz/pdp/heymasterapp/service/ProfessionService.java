@@ -76,7 +76,14 @@ public class ProfessionService {
         Optional<Profession> optional = repository.findById(id);
         if (!optional.isPresent()) return new ApiResponse("not found profession",
                 false);
-        repository.delete(optional.get());
+        Profession profession = optional.get();
+        profession.setIsActive(false);
+        repository.save(profession);
         return new ApiResponse("Deleted",true);
+    }
+
+    public ApiResponse getAllActive() {
+        List<Profession> professionList = repository.getAllByIsActiveTrue();
+        return new ApiResponse("Ok",true,professionList);
     }
 }
