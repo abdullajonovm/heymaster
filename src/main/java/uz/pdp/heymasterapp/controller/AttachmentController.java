@@ -1,6 +1,7 @@
 package uz.pdp.heymasterapp.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,6 +33,7 @@ public class AttachmentController {
 
     final AttachmentService attachmentService;
 
+    @PreAuthorize(value = "hasAnyRole('SUPER_ADMIN')")
     @GetMapping("/info")
     public List<Attachment> getInfo() {
         List<Attachment> all = attachmentRepository.findAll();

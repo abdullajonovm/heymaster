@@ -24,4 +24,5 @@ public interface RegionRepository extends JpaRepository<Region, Integer> {
 
     @Query("select r.nameUz from regions  r ")
     List<Region>getAllRuName();
+
 }
