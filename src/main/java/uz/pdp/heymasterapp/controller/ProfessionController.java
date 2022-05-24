@@ -17,13 +17,13 @@ public class ProfessionController {
 
     final ProfessionService professionService;
 
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
     @GetMapping("/all")
     public ResponseEntity getAll() {
         ApiResponse apiResponse = professionService.getAll();
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 404).body(apiResponse);
     }
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','CLIENT')")
+    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','CLIENT')")
     @GetMapping("/getAllActive")
     public ResponseEntity getAllActive(){
         ApiResponse apiResponse=professionService.getAllActive();

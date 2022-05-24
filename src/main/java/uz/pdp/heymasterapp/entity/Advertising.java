@@ -1,6 +1,7 @@
 package uz.pdp.heymasterapp.entity;
 
 import lombok.*;
+import uz.pdp.heymasterapp.entity.template.AbsEntity;
 
 import javax.persistence.*;
 
@@ -10,10 +11,7 @@ import javax.persistence.*;
 @Setter
 @ToString
 @Entity
-public class Advertising {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class Advertising extends AbsEntity {
 
     private String body;
 

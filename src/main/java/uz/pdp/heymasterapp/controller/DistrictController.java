@@ -24,7 +24,7 @@ public class DistrictController {
         List<District> regionList = repository.findAll();
         return ResponseEntity.ok().body(regionList);
     }
-    @PreAuthorize( value = "hasAnyRole('SUPER_ADMIN')")
+    @PreAuthorize( value = "hasAuthority('SUPER_ADMIN')")
     @GetMapping("/all/uz")
     public ResponseEntity getAllUzName(){
         List<String> allUzName = repository.getAllUzName();
