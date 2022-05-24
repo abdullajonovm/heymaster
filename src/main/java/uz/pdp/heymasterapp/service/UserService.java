@@ -10,6 +10,7 @@ import uz.pdp.heymasterapp.repository.AttachmentRepository;
 import uz.pdp.heymasterapp.repository.UserRepository;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,7 +29,49 @@ public class UserService {
         user.setPhoneNumber(dto.getPhoneNumber());
         userRepository.save(user);
 
-
         return new ApiResponse("Edited",true);
+    }
+
+    public ApiResponse getAll() {
+        List<User> userList = userRepository.findAll();
+        return new ApiResponse("Ok",true,userList);
+    }
+
+    public ApiResponse getAllActive() {
+        Optional<List<User>> optional = userRepository.findAllByActiveIsTrue();
+        if (!optional.isPresent()) return new ApiResponse("Not active user ",true);
+        List<User> userList = optional.get();
+        return new ApiResponse("ok",true,userList);
+    }
+
+    public ApiResponse block(Long id) {
+
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (!optionalUser.isPresent()) return new ApiResponse("User not found",false);
+        User user = optionalUser.get();
+        user.setActive(false);
+        userRepository.save(user);
+        return new ApiResponse("User bloked",true);
+
+    }
+
+    public ApiResponse unblock(Long id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (!optionalUser.isPresent()) return new ApiResponse("User not found",false);
+        User user = optionalUser.get();
+        user.setActive(true);
+        userRepository.save(user);
+        return new ApiResponse("User bloked",true);
+    }
+
+    public ApiResponse deleteAttPhoto(Long id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (!optionalUser.isPresent()) return new ApiResponse("User not found",false);
+        User user = optionalUser.get();
+        Attachment profilePhoto = user.getProfilePhoto();
+        attachmentRepository.delete(profilePhoto);
+        userRepository.save(user);
+        return new ApiResponse("Profile photo deleted",true);
+
     }
 }

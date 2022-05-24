@@ -39,7 +39,7 @@ public class AttachmentController {
         List<Attachment> all = attachmentRepository.findAll();
         return all;
     }
-
+    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','CLIENT','MASTER')")
     @PostMapping("/upload")
     public String uploadFile(MultipartHttpServletRequest request) throws IOException {
 
@@ -89,6 +89,7 @@ public class AttachmentController {
         }
     }
 
+    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','CLIENT','MASTER')")
     @PostMapping("/uploadFiles")
     public ApiResponse upload(MultipartHttpServletRequest request) {
         return attachmentService.upload(request);

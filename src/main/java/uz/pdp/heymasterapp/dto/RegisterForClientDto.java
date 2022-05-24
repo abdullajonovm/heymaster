@@ -15,7 +15,7 @@ public class RegisterForClientDto {
     @NotNull
     private  String fullName;
 
-//    private Integer attachmentId;
+//   private Integer attachmentId;
 
     public RegisterForClientDto(String phoneNumber, String fullName) {
         this.phoneNumber = phoneNumber;

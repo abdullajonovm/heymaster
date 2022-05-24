@@ -28,6 +28,7 @@ public class AttachmentService {
         //faqat nomlari
         Iterator<String> fileNames = request.getFileNames();
         //realniy fayllar
+        ApiResponse apiResponse = new ApiResponse();
 
         while (fileNames.hasNext()) {
             List<MultipartFile> files = request.getFiles(fileNames.next());
@@ -38,6 +39,9 @@ public class AttachmentService {
                         file.getContentType());
 
                 Attachment save = attachmentRepository.save(attachment);
+                apiResponse.setObject(save.getId());
+                apiResponse.setSuccess(true);
+                apiResponse.setMessage("mana");
                 AttachmentContent attachmentContent = new AttachmentContent();
                 attachmentContent.setAttachment(save);
                 try {
@@ -48,6 +52,6 @@ public class AttachmentService {
                 attachmentContentRepository.save(attachmentContent);
             }
         }
-        return new ApiResponse("Mana", true);
+        return apiResponse;
     }
 }

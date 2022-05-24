@@ -17,5 +17,6 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
     Optional<User> findByPhoneNumber(String number);
     Attachment findByProfilePhoto(Attachment profilePhoto);
-
+    @Query("select u from users u where u.isActive = true")
+    Optional<List<User>>findAllByActiveIsTrue();
 }
