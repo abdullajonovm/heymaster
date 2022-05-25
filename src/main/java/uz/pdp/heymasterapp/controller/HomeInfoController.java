@@ -17,7 +17,6 @@ HomeInfoController {
     //TODO Get homePageInfo topProfessions+AllProfessions+popularMasters
     final HomeService homeService;
 
-//    @PreAuthorize( "hasAnyAuthority('CLIENT', 'SUPER_ADMIN', 'MASTER')")
     @GetMapping
     public ResponseEntity getHomeInfo(){
         HomPageDto homPageDto = homeService.getHomeInfo();

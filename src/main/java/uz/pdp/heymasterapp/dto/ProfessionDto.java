@@ -15,4 +15,5 @@ public class ProfessionDto {
     private String  name;
     @NotEmpty(message = "you need choose category !")
     private Integer categoryId;
+
 }

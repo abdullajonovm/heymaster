@@ -73,7 +73,7 @@ public class AttachmentController {
     }
 
     @GetMapping("/download/{id}")
-    public void getFile(@PathVariable Integer id, HttpServletResponse response) throws IOException {
+    public void getFile(@PathVariable Long id, HttpServletResponse response) throws IOException {
         Optional<Attachment> optionalAttachment = attachmentRepository.findById(id);
 
         if (optionalAttachment.isPresent()) {

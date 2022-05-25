@@ -7,8 +7,8 @@ import uz.pdp.heymasterapp.entity.AttachmentContent;
 import java.util.Optional;
 
 @Repository
-public interface AttachmentContentRepository extends JpaRepository<AttachmentContent, Integer> {
+public interface AttachmentContentRepository extends JpaRepository<AttachmentContent, Long> {
 
 
-    Optional<AttachmentContent> findByAttachmentId(Integer attachment_id);
+    Optional<AttachmentContent> findByAttachmentId(Long attachment_id);
 }
