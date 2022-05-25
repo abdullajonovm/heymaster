@@ -2,6 +2,7 @@ package uz.pdp.heymasterapp.entity;
 
 import lombok.*;
 import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import uz.pdp.heymasterapp.entity.location.Location;
@@ -19,11 +20,13 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString
+@EntityListeners(AuditingEntityListener.class)
 @Entity(name = "users")
 public class User extends AbsEntity implements UserDetails {
 
     @Column(nullable = false)
     private String fullName;
+
     private int experienceYear=0;
 
     @Column(nullable = false)
@@ -38,6 +41,12 @@ public class User extends AbsEntity implements UserDetails {
     private Timestamp approximateEndTime;
 
     private Double salary;
+
+    //userning olgan barcha ballari
+    private Long totalMark = 0l;
+
+    //baxo bergan odamlar soni
+    private Long peopleReitedCount = 0l;
 
     @OneToOne
     private Attachment profilePhoto;
@@ -88,6 +97,7 @@ public class User extends AbsEntity implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return this.isActive;
+        return true;
     }
+
 }

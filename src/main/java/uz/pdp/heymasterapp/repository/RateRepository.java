@@ -9,6 +9,6 @@ import uz.pdp.heymasterapp.entity.enums.RoleEnum;
 
 import java.util.List;
 
-public interface RateRepository extends JpaRepository<Rate,Integer> {
+public interface RateRepository extends JpaRepository<Rate,Long> {
 
 }
