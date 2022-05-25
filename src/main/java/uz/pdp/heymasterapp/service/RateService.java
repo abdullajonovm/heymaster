@@ -39,13 +39,13 @@ public class RateService {
                 rateRepository.save(rate);
 
                 //userga rate bergandan shu userni totalMarkiga rateDtoda kelgan reyting balni qoshib qoydik
-//                Long totalMark = user.getTotalMark();
-//                totalMark += rateDto.getRety();
-//
-//                user.setTotalMark(totalMark);
-//                Long rateCount = user.getPeopleReitedCount() + 1;
-//                user.setPeopleReitedCount(rateCount);
-//                userRepository.save(user);
+                Long totalMark = user.getTotalMark();
+                totalMark += rateDto.getRety();
+
+                user.setTotalMark(totalMark);
+                Long rateCount = user.getPeopleReitedCount() + 1;
+                user.setPeopleReitedCount(rateCount);
+                userRepository.save(user);
 //                System.out.println(user);
 //                System.out.println(rate);
 

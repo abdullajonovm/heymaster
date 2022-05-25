@@ -16,8 +16,8 @@ public class Notification extends AbsEntity {
     private String text;
 
     private String body;
+
     @ManyToOne
     private User toWhom;
-
 
 }

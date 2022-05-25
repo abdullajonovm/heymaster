@@ -36,6 +36,8 @@ public class RateController {
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 400).body(apiResponse);
     }
 
-
+//    @PreAuthorize(value = "hasAuthority('SUPER_ADMIN')")
+//    @GetMapping("/api/getAll")
+//    public ResponseEntity get
 
 }
