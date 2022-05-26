@@ -1,15 +1,11 @@
 package uz.pdp.heymasterapp.entity.template;
 
-import javafx.scene.media.AudioSpectrumListener;
 import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import uz.pdp.heymasterapp.entity.User;
 
 import javax.persistence.*;
 import java.util.Date;
