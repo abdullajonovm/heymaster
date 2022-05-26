@@ -39,7 +39,7 @@ public class AttachmentController {
         List<Attachment> all = attachmentRepository.findAll();
         return all;
     }
-
+    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','CLIENT','MASTER')")
     @PostMapping("/upload")
     public String uploadFile(MultipartHttpServletRequest request) throws IOException {
 
@@ -73,7 +73,7 @@ public class AttachmentController {
     }
 
     @GetMapping("/download/{id}")
-    public void getFile(@PathVariable Integer id, HttpServletResponse response) throws IOException {
+    public void getFile(@PathVariable Long id, HttpServletResponse response) throws IOException {
         Optional<Attachment> optionalAttachment = attachmentRepository.findById(id);
 
         if (optionalAttachment.isPresent()) {
@@ -89,6 +89,7 @@ public class AttachmentController {
         }
     }
 
+    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','CLIENT','MASTER')")
     @PostMapping("/uploadFiles")
     public ApiResponse upload(MultipartHttpServletRequest request) {
         return attachmentService.upload(request);

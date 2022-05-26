@@ -25,8 +25,8 @@ public abstract class AbsEntity<U> {
 
     @JoinColumn(updatable = false)
     @CreatedBy
-    @ManyToOne(fetch = FetchType.LAZY)
-    private User createdBy;
+//    @ManyToOne(fetch = FetchType.LAZY)
+    private Long createdBy;
 
     @CreatedDate
     @Temporal(TIMESTAMP)
@@ -34,8 +34,8 @@ public abstract class AbsEntity<U> {
     private Date createDate;
 
     @LastModifiedBy
-    @ManyToOne(fetch = FetchType.LAZY)
-    private User updatedBy;
+//    @ManyToOne(fetch = FetchType.LAZY)
+    private Long updatedBy;
 
 
     @LastModifiedDate
