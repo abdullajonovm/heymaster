@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import uz.pdp.heymasterapp.dto.ApiResponse;
 import uz.pdp.heymasterapp.dto.LoginDto;
 import uz.pdp.heymasterapp.entity.User;
 import uz.pdp.heymasterapp.repository.UserRepository;
@@ -25,15 +26,25 @@ public class GeneratePasswordForLogin {
     @PostMapping()
     public ResponseEntity getPassword(@RequestBody LoginDto loginDto){
         Optional<User> optionalUser = userRepository.findByPhoneNumber(loginDto.getPhoneNumber());
-        if (!optionalUser.isPresent()) return ResponseEntity.status(HttpStatus.NOT_FOUND).
-                body("You must registired");
+        ApiResponse apiResponse = new ApiResponse();
         Integer generate = generate();
-        User user = optionalUser.get();
-        user.setGeneratePassword(passwordEncoder.encode(String.valueOf(generate)));
-        userRepository.save(user);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user.setGeneratePassword(passwordEncoder.encode(String.valueOf(generate)));
+            apiResponse.setMessage(" go to login page ");
+            apiResponse.setSuccess(true);
+            apiResponse.setObject(generate);
+            userRepository.save(user);
+        }
+        else {
+            apiResponse.setSuccess(false);
+            apiResponse.setMessage("You must registered");
+            apiResponse.setObject(generate);
+        }
+
 
         System.out.println(generate);
-        return ResponseEntity.ok().body( "bu sms orqali jonatish kk edi: "+generate);
+        return ResponseEntity.ok().body(apiResponse);
     }
 
     public Integer generate(){

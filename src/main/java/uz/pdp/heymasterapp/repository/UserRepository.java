@@ -6,6 +6,7 @@ import uz.pdp.heymasterapp.entity.Attachment;
 import uz.pdp.heymasterapp.entity.Profession;
 import uz.pdp.heymasterapp.entity.User;
 
+import java.lang.annotation.Native;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -14,14 +15,22 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
     boolean existsByPhoneNumber(String number);
 
-
-
-    Optional<User> findByPhoneNumber(String number);
     Attachment findByProfilePhoto(Attachment profilePhoto);
-    @Query("select u from users u where u.isActive = true")
-    Optional<List<User>>findAllByActiveIsTrue();
+    @Query(value = "select * from users u join users_roles ur on u.id = ur.users_id where u.isActive = true " +
+            "and roles_id=1 ", nativeQuery = true)
+    Optional<List<User>>findAllClientByActiveIsTrue();
+    @Query(value = "select * from users u join users_roles ur on u.id = ur.users_id where u.isActive = true " +
+            "and roles_id=2", nativeQuery = true)
+    Optional<List<User>>findAllMasterByActiveIsTrue();
+
 
     @Query(value = "select * from users u where u.total_mark is not null order by total_mark desc limit 3", nativeQuery = true)
     Set<User> topMasters();
 
+    Optional<User> findByPhoneNumber(String phoneNumber);
+
+    @Query(value = "select * from users u join users_roles ur on u.id = ur.users_id where roles_id=1",nativeQuery = true)
+    Optional<List<User>> getAllClient();
+    @Query(value = "select * from users u join users_roles ur on u.id = ur.users_id where roles_id=2",nativeQuery = true)
+    Optional<List<User>> getAllMaster();
 }
