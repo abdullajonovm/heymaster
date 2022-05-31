@@ -12,6 +12,7 @@ public class RegisterForMasterDto {
     private  String phoneNumber;
     @NotNull
     private  String fullName;
+    
     @NotNull
     private  int experienceYear;
 

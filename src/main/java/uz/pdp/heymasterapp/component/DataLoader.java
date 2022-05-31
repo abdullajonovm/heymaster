@@ -61,7 +61,7 @@ public class DataLoader implements CommandLineRunner {
             roleRepository.save(role2);
 
             User user = new User();
-            user.setPhoneNumber("943234311");
+            user.setPhoneNumber("+998943234311");
             user.setFullName("Azizbek Abdulaxatov");
             Role roleName = roleRepository.findByRoleName(RoleEnum.SUPER_ADMIN);
             user.setRoles(Collections.singleton(roleName));

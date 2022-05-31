@@ -26,6 +26,7 @@ import uz.pdp.heymasterapp.security.JwtProvider;
 import javax.validation.Valid;
 import java.util.Collections;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class AuthService implements UserDetailsService {
@@ -107,8 +108,12 @@ public class AuthService implements UserDetailsService {
         User user = new User();
         user.setFullName(registerDto.getFullName());
         user.setPhoneNumber(registerDto.getPhoneNumber());
+        Set<Role> roles = user.getRoles();
         Role role = roleRepository.findByRoleName(RoleEnum.MASTER);
-        user.setRoles(Collections.singleton(role));
+        //Role role1 = roleRepository.findByRoleName(RoleEnum.CLIENT);
+        roles.add(role);
+      //  roles.add(role1);
+        user.setRoles(roles);
         user.setExperienceYear(registerDto.getExperienceYear());
         user.setSalary(registerDto.getSalary());
         Optional<District> districtOptional = districtRepository.findById(registerDto.getDistrictId());

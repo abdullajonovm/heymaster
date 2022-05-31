@@ -1,6 +1,8 @@
 package uz.pdp.heymasterapp.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -11,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import uz.pdp.heymasterapp.dto.ApiResponse;
 import uz.pdp.heymasterapp.dto.LoginDto;
+import uz.pdp.heymasterapp.dto.SendMassageDto;
 import uz.pdp.heymasterapp.entity.User;
+import uz.pdp.heymasterapp.feignClient.SendMassage;
 import uz.pdp.heymasterapp.repository.UserRepository;
 
 import java.util.Optional;
@@ -23,23 +27,35 @@ public class GeneratePasswordForLogin {
     final UserRepository userRepository;
     final PasswordEncoder passwordEncoder;
 
+    final SendMassage sendMassage;
+    @Value("${key.for.Send.SMS}")
+    private String key;
+
     @PostMapping()
-    public ResponseEntity getPassword(@RequestBody LoginDto loginDto){
+    public ResponseEntity getPassword(@RequestBody LoginDto loginDto) {
         Optional<User> optionalUser = userRepository.findByPhoneNumber(loginDto.getPhoneNumber());
         ApiResponse apiResponse = new ApiResponse();
         Integer generate = generate();
+
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             user.setGeneratePassword(passwordEncoder.encode(String.valueOf(generate)));
             apiResponse.setMessage(" go to login page ");
             apiResponse.setSuccess(true);
             apiResponse.setObject(generate);
+            SendMassageDto sendMassageDto = new SendMassageDto();
+            sendMassageDto.setRecipients(loginDto.getPhoneNumber());
+            sendMassageDto.setBody(sendMassageDto.getBody() + " your code " + generate);
+            sendMassage.sendMassages(sendMassageDto, key);
             userRepository.save(user);
-        }
-        else {
+        } else {
             apiResponse.setSuccess(false);
             apiResponse.setMessage("You must registered");
             apiResponse.setObject(generate);
+            SendMassageDto sendMassageDto = new SendMassageDto();
+            sendMassageDto.setBody(sendMassageDto.getBody() + " your code " + generate);
+            sendMassageDto.setRecipients(loginDto.getPhoneNumber());
+            sendMassage.sendMassages(sendMassageDto, key);
         }
 
 
@@ -47,8 +63,8 @@ public class GeneratePasswordForLogin {
         return ResponseEntity.ok().body(apiResponse);
     }
 
-    public Integer generate(){
+    public Integer generate() {
         int smsCode = (int) ((Math.random() * 9000) + 900);
-        return  smsCode;
+        return smsCode;
     }
 }
