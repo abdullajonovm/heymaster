@@ -68,7 +68,8 @@ public class AuthService implements UserDetailsService {
         user.setFullName(registerDto.getFullName());
         Role role = roleRepository.findByRoleName(RoleEnum.CLIENT);
         user.setRoles(Collections.singleton(role));
-
+        user.setGender(registerDto.getGender());
+        user.setBirthDate(registerDto.getDate());
         userRepository.save(user);
 
 
@@ -111,6 +112,8 @@ public class AuthService implements UserDetailsService {
         user.setRoles(Collections.singleton(role));
         user.setExperienceYear(registerDto.getExperienceYear());
         user.setSalary(registerDto.getSalary());
+        user.setGender(registerDto.getGender());
+        user.setBirthDate(registerDto.getBirthDate());
         Optional<District> districtOptional = districtRepository.findById(registerDto.getDistrictId());
         if (!districtOptional.isPresent()) return new ApiResponse("District not found",false);
         Optional<Region> regionOptional = regionRepository.findById(registerDto.getRegionId());

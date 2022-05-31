@@ -4,6 +4,7 @@ package uz.pdp.heymasterapp.dto;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
+import java.sql.Date;
 import java.util.List;
 
 @Data
@@ -20,6 +21,10 @@ public class RegisterForMasterDto {
     private Integer regionId;
 
     private Integer districtId;
+
+    private Boolean gender;
+
+    private Date birthDate;
 
     private List<Integer>professionIdList;
 
