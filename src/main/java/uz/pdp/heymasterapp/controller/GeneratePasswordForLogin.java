@@ -26,7 +26,7 @@ public class GeneratePasswordForLogin {
     public ResponseEntity getPassword(@RequestBody LoginDto loginDto){
         Optional<User> optionalUser = userRepository.findByPhoneNumber(loginDto.getPhoneNumber());
         if (!optionalUser.isPresent()) return ResponseEntity.status(HttpStatus.NOT_FOUND).
-                body("You must registired");
+                body("You must registered");
         Integer generate = generate();
         User user = optionalUser.get();
         user.setGeneratePassword(passwordEncoder.encode(String.valueOf(generate)));
