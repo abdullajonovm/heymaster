@@ -10,6 +10,7 @@ import uz.pdp.heymasterapp.entity.template.AbsEntity;
 import uz.pdp.heymasterapp.entity.enums.RoleEnum;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.List;
@@ -41,6 +42,10 @@ public class User extends AbsEntity implements UserDetails {
     private Timestamp approximateEndTime;
 
     private Double salary;
+
+    private Boolean gender;
+
+    private Date birthDate;
 
     //userning olgan barcha ballari
     private Long totalMark = 0l;
