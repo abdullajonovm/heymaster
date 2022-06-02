@@ -24,6 +24,7 @@ public class RegisterForMasterDto {
 
     private List<Integer>professionIdList;
 
+    private String password;
 
 
 }

@@ -8,8 +8,13 @@ import uz.pdp.heymasterapp.dto.ApiResponse;
 import uz.pdp.heymasterapp.dto.RegisterForClientDto;
 import uz.pdp.heymasterapp.dto.RegisterForMasterDto;
 import uz.pdp.heymasterapp.entity.User;
+import uz.pdp.heymasterapp.entity.location.District;
+import uz.pdp.heymasterapp.repository.UserRepository;
 import uz.pdp.heymasterapp.security.CurrentUser;
 import uz.pdp.heymasterapp.service.UserService;
+
+import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
@@ -17,6 +22,15 @@ import uz.pdp.heymasterapp.service.UserService;
 public class MasterController {
 
     final UserService userService;
+    final UserRepository userRepository;
+
+    @PreAuthorize("hasAnyAuthority('MASTER','SUPER_ADMIN','CLIENT')")
+    @GetMapping("/search/{name}")
+    public ResponseEntity getMaster(@PathVariable String name){
+        Optional<List<District>> optional = userRepository.getMasterByFullName(name);
+        if (optional.isPresent()) return ResponseEntity.ok().body(optional.get());
+        return ResponseEntity.ok().body("Not found");
+    }
 
     @PreAuthorize(value = "hasAnyAuthority('CLIENT','SUPER_ADMIN')")
     @PutMapping("/edit/{id}")

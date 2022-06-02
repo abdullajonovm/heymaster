@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import uz.pdp.heymasterapp.entity.Category;
+import uz.pdp.heymasterapp.entity.location.District;
 import uz.pdp.heymasterapp.entity.location.Region;
 
 import java.util.List;
@@ -24,5 +25,7 @@ public interface RegionRepository extends JpaRepository<Region, Integer> {
 
     @Query("select r.nameUz from regions  r ")
     List<Region>getAllRuName();
+    @Query(value = "select c from regions c where c.nameUz LIKE %:name%")
+    Optional<List<Region>> getDistrictByNameCharacters(@Param("name") String name);
 
 }

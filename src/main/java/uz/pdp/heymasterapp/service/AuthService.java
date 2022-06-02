@@ -39,21 +39,23 @@ public class AuthService implements UserDetailsService {
     final LocationRepository locationRepository;
     final DistrictRepository districtRepository;
     final RegionRepository regionRepository;
+    final PasswordEncoder passwordEncoder;
 
     private final AuthenticationManager authenticationManager;
 
     private final JwtProvider jwtProvider;
 
-    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder,
+    public AuthService(UserRepository userRepository,
                        RoleRepository roleRepository,
                        LocationRepository locationRepository, DistrictRepository districtRepository,
-                       RegionRepository regionRepository, @Lazy AuthenticationManager authenticationManager,
+                       RegionRepository regionRepository, PasswordEncoder passwordEncoder, @Lazy AuthenticationManager authenticationManager,
                        JwtProvider jwtProvider) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.locationRepository = locationRepository;
         this.districtRepository = districtRepository;
         this.regionRepository = regionRepository;
+        this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.jwtProvider = jwtProvider;
     }
@@ -65,6 +67,7 @@ public class AuthService implements UserDetailsService {
             return new ApiResponse("This user already exist",false);
         }
         User user = new User();
+        user.setGeneratePassword(passwordEncoder.encode(registerDto.getPassword()));
         user.setPhoneNumber(registerDto.getPhoneNumber());
         user.setFullName(registerDto.getFullName());
         Role role = roleRepository.findByRoleName(RoleEnum.CLIENT);
@@ -106,6 +109,7 @@ public class AuthService implements UserDetailsService {
         if (optionalUser.isPresent())return new ApiResponse("This user already exist",false);
 
         User user = new User();
+        user.setGeneratePassword(passwordEncoder.encode(registerDto.getPassword()));
         user.setFullName(registerDto.getFullName());
         user.setPhoneNumber(registerDto.getPhoneNumber());
         Set<Role> roles = user.getRoles();

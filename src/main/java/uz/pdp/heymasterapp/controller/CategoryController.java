@@ -34,7 +34,7 @@ public class CategoryController {
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 404).body(apiResponse);
     }
     @PreAuthorize(value = "hasAnyRole('MASTER','SUPER_ADMIN')")
-    @PostMapping("")
+    @PostMapping("/add")
     public ResponseEntity add(@RequestBody Category category) {
         ApiResponse apiResponse = categoryService.add(category);
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 404).body(apiResponse);
@@ -46,7 +46,7 @@ public class CategoryController {
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 404).body(apiResponse);
     }
     @PreAuthorize(value = "hasAnyRole('SUPER_ADMIN')")
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity del(@PathVariable Integer id){
         ApiResponse apiResponse=categoryService.del(id);
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 404).body(apiResponse);

@@ -3,17 +3,22 @@ package uz.pdp.heymasterapp.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import uz.pdp.heymasterapp.entity.Attachment;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class RegisterForClientDto {
 
-    @NotNull
+    @Pattern(regexp = "/^[+][998]{3}\\d{9}",message = "+998901234567  korinishida kiritih kerak")
     private  String phoneNumber;
     @NotNull
     private  String fullName;
+    private String password;
 
 //   private Integer attachmentId;
 

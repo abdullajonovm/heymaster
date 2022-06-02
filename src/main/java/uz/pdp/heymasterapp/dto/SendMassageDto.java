@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class SendMassageDto {
     private String recipients;
     private String originator="Hey Master ";
-    private String body="Well come to Hey master ";
+    private String body="Welcome to Hey master ";
 }

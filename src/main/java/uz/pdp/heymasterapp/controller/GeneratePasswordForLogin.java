@@ -18,6 +18,8 @@ import uz.pdp.heymasterapp.entity.User;
 import uz.pdp.heymasterapp.feignClient.SendMassage;
 import uz.pdp.heymasterapp.repository.UserRepository;
 
+import javax.validation.Valid;
+import java.util.LinkedList;
 import java.util.Optional;
 
 @RequestMapping("/api/password")
@@ -32,7 +34,7 @@ public class GeneratePasswordForLogin {
     private String key;
 
     @PostMapping()
-    public ResponseEntity getPassword(@RequestBody LoginDto loginDto) {
+    public ResponseEntity getPassword(@Valid @RequestBody LoginDto loginDto) {
         Optional<User> optionalUser = userRepository.findByPhoneNumber(loginDto.getPhoneNumber());
         ApiResponse apiResponse = new ApiResponse();
         Integer generate = generate();
@@ -45,7 +47,8 @@ public class GeneratePasswordForLogin {
             apiResponse.setObject(generate);
             SendMassageDto sendMassageDto = new SendMassageDto();
             sendMassageDto.setRecipients(loginDto.getPhoneNumber());
-            sendMassageDto.setBody(sendMassageDto.getBody() + " your code " + generate);
+           sendMassageDto.setBody(sendMassageDto.getBody() + " your code " + generate);
+
             sendMassage.sendMassages(sendMassageDto, key);
             userRepository.save(user);
         } else {
@@ -53,7 +56,7 @@ public class GeneratePasswordForLogin {
             apiResponse.setMessage("You must registered");
             apiResponse.setObject(generate);
             SendMassageDto sendMassageDto = new SendMassageDto();
-            sendMassageDto.setBody(sendMassageDto.getBody() + " your code " + generate);
+            sendMassageDto.setBody(sendMassageDto.getBody());
             sendMassageDto.setRecipients(loginDto.getPhoneNumber());
             sendMassage.sendMassages(sendMassageDto, key);
         }

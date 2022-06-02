@@ -7,20 +7,21 @@ import org.springframework.web.bind.annotation.*;
 import uz.pdp.heymasterapp.dto.ApiResponse;
 import uz.pdp.heymasterapp.dto.RegisterForClientDto;
 import uz.pdp.heymasterapp.entity.User;
+import uz.pdp.heymasterapp.entity.location.District;
+import uz.pdp.heymasterapp.repository.UserRepository;
 import uz.pdp.heymasterapp.security.CurrentUser;
 import uz.pdp.heymasterapp.service.UserService;
+
+import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
 
-    //TODO editProfile
-    //TODO postMapping register with outh2
-    //TODO GetMapping sendOTP generate OTP
-    //TODO PostMapping verify OTP
-    //TODO register PostMapping param(String Role) + DTO malumotlari(registerdan otkaziladi)
 
+    final UserRepository userRepository;
     final UserService userService;
 
     @PreAuthorize(value = "hasAnyAuthority('CLIENT','SUPER_ADMIN')")
@@ -63,5 +64,13 @@ public class UserController {
     public ResponseEntity delete(@PathVariable Long id){
         ApiResponse apiResponse=userService.deleteAttPhoto(id);
         return ResponseEntity.status(apiResponse.isSuccess()? 200:404).body(apiResponse);
+    }
+
+    @PreAuthorize("hasAnyAuthority('MASTER','SUPER_ADMIN','CLIENT')")
+    @GetMapping("/search/{name}")
+    public ResponseEntity getMaster(@PathVariable String name){
+        Optional<List<District>> optional = userRepository.getClientByFullName(name);
+        if (optional.isPresent()) return ResponseEntity.ok().body(optional.get());
+        return ResponseEntity.ok().body("Not found");
     }
 }

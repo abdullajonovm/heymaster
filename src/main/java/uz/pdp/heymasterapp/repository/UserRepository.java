@@ -2,9 +2,11 @@ package uz.pdp.heymasterapp.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import uz.pdp.heymasterapp.entity.Attachment;
 import uz.pdp.heymasterapp.entity.Profession;
 import uz.pdp.heymasterapp.entity.User;
+import uz.pdp.heymasterapp.entity.location.District;
 
 import java.lang.annotation.Native;
 import java.util.List;
@@ -33,4 +35,11 @@ public interface UserRepository extends JpaRepository<User,Long> {
     Optional<List<User>> getAllClient();
     @Query(value = "select * from users u join users_roles ur on u.id = ur.users_id where roles_id=2",nativeQuery = true)
     Optional<List<User>> getAllMaster();
+
+    @Query(value = "select c from users c join users_roles ur on c.id=ur.users_id " +
+            " where c.fullName LIKE %:name% and roles_id=2 ",nativeQuery = true)
+    Optional<List<District>> getMasterByFullName(@Param("name") String name);
+    @Query(value = "select c from users c join users_roles ur on c.id=ur.users_id " +
+            " where c.fullName LIKE %:name% and roles_id=1 ",nativeQuery = true)
+    Optional<List<District>> getClientByFullName(@Param("name") String name);
 }
