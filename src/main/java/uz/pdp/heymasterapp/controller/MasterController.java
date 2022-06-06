@@ -1,6 +1,7 @@
 package uz.pdp.heymasterapp.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -73,4 +74,12 @@ public class MasterController {
         ApiResponse apiResponse=userService.deleteAttPhoto(id);
         return ResponseEntity.status(apiResponse.isSuccess()? 200:404).body(apiResponse);
     }
+    @PreAuthorize("hasAnyAuthority('MASTER','CLIENT')")
+    @PostMapping("client/to/master")
+    public ResponseEntity clientToMaster(@CurrentUser User user, @RequestBody RegisterForMasterDto dto){
+        ApiResponse apiResponse=userService.clientToMaster(user,dto);
+        return ResponseEntity.status(apiResponse.isSuccess()? 200:404).body(apiResponse);
+    }
+
+
 }

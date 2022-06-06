@@ -7,12 +7,15 @@ import uz.pdp.heymasterapp.dto.RegisterForClientDto;
 import uz.pdp.heymasterapp.dto.RegisterForMasterDto;
 import uz.pdp.heymasterapp.entity.Attachment;
 import uz.pdp.heymasterapp.entity.Profession;
+import uz.pdp.heymasterapp.entity.Role;
 import uz.pdp.heymasterapp.entity.User;
+import uz.pdp.heymasterapp.entity.enums.RoleEnum;
 import uz.pdp.heymasterapp.entity.location.District;
 import uz.pdp.heymasterapp.entity.location.Location;
 import uz.pdp.heymasterapp.entity.location.Region;
 import uz.pdp.heymasterapp.repository.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,6 +31,7 @@ public class UserService {
     final LocationRepository location;
 
     final ProfessionRepository professionRepository;
+    final RoleRepository roleRepository;
 
     final AttachmentRepository attachmentRepository;
 
@@ -130,5 +134,34 @@ public class UserService {
         userRepository.save(user);
         return new ApiResponse("Edited master accaunt ", true);
 
+    }
+
+
+    public ApiResponse clientToMaster(User user, RegisterForMasterDto dto) {
+        Optional<User> optional = userRepository.findByPhoneNumber(user.getPhoneNumber());
+        if (!optional.isPresent()) return new ApiResponse("User not found",false);
+        user.setRoles(roleRepository.findByRoleName(RoleEnum.MASTER));
+        Optional<Region> regionOptional = regionRepository.findById(dto.getRegionId());
+        if (!regionOptional.isPresent()) return new ApiResponse("Region not found",false);
+        Region region = regionOptional.get();
+        Optional<District> districtOptional = districtRepository.findById(dto.getDistrictId());
+        if (!districtOptional.isPresent()) return new ApiResponse("District not found",false);
+        District district = districtOptional.get();
+        Location location = new Location();
+        location.setRegion(region);
+        location.setDistrict(district);
+        user.setLocation(location);
+        user.setExperienceYear(dto.getExperienceYear());
+
+        user.setSalary(dto.getSalary());
+
+        ArrayList<Profession> professionList=new ArrayList();
+        for (Integer integer : dto.getProfessionIdList()) {
+            Profession byId = professionRepository.getById(integer);
+            professionList.add(byId);
+        }
+        user.setProfessionList(professionList);
+        userRepository.save(user);
+        return new ApiResponse("Client profile changed to master",true);
     }
 }

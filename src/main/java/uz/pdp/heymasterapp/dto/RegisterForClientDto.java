@@ -8,6 +8,7 @@ import uz.pdp.heymasterapp.entity.Attachment;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.sql.Date;
 
 @Data
 @NoArgsConstructor
@@ -19,6 +20,10 @@ public class RegisterForClientDto {
     @NotNull
     private  String fullName;
     private String password;
+
+    private Boolean gender;
+
+    private Date Date;
 
 //   private Integer attachmentId;
 

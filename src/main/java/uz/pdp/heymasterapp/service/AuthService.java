@@ -71,17 +71,12 @@ public class AuthService implements UserDetailsService {
         user.setPhoneNumber(registerDto.getPhoneNumber());
         user.setFullName(registerDto.getFullName());
         Role role = roleRepository.findByRoleName(RoleEnum.CLIENT);
-        user.setRoles(Collections.singleton(role));
+        user.setRoles(role);
         user.setGender(registerDto.getGender());
         user.setBirthDate(registerDto.getDate());
         userRepository.save(user);
-
-
         return new ApiResponse("Successfully registered. Please verify",true);
     }
-
-
-
     public ApiResponse login(LoginDto loginDto) {
 
         try {
@@ -90,7 +85,6 @@ public class AuthService implements UserDetailsService {
                 Authentication authenticate = authenticationManager.
                     authenticate(new UsernamePasswordAuthenticationToken
                     (loginDto.getPhoneNumber(),loginDto.getPassword()));
-
           //  User user = (User) authenticate.getPrincipal();
             String token = jwtProvider.generateToken(loginDto.getPhoneNumber());
             return new ApiResponse("Mana token",true,token);
@@ -113,12 +107,11 @@ public class AuthService implements UserDetailsService {
         user.setGeneratePassword(passwordEncoder.encode(registerDto.getPassword()));
         user.setFullName(registerDto.getFullName());
         user.setPhoneNumber(registerDto.getPhoneNumber());
-        Set<Role> roles = user.getRoles();
         Role role = roleRepository.findByRoleName(RoleEnum.MASTER);
         //Role role1 = roleRepository.findByRoleName(RoleEnum.CLIENT);
-        roles.add(role);
+
       //  roles.add(role1);
-        user.setRoles(roles);
+        user.setRoles(role);
         user.setExperienceYear(registerDto.getExperienceYear());
         user.setSalary(registerDto.getSalary());
         user.setGender(registerDto.getGender());

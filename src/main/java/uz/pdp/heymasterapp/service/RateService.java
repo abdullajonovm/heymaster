@@ -28,8 +28,8 @@ public class RateService {
             return new ApiResponse("To Whom id xato berilgan. " + rateDto.getToWhomId() + " bunday id dagi user mavjud emas", false);
         }
         User user = byId.get();
-        for (Role role : user.getRoles()) {
-            if (role.getRoleName().name().equals(RoleEnum.MASTER.name())) {
+        Role role = user.getRoles();
+        if (role.getRoleName().name().equals(RoleEnum.MASTER.name())) {
 
                 Rate rate = new Rate();
                 rate.setRating(rateDto.getRety());
@@ -51,7 +51,7 @@ public class RateService {
 
                 return new ApiResponse("Rate succesfully added", true);
             }
-        }
+
         return new ApiResponse("Bu user master emas backendchilar xato qilyabmiz", false);
     }
 

@@ -67,13 +67,13 @@ public class User extends AbsEntity implements UserDetails {
     private List<Profession> professionList;
 
 
-    @ManyToMany
-    private Set<Role> roles;
+    @ManyToOne
+    private Role roles;
 
     //Quyidagilar UserDetails ning method lari
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.roles;
+        return (Collection<? extends GrantedAuthority>) this.roles;
     }
     @Override
     public String getPassword() {
