@@ -67,7 +67,7 @@ public class AuthService implements UserDetailsService {
         user.setPhoneNumber(registerDto.getPhoneNumber());
         user.setFullName(registerDto.getFullName());
         Role role = roleRepository.findByRoleName(RoleEnum.CLIENT);
-        user.setRoles(Collections.singleton(role));
+        user.setRoles(role);
         user.setGender(registerDto.getGender());
         user.setBirthDate(registerDto.getDate());
         userRepository.save(user);
@@ -109,7 +109,7 @@ public class AuthService implements UserDetailsService {
         user.setFullName(registerDto.getFullName());
         user.setPhoneNumber(registerDto.getPhoneNumber());
         Role role = roleRepository.findByRoleName(RoleEnum.MASTER);
-        user.setRoles(Collections.singleton(role));
+        user.setRoles(role);
         user.setExperienceYear(registerDto.getExperienceYear());
         user.setSalary(registerDto.getSalary());
         user.setGender(registerDto.getGender());

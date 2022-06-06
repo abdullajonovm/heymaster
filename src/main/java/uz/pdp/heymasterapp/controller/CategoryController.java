@@ -21,7 +21,7 @@ public class CategoryController {
         ApiResponse apiResponse = categoryService.getAll();
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 404).body(apiResponse);
     }
-    @PreAuthorize(value = "hasAnyRole('CLIENT','SUPER_ADMIN')")
+    @PreAuthorize(value = "hasAnyRole('CLIENT','MASTER','SUPER_ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity getById(@PathVariable Integer id) {
         ApiResponse apiResponse = categoryService.getOne(id);
