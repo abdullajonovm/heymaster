@@ -35,7 +35,7 @@ public class ProfessionController {
         ApiResponse apiResponse = professionService.getOne(id);
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 404).body(apiResponse);
     }
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','CLIENT')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','CLIENT', 'MASTER')")
     @GetMapping("/search/{name}")
     public ResponseEntity searchByChar(@PathVariable String name) {
         ApiResponse apiResponse = professionService.getByChar(name);

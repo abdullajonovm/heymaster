@@ -25,7 +25,7 @@ public class UserController {
     final UserRepository userRepository;
     final UserService userService;
 
-    @PreAuthorize(value = "hasAnyAuthority('CLIENT','SUPER_ADMIN')")
+    @PreAuthorize(value = "hasAnyAuthority('CLIENT','SUPER_ADMIN', 'MASTER')")
     @PutMapping("/edit/{id}")
     public ResponseEntity editeUserProfile(@CurrentUser User user, @RequestBody RegisterForClientDto dto) {
         ApiResponse response = userService.edit(user, dto);
@@ -60,7 +60,7 @@ public class UserController {
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 404).body(apiResponse);
     }
 
-    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','CLIENT')")
+    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','CLIENT', 'MASTER')")
     @GetMapping("/deleteAttPhoto/{id}")
     public ResponseEntity delete(@PathVariable Long id){
         ApiResponse apiResponse=userService.deleteAttPhoto(id);

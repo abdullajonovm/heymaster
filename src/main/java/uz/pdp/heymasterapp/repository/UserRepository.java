@@ -26,7 +26,7 @@ public interface UserRepository extends JpaRepository<User,Long> {
     Optional<List<User>>findAllMasterByActiveIsTrue();
 
 
-    @Query(value = "select * from users u where u.total_mark is not null order by total_mark desc limit 3", nativeQuery = true)
+    @Query(value = "select * from users u where u.total_mark is not null  and u.is_active = true order by total_mark desc limit 3", nativeQuery = true)
     Set<User> topMasters();
 
     Optional<User> findByPhoneNumber(String phoneNumber);
@@ -43,3 +43,4 @@ public interface UserRepository extends JpaRepository<User,Long> {
             " where c.fullName LIKE %:name% and roles_id=1 ",nativeQuery = true)
     Optional<List<District>> getClientByFullName(@Param("name") String name);
 }
+

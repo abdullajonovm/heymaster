@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic().disable()
                 .authorizeRequests()
 //                .antMatchers("/api/auth/register").permitAll()
-                .antMatchers("/api/password","/api/auth/**","/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                .antMatchers("/api/password","/api/auth/**","/swagger-ui/**", "/v3/api-docs/**", "/api/test/**").permitAll()
                 .antMatchers("/**").authenticated();
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
