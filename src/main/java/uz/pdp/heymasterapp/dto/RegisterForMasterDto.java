@@ -13,6 +13,7 @@ public class RegisterForMasterDto {
     private  String phoneNumber;
     @NotNull
     private  String fullName;
+    
     @NotNull
     private  int experienceYear;
 
@@ -28,6 +29,7 @@ public class RegisterForMasterDto {
 
     private List<Integer>professionIdList;
 
+    private String password;
 
 
 }

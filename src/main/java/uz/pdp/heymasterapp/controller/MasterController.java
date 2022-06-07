@@ -1,6 +1,7 @@
 package uz.pdp.heymasterapp.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -18,31 +19,38 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/user")
-public class UserController {
+@RequestMapping("/api/master")
+public class MasterController {
 
-
-    final UserRepository userRepository;
     final UserService userService;
+    final UserRepository userRepository;
 
-    @PreAuthorize(value = "hasAnyAuthority('CLIENT','SUPER_ADMIN', 'MASTER')")
+    @PreAuthorize("hasAnyAuthority('MASTER','SUPER_ADMIN','CLIENT')")
+    @GetMapping("/search/{name}")
+    public ResponseEntity getMaster(@PathVariable String name){
+        Optional<List<District>> optional = userRepository.getMasterByFullName(name);
+        if (optional.isPresent()) return ResponseEntity.ok().body(optional.get());
+        return ResponseEntity.ok().body("Not found");
+    }
+
+    @PreAuthorize(value = "hasAnyAuthority('CLIENT','SUPER_ADMIN')")
     @PutMapping("/edit/{id}")
-    public ResponseEntity editeUserProfile(@CurrentUser User user, @RequestBody RegisterForClientDto dto) {
-        ApiResponse response = userService.edit(user, dto);
+    public ResponseEntity editeUserProfile(@CurrentUser User user, @RequestBody RegisterForMasterDto dto) {
+        ApiResponse response = userService.editMaster(user, dto);
         return ResponseEntity.status(response.isSuccess() ? 200 : 404).body(response);
     }
 
     @PreAuthorize(value = "hasAnyAuthority('SUPER_ADMIN')")
     @GetMapping("/all")
     public ResponseEntity getAllUser() {
-        ApiResponse apiResponse = userService.getAll();
+        ApiResponse apiResponse = userService.getAllMaster();
         return ResponseEntity.ok().body(apiResponse);
     }
 
     @PreAuthorize(value = "hasAnyAuthority('SUPER_ADMIN')")
     @GetMapping("/allActive")
     public ResponseEntity getAllActiveUser() {
-        ApiResponse apiResponse = userService.getAllActive();
+        ApiResponse apiResponse = userService.getAllMasterActive();
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 404).body(apiResponse);
     }
 
@@ -60,18 +68,18 @@ public class UserController {
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 404).body(apiResponse);
     }
 
-    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','CLIENT', 'MASTER')")
+    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','CLIENT')")
     @GetMapping("/deleteAttPhoto/{id}")
     public ResponseEntity delete(@PathVariable Long id){
         ApiResponse apiResponse=userService.deleteAttPhoto(id);
         return ResponseEntity.status(apiResponse.isSuccess()? 200:404).body(apiResponse);
     }
-
-    @PreAuthorize("hasAnyAuthority('MASTER','SUPER_ADMIN','CLIENT')")
-    @GetMapping("/search/{name}")
-    public ResponseEntity getMaster(@PathVariable String name){
-        Optional<List<District>> optional = userRepository.getClientByFullName(name);
-        if (optional.isPresent()) return ResponseEntity.ok().body(optional.get());
-        return ResponseEntity.ok().body("Not found");
+    @PreAuthorize("hasAnyAuthority('MASTER','CLIENT')")
+    @PostMapping("client/to/master")
+    public ResponseEntity clientToMaster(@CurrentUser User user, @RequestBody RegisterForMasterDto dto){
+        ApiResponse apiResponse=userService.clientToMaster(user,dto);
+        return ResponseEntity.status(apiResponse.isSuccess()? 200:404).body(apiResponse);
     }
+
+
 }

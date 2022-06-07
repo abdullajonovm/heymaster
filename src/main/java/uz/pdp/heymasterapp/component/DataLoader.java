@@ -4,15 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import uz.pdp.heymasterapp.entity.Category;
-import uz.pdp.heymasterapp.entity.Profession;
-import uz.pdp.heymasterapp.entity.Role;
-import uz.pdp.heymasterapp.entity.User;
+import uz.pdp.heymasterapp.entity.*;
 import uz.pdp.heymasterapp.entity.enums.RoleEnum;
-import uz.pdp.heymasterapp.repository.CategoryRepository;
-import uz.pdp.heymasterapp.repository.ProfessionRepository;
-import uz.pdp.heymasterapp.repository.RoleRepository;
-import uz.pdp.heymasterapp.repository.UserRepository;
+import uz.pdp.heymasterapp.repository.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,6 +26,7 @@ public class DataLoader implements CommandLineRunner {
 
     final UserRepository userRepository;
     final RoleRepository roleRepository;
+    final AdvertisingRepository advertisingRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -61,12 +56,17 @@ public class DataLoader implements CommandLineRunner {
             roleRepository.save(role2);
 
             User user = new User();
-            user.setPhoneNumber("943234311");
+            user.setPhoneNumber("+998943234311");
             user.setFullName("Azizbek Abdulaxatov");
             Role roleName = roleRepository.findByRoleName(RoleEnum.SUPER_ADMIN);
             user.setRoles(roleName);
             userRepository.save(user);
 
+            Advertising advertising = new Advertising();
+            advertising.setBody("Mexmash shurflari");
+            advertising.setDiscount("mavjud emas");
+            advertising.setTitle("Eng sifatlisi bizda");
+            advertisingRepository.save(advertising);
         }
     }
 }

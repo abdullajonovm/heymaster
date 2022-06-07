@@ -17,7 +17,7 @@ public class ProfessionController {
 
     final ProfessionService professionService;
 
-    @PreAuthorize("hasRole('SUPER_ADMIN')")
+    @PreAuthorize("hasAuthority('SUPER_ADMIN')")
     @GetMapping("/all")
     public ResponseEntity getAll() {
         ApiResponse apiResponse = professionService.getAll();
@@ -29,31 +29,31 @@ public class ProfessionController {
         ApiResponse apiResponse=professionService.getAllActive();
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 404).body(apiResponse);
     }
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
+    @PreAuthorize("hasAuthority('SUPER_ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity getById(@PathVariable Integer id) {
         ApiResponse apiResponse = professionService.getOne(id);
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 404).body(apiResponse);
     }
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','CLIENT', 'MASTER')")
+    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','CLIENT', 'MASTER')")
     @GetMapping("/search/{name}")
     public ResponseEntity searchByChar(@PathVariable String name) {
         ApiResponse apiResponse = professionService.getByChar(name);
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 404).body(apiResponse);
     }
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
+    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN')")
     @PostMapping("")
     public ResponseEntity add(@RequestBody ProfessionDto professionDto) {
         ApiResponse apiResponse = professionService.add(professionDto);
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 404).body(apiResponse);
     }
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN','MASTER')")
+    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','MASTER')")
     @PatchMapping("/{id}")
     public ResponseEntity edit(@PathVariable Integer id,@Valid @RequestBody ProfessionDto professionDto){
         ApiResponse apiResponse=professionService.edit(id,professionDto);
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 404).body(apiResponse);
     }
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
+    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN')")
     @DeleteMapping("{id}")
     public ResponseEntity del(@PathVariable Integer id){
         ApiResponse apiResponse=professionService.del(id);
