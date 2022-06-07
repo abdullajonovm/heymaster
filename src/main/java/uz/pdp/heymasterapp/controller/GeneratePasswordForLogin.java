@@ -49,7 +49,7 @@ public class GeneratePasswordForLogin {
             sendMassageDto.setRecipients(loginDto.getPhoneNumber());
            sendMassageDto.setBody(sendMassageDto.getBody() + " your code " + generate);
 
-            sendMassage.sendMassages(sendMassageDto, key);
+           // sendMassage.sendMassages(sendMassageDto, key);
             userRepository.save(user);
         } else {
             apiResponse.setSuccess(false);
@@ -58,7 +58,7 @@ public class GeneratePasswordForLogin {
             SendMassageDto sendMassageDto = new SendMassageDto();
             sendMassageDto.setBody(sendMassageDto.getBody());
             sendMassageDto.setRecipients(loginDto.getPhoneNumber());
-            sendMassage.sendMassages(sendMassageDto, key);
+//            sendMassage.sendMassages(sendMassageDto, key);
         }
 
 

@@ -11,8 +11,6 @@ import javax.validation.constraints.Pattern;
 @AllArgsConstructor
 @Data
 public class LoginDto {
-    @Pattern(regexp = "/^[+][998]{3}\\d{7}",message = "+998901234567  korinishida kiritih kerak")
     private String phoneNumber;
-    @NotBlank(message = "Enter password please ")
     private String password;
 }
