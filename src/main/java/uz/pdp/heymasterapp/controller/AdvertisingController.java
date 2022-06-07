@@ -6,7 +6,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import uz.pdp.heymasterapp.dto.AdvertisingDto;
 import uz.pdp.heymasterapp.dto.ApiResponse;
-import uz.pdp.heymasterapp.entity.Advertising;
 import uz.pdp.heymasterapp.service.AdvertisingService;
 
 @RequiredArgsConstructor

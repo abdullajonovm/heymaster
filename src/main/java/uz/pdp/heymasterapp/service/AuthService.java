@@ -3,8 +3,6 @@ package uz.pdp.heymasterapp.service;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -24,7 +22,6 @@ import uz.pdp.heymasterapp.repository.*;
 import uz.pdp.heymasterapp.security.JwtProvider;
 
 import javax.validation.Valid;
-import java.util.Collections;
 import java.util.Optional;
 
 @Service
@@ -79,17 +76,17 @@ public class AuthService implements UserDetailsService {
 
 
     public ApiResponse login(LoginDto loginDto) {
-
+        Optional<User> byPhoneNumber = userRepository.findByPhoneNumber(loginDto.getPhoneNumber());
         try {
-            if (!userRepository.findByPhoneNumber(loginDto.getPhoneNumber()).isPresent())
+            if (!byPhoneNumber.isPresent())
                 return new ApiResponse("user  not found",false);
-                Authentication authenticate = authenticationManager.
-                    authenticate(new UsernamePasswordAuthenticationToken
-                    (loginDto.getPhoneNumber(),loginDto.getPassword()));
+               // Authentication authenticate = authenticationManager.
+                 //   authenticate(new UsernamePasswordAuthenticationToken
+                //    (loginDto.getPhoneNumber(),loginDto.getPassword()));
 
           //  User user = (User) authenticate.getPrincipal();
             String token = jwtProvider.generateToken(loginDto.getPhoneNumber());
-            return new ApiResponse("Mana token",true,token);
+            return new ApiResponse(""+byPhoneNumber.get().getRoles().getRoleName(),true,token);
         }catch (BadCredentialsException badCredentialsException){
             return new ApiResponse("Username or password is wrong",false);
         }

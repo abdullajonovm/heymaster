@@ -6,14 +6,12 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-
+import uz.pdp.heymasterapp.dto.ApiResponse;
 import uz.pdp.heymasterapp.entity.Attachment;
 import uz.pdp.heymasterapp.entity.AttachmentContent;
-import uz.pdp.heymasterapp.dto.ApiResponse;
 import uz.pdp.heymasterapp.repository.AttachmentContentRepository;
 import uz.pdp.heymasterapp.repository.AttachmentRepository;
 import uz.pdp.heymasterapp.service.AttachmentService;
-
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

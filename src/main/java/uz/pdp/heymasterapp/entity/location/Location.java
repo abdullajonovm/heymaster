@@ -2,7 +2,6 @@ package uz.pdp.heymasterapp.entity.location;
 
 
 import lombok.*;
-import uz.pdp.heymasterapp.entity.template.AbsEntity;
 
 import javax.persistence.*;
 

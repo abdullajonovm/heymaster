@@ -7,7 +7,6 @@ import uz.pdp.heymasterapp.entity.template.AbsEntity;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 @AllArgsConstructor
 @NoArgsConstructor

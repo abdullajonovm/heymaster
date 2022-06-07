@@ -1,20 +1,18 @@
 package uz.pdp.heymasterapp.entity;
 
 import lombok.*;
-import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import uz.pdp.heymasterapp.entity.location.Location;
 import uz.pdp.heymasterapp.entity.template.AbsEntity;
-import uz.pdp.heymasterapp.entity.enums.RoleEnum;
 
 import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -73,7 +71,7 @@ public class User extends AbsEntity implements UserDetails {
     //Quyidagilar UserDetails ning method lari
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return (Collection<? extends GrantedAuthority>) this.roles;
+        return Collections.singleton(roles);
     }
     @Override
     public String getPassword() {

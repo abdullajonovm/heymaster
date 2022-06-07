@@ -2,10 +2,10 @@ package uz.pdp.heymasterapp.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import uz.pdp.heymasterapp.dto.ApiResponse;
 import uz.pdp.heymasterapp.dto.ProfessionDto;
 import uz.pdp.heymasterapp.entity.Category;
 import uz.pdp.heymasterapp.entity.Profession;
-import uz.pdp.heymasterapp.dto.ApiResponse;
 import uz.pdp.heymasterapp.repository.CategoryRepository;
 import uz.pdp.heymasterapp.repository.ProfessionRepository;
 

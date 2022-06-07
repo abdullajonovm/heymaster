@@ -29,7 +29,7 @@ public class RateService {
         }
         User user = byId.get();
         Role role = user.getRoles();
-            if (role.getRoleName().name().equals(RoleEnum.MASTER.name())) {
+        if (role.getRoleName().name().equals(RoleEnum.MASTER.name())) {
 
                 Rate rate = new Rate();
                 rate.setRating(rateDto.getRety());
