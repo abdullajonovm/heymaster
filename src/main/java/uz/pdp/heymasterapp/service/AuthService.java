@@ -83,9 +83,9 @@ public class AuthService implements UserDetailsService {
         try {
             if (!userRepository.findByPhoneNumber(loginDto.getPhoneNumber()).isPresent())
                 return new ApiResponse("user  not found",false);
-                Authentication authenticate = authenticationManager.
-                    authenticate(new UsernamePasswordAuthenticationToken
-                    (loginDto.getPhoneNumber(),loginDto.getPassword()));
+               // Authentication authenticate = authenticationManager.
+                 //   authenticate(new UsernamePasswordAuthenticationToken
+                //    (loginDto.getPhoneNumber(),loginDto.getPassword()));
 
           //  User user = (User) authenticate.getPrincipal();
             String token = jwtProvider.generateToken(loginDto.getPhoneNumber());

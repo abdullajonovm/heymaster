@@ -13,6 +13,7 @@ import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -73,7 +74,7 @@ public class User extends AbsEntity implements UserDetails {
     //Quyidagilar UserDetails ning method lari
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return (Collection<? extends GrantedAuthority>) this.roles;
+        return Collections.singleton(roles);
     }
     @Override
     public String getPassword() {
