@@ -18,13 +18,13 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class DistrictController {
     final DistrictRepository repository;
-    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN')")
+//    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN')")
     @GetMapping("/all")
     public ResponseEntity getAll(){
         List<District> regionList = repository.findAll();
         return ResponseEntity.ok().body(regionList);
     }
-    @PreAuthorize("hasAnyAuthority('MASTER','SUPER_ADMIN','CLIENT')")
+//    @PreAuthorize("hasAnyAuthority('MASTER','SUPER_ADMIN','CLIENT')")
     @GetMapping("/region/{id}")
     public ResponseEntity getByRegionId(@PathVariable Integer id){
         Optional<District> optional = repository.findByRegionId(id);
@@ -33,7 +33,7 @@ public class DistrictController {
         }
         return ResponseEntity.ok().body(optional.get());
     }
-    @PreAuthorize("hasAnyAuthority('MASTER','SUPER_ADMIN','CLIENT')")
+//    @PreAuthorize("hasAnyAuthority('MASTER','SUPER_ADMIN','CLIENT')")
     @GetMapping("/search/{name}")
     public ResponseEntity getDistrictByName(@PathVariable String name){
         Optional<List<District>> optional = repository.getDistrictByNameCharacters(name);

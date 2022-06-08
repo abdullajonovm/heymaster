@@ -18,13 +18,13 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class RegionController {
     final RegionRepository repository;
-    @PreAuthorize(value = "hasAnyRole('MASTER')")
+//    @PreAuthorize(value = "hasAnyRole('MASTER')")
     @GetMapping("/all")
     public ResponseEntity getAll(){
         List<Region> regionList = repository.findAll();
         return ResponseEntity.ok().body(regionList);
     }
-    @PreAuthorize("hasAnyAuthority('MASTER','SUPER_ADMIN','CLIENT')")
+//    @PreAuthorize("hasAnyAuthority('MASTER','SUPER_ADMIN','CLIENT')")
     @GetMapping("/search/{name}")
     public ResponseEntity getRegionByName(@PathVariable String name){
         Optional<List<Region>> optional = repository.getDistrictByNameCharacters(name);
