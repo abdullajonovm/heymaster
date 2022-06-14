@@ -31,7 +31,7 @@ public class MasterController {
         return ResponseEntity.ok().body("Not found");
     }
 
-    @PreAuthorize(value = "hasAnyAuthority('CLIENT','SUPER_ADMIN')")
+    @PreAuthorize(value = "hasAnyAuthority('SUPER_ADMIN','MASTER')")
     @PutMapping("/edit/{id}")
     public ResponseEntity editeUserProfile(@CurrentUser User user, @RequestBody RegisterForMasterDto dto) {
         ApiResponse response = userService.editMaster(user, dto);
@@ -45,7 +45,7 @@ public class MasterController {
         return ResponseEntity.ok().body(apiResponse);
     }
 
-    @PreAuthorize(value = "hasAnyAuthority('SUPER_ADMIN')")
+    @PreAuthorize(value = "hasAnyAuthority('SUPER_ADMIN','CLIENT','MASTER')")
     @GetMapping("/allActive")
     public ResponseEntity getAllActiveUser() {
         ApiResponse apiResponse = userService.getAllMasterActive();
@@ -65,8 +65,8 @@ public class MasterController {
         ApiResponse apiResponse = userService.unblock(id);
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 404).body(apiResponse);
     }
-
-    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','CLIENT')")
+//TODO qaraw kk
+    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN')")
     @GetMapping("/deleteAttPhoto/{id}")
     public ResponseEntity delete(@PathVariable Long id){
         ApiResponse apiResponse=userService.deleteAttPhoto(id);

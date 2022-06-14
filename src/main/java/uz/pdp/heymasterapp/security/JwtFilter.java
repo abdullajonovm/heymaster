@@ -37,7 +37,7 @@ public class JwtFilter extends OncePerRequestFilter {
             if (phoneNumber!=null){
                 UserDetails user = authService.loadUserByUsername(phoneNumber);
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-                        new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+                        new UsernamePasswordAuthenticationToken(user,null, user.getAuthorities());
 
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
                 //System.out.println(SecurityContextHolder.getContext().getAuthentication().getAuthorities());

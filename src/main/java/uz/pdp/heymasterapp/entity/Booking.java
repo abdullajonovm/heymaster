@@ -21,11 +21,8 @@ public class Booking extends AbsEntity{
     @ManyToOne
     private User toWhom;
 
-    @OneToOne
-    private Notification notification;
+    private boolean isAccepted=false;
 
-    private boolean isAccepted;
-
-    private Boolean isFinished;
+    private Boolean isFinished=false;
 
 }

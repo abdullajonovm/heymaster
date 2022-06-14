@@ -6,14 +6,19 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import uz.pdp.heymasterapp.dto.ApiResponse;
 import uz.pdp.heymasterapp.dto.ProfessionDto;
+import uz.pdp.heymasterapp.entity.location.District;
+import uz.pdp.heymasterapp.repository.ProfessionRepository;
 import uz.pdp.heymasterapp.service.ProfessionService;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.Optional;
 
 @RequestMapping("/api/profession")
 @RestController
 @RequiredArgsConstructor
 public class ProfessionController {
+    final ProfessionRepository professionRepository;
 
     final ProfessionService professionService;
 
@@ -23,7 +28,7 @@ public class ProfessionController {
         ApiResponse apiResponse = professionService.getAll();
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 404).body(apiResponse);
     }
-    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','CLIENT')")
+    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','CLIENT','MASTER')")
     @GetMapping("/getAllActive")
     public ResponseEntity getAllActive(){
         ApiResponse apiResponse=professionService.getAllActive();
@@ -47,7 +52,7 @@ public class ProfessionController {
         ApiResponse apiResponse = professionService.add(professionDto);
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 404).body(apiResponse);
     }
-    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','MASTER')")
+    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN')")
     @PatchMapping("/{id}")
     public ResponseEntity edit(@PathVariable Integer id,@Valid @RequestBody ProfessionDto professionDto){
         ApiResponse apiResponse=professionService.edit(id,professionDto);
@@ -59,5 +64,15 @@ public class ProfessionController {
         ApiResponse apiResponse=professionService.del(id);
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 404).body(apiResponse);
     }
+
+//    @PreAuthorize("hasAnyAuthority('MASTER','SUPER_ADMIN','CLIENT')")
+//    @GetMapping("/region/{id}")
+//    public ResponseEntity getByRegionId(@PathVariable Integer id){
+//        Optional<List<District>> optionalList = professionRepository.findByCategory_Id(id);
+//        if (!optionalList.isPresent()) {
+//            return ResponseEntity.ok().body("District not found");
+//        }
+//        return ResponseEntity.ok().body(optionalList.get());
+//    }
 
 }

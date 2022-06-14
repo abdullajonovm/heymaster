@@ -35,12 +35,13 @@ public class AdvertisingController {
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 400).body(apiResponse);
     }
 
-    @GetMapping
+    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','MASTER','CLIENT')")
+    @GetMapping("all")
     public ResponseEntity getAll(){
         ApiResponse apiResponse = advertisingService.getAll();
         return ResponseEntity.ok().body(apiResponse);
     }
-
+    @PreAuthorize( "hasAuthority('SUPER_ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity getOne(@PathVariable Long id){
         ApiResponse apiResponse = advertisingService.getOne(id);

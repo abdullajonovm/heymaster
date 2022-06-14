@@ -17,7 +17,7 @@ import javax.persistence.ManyToOne;
 @EntityListeners(AuditingEntityListener.class)
 public class Notification extends AbsEntity {
 
-    private String text;
+    private String title="Hey Master 👨‍🔧👩‍🔧";
 
     private String body;
 

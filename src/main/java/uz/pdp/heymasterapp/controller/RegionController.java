@@ -24,7 +24,7 @@ public class RegionController {
         List<Region> regionList = repository.findAll();
         return ResponseEntity.ok().body(regionList);
     }
-//    @PreAuthorize("hasAnyAuthority('MASTER','SUPER_ADMIN','CLIENT')")
+    @PreAuthorize("hasAnyAuthority('MASTER','SUPER_ADMIN','CLIENT')")
     @GetMapping("/search/{name}")
     public ResponseEntity getRegionByName(@PathVariable String name){
         Optional<List<Region>> optional = repository.getDistrictByNameCharacters(name);

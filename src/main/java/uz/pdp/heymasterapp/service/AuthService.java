@@ -3,6 +3,8 @@ package uz.pdp.heymasterapp.service;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,6 +14,7 @@ import uz.pdp.heymasterapp.dto.ApiResponse;
 import uz.pdp.heymasterapp.dto.LoginDto;
 import uz.pdp.heymasterapp.dto.RegisterForClientDto;
 import uz.pdp.heymasterapp.dto.RegisterForMasterDto;
+import uz.pdp.heymasterapp.entity.Device;
 import uz.pdp.heymasterapp.entity.Role;
 import uz.pdp.heymasterapp.entity.User;
 import uz.pdp.heymasterapp.entity.enums.RoleEnum;
@@ -36,6 +39,7 @@ public class AuthService implements UserDetailsService {
     final DistrictRepository districtRepository;
     final RegionRepository regionRepository;
 
+    final DeviceRepository deviceRepository;
     private final AuthenticationManager authenticationManager;
 
     private final JwtProvider jwtProvider;
@@ -43,13 +47,14 @@ public class AuthService implements UserDetailsService {
     public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder,
                        RoleRepository roleRepository,
                        LocationRepository locationRepository, DistrictRepository districtRepository,
-                       RegionRepository regionRepository, @Lazy AuthenticationManager authenticationManager,
+                       RegionRepository regionRepository, DeviceRepository deviceRepository, @Lazy AuthenticationManager authenticationManager,
                        JwtProvider jwtProvider) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.locationRepository = locationRepository;
         this.districtRepository = districtRepository;
         this.regionRepository = regionRepository;
+        this.deviceRepository = deviceRepository;
         this.authenticationManager = authenticationManager;
         this.jwtProvider = jwtProvider;
     }
@@ -65,6 +70,9 @@ public class AuthService implements UserDetailsService {
         user.setFullName(registerDto.getFullName());
         Role role = roleRepository.findByRoleName(RoleEnum.CLIENT);
         user.setRoles(role);
+        Device device = new Device();
+        device.setDeviceId(registerDto.getDeviceId());
+        user.setDevice(device);
         user.setGender(registerDto.getGender());
         user.setBirthDate(registerDto.getDate());
         userRepository.save(user);
@@ -80,9 +88,9 @@ public class AuthService implements UserDetailsService {
         try {
             if (!byPhoneNumber.isPresent())
                 return new ApiResponse("user  not found",false);
-               // Authentication authenticate = authenticationManager.
-                 //   authenticate(new UsernamePasswordAuthenticationToken
-                //    (loginDto.getPhoneNumber(),loginDto.getPassword()));
+                Authentication authenticate = authenticationManager.
+                   authenticate(new UsernamePasswordAuthenticationToken
+                    (loginDto.getPhoneNumber(),loginDto.getPassword()));
 
           //  User user = (User) authenticate.getPrincipal();
             String token = jwtProvider.generateToken(loginDto.getPhoneNumber());
@@ -119,8 +127,10 @@ public class AuthService implements UserDetailsService {
         location.setDistrict(districtOptional.get());
         location.setRegion(regionOptional.get());
         user.setLocation(location);
+        Device device = new Device();
+        device.setDeviceId(registerDto.getDeviceId());
+        user.setDevice(device);
         userRepository.save(user);
-
         return new ApiResponse("Master successfully saved !",true);
 
     }

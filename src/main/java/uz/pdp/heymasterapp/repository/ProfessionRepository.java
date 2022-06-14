@@ -6,11 +6,12 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import uz.pdp.heymasterapp.entity.Category;
 import uz.pdp.heymasterapp.entity.Profession;
+import uz.pdp.heymasterapp.entity.location.District;
 
 import java.util.List;
 import java.util.Optional;
 
-@Repository
+
 public interface ProfessionRepository extends JpaRepository<Profession, Integer> {
 
 //    @Query(value = "select c from category c where c.name LIKE %:name%")
@@ -26,4 +27,6 @@ public interface ProfessionRepository extends JpaRepository<Profession, Integer>
 
     @Query("select p from profession p where p.isActive = true")
     List<Profession>getAllByIsActiveTrue();
+
+   // Optional<List<District>> findByCategory_Id(Integer id);
 }

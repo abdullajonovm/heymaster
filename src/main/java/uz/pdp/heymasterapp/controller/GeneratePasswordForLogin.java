@@ -8,11 +8,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import uz.pdp.heymasterapp.dto.ApiResponse;
-import uz.pdp.heymasterapp.dto.LoginDto;
-import uz.pdp.heymasterapp.dto.SendMassageDto;
+import uz.pdp.heymasterapp.dto.*;
 import uz.pdp.heymasterapp.entity.User;
 import uz.pdp.heymasterapp.feignClient.SendMassage;
+import uz.pdp.heymasterapp.feignClient.SendNotification;
 import uz.pdp.heymasterapp.repository.UserRepository;
 
 import javax.validation.Valid;
@@ -21,13 +20,17 @@ import java.util.Optional;
 @RequestMapping("/api/password")
 @RestController
 @RequiredArgsConstructor
-public class GeneratePasswordForLogin {
+public class GeneratePasswordForLogin  {
     final UserRepository userRepository;
     final PasswordEncoder passwordEncoder;
 
     final SendMassage sendMassage;
+
+
+
+
     @Value("${key.for.Send.SMS}")
-    private String key;
+    private String SMS_Key;
 
     @PostMapping()
     public ResponseEntity getPassword(@Valid @RequestBody LoginDto loginDto) {
@@ -43,9 +46,8 @@ public class GeneratePasswordForLogin {
             apiResponse.setObject(generate);
             SendMassageDto sendMassageDto = new SendMassageDto();
             sendMassageDto.setRecipients(loginDto.getPhoneNumber());
-           sendMassageDto.setBody(sendMassageDto.getBody() + " your code " + generate);
-
-//            sendMassage.sendMassages(sendMassageDto, key);
+            sendMassageDto.setBody(sendMassageDto.getBody() + " your code " + generate);
+           // sendMassage.sendMassages(sendMassageDto,SMS_Key);
             userRepository.save(user);
         } else {
             apiResponse.setSuccess(false);
@@ -62,8 +64,11 @@ public class GeneratePasswordForLogin {
         return ResponseEntity.ok().body(apiResponse);
     }
 
+
     public Integer generate() {
         int smsCode = (int) ((Math.random() * 9000) + 900);
         return smsCode;
     }
+
+
 }

@@ -23,6 +23,7 @@ public class RegisterForClientDto {
     private Boolean gender;
 
     private Date Date;
+    private String DeviceId;
 
 //   private Integer attachmentId;
 

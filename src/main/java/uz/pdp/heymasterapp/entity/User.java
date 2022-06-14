@@ -28,7 +28,9 @@ public class User extends AbsEntity implements UserDetails {
 
     private int experienceYear=0;
 
-    @Column(nullable = false)
+    @OneToOne(cascade = CascadeType.ALL)
+    private Device device;
+    @Column(nullable = false,unique = true)
     private String phoneNumber;
 
     private String  generatePassword;
@@ -63,6 +65,7 @@ public class User extends AbsEntity implements UserDetails {
 
     @ManyToMany
     private List<Profession> professionList;
+
 
 
     @ManyToOne

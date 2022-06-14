@@ -18,7 +18,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class DistrictController {
     final DistrictRepository repository;
-//    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN')")
+    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN')")
     @GetMapping("/all")
     public ResponseEntity getAll(){
         List<District> regionList = repository.findAll();
@@ -27,13 +27,13 @@ public class DistrictController {
 //    @PreAuthorize("hasAnyAuthority('MASTER','SUPER_ADMIN','CLIENT')")
     @GetMapping("/region/{id}")
     public ResponseEntity getByRegionId(@PathVariable Integer id){
-        Optional<District> optional = repository.findByRegionId(id);
-        if (!optional.isPresent()) {
+        Optional<List<District>> optionalList = repository.findByRegionId(id);
+        if (!optionalList.isPresent()) {
             return ResponseEntity.ok().body("District not found");
         }
-        return ResponseEntity.ok().body(optional.get());
+        return ResponseEntity.ok().body(optionalList.get());
     }
-//    @PreAuthorize("hasAnyAuthority('MASTER','SUPER_ADMIN','CLIENT')")
+    @PreAuthorize("hasAnyAuthority('MASTER','SUPER_ADMIN','CLIENT')")
     @GetMapping("/search/{name}")
     public ResponseEntity getDistrictByName(@PathVariable String name){
         Optional<List<District>> optional = repository.getDistrictByNameCharacters(name);

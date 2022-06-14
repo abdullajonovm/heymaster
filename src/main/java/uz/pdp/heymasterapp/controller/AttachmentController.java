@@ -31,7 +31,7 @@ public class AttachmentController {
 
     final AttachmentService attachmentService;
 
-    @PreAuthorize(value = "hasAnyRole('SUPER_ADMIN')")
+    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','CLIENT','MASTER')")
     @GetMapping("/info")
     public List<Attachment> getInfo() {
         List<Attachment> all = attachmentRepository.findAll();
@@ -70,6 +70,7 @@ public class AttachmentController {
         return "Xatolik";
     }
 
+    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','CLIENT','MASTER')")
     @GetMapping("/download/{id}")
     public void getFile(@PathVariable Long id, HttpServletResponse response) throws IOException {
         Optional<Attachment> optionalAttachment = attachmentRepository.findById(id);

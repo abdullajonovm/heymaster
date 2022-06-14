@@ -49,7 +49,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic().disable()
                 .authorizeRequests()
 //                .antMatchers("/api/auth/register").permitAll()
-                .antMatchers("/api/password","/api/auth/**","/swagger-ui/**", "/v3/api-docs/**", "/api/test/**","/api/district/**","/api/region/**").permitAll()
+                .antMatchers("/api/password","/api/auth/**","/swagger-ui/**",
+                        "/v3/api-docs/**", "/api/test/**","/api/district/region/{id}","/api/region/all").permitAll()
                 .antMatchers("/**").authenticated();
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
