@@ -65,14 +65,14 @@ public class ProfessionController {
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 404).body(apiResponse);
     }
 
-//    @PreAuthorize("hasAnyAuthority('MASTER','SUPER_ADMIN','CLIENT')")
-//    @GetMapping("/region/{id}")
-//    public ResponseEntity getByRegionId(@PathVariable Integer id){
-//        Optional<List<District>> optionalList = professionRepository.findByCategory_Id(id);
-//        if (!optionalList.isPresent()) {
-//            return ResponseEntity.ok().body("District not found");
-//        }
-//        return ResponseEntity.ok().body(optionalList.get());
-//    }
+    @PreAuthorize("hasAnyAuthority('MASTER','SUPER_ADMIN','CLIENT')")
+    @GetMapping("/category/{id}")
+    public ResponseEntity getByCategoryId(@PathVariable Integer id){
+        Optional<List<District>> optionalList = professionRepository.findByCategory_Id(id);
+        if (!optionalList.isPresent()) {
+            return ResponseEntity.ok().body("District not found");
+        }
+        return ResponseEntity.ok().body(optionalList.get());
+    }
 
 }

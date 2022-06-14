@@ -16,8 +16,8 @@ public interface UserRepository extends JpaRepository<User,Long> {
     boolean existsByPhoneNumber(String number);
 
     Attachment findByProfilePhoto(Attachment profilePhoto);
-    @Query(value = "select * from users u join users_roles ur on u.id = ur.users_id where u.isActive = true " +
-            "and roles_id=1 ", nativeQuery = true)
+
+    @Query(value = "select * from users u where u.roles_id=1  and u.is_active=true ", nativeQuery = true)
     Optional<List<User>>findAllClientByActiveIsTrue();
     @Query(value = "select * from users u where roles_id=2 and u.is_active=true", nativeQuery = true)
     Optional<List<User>>findAllMasterByActiveIsTrue();
@@ -28,16 +28,14 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
     Optional<User> findByPhoneNumber(String phoneNumber);
 
-    @Query(value = "select * from users u join users_roles ur on u.id = ur.users_id where roles_id=1",nativeQuery = true)
+    @Query(value = "select * from users u where u.roles_id=1",nativeQuery = true)
     Optional<List<User>> getAllClient();
-    @Query(value = "select * from users u join users_roles ur on u.id = ur.users_id where roles_id=2",nativeQuery = true)
+    @Query(value = "select * from users u where u.roles_id=2",nativeQuery = true)
     Optional<List<User>> getAllMaster();
 
-    @Query(value = "select c from users c join users_roles ur on c.id=ur.users_id " +
-            " where c.fullName LIKE %:name% and roles_id=2 ",nativeQuery = true)
+    @Query(value = "select * from users u where u.full_name like '%:name%' and u.roles_id=2 ",nativeQuery = true)
     Optional<List<District>> getMasterByFullName(@Param("name") String name);
-    @Query(value = "select c from users c join users_roles ur on c.id=ur.users_id " +
-            " where c.fullName LIKE %:name% and roles_id=1 ",nativeQuery = true)
+    @Query(value = "select * from users u where u.full_name like '%:name%' and u.roles_id=1",nativeQuery = true)
     Optional<List<District>> getClientByFullName(@Param("name") String name);
 }
 

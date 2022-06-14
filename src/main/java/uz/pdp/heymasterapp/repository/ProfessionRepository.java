@@ -28,5 +28,6 @@ public interface ProfessionRepository extends JpaRepository<Profession, Integer>
     @Query("select p from profession p where p.isActive = true")
     List<Profession>getAllByIsActiveTrue();
 
-   // Optional<List<District>> findByCategory_Id(Integer id);
+    @Query(value = "select * from profession p where p.category_id=:id",nativeQuery = true)
+    Optional<List<District>> findByCategory_Id(Integer id);
 }
