@@ -18,7 +18,7 @@ public class RegisterForMasterDto {
     @NotNull
     private  int experienceYear;
 
- //   private Device device;
+    private String deviceId;
 
     private Double salary;
 

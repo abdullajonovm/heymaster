@@ -32,7 +32,7 @@ public class ProfessionController {
         ApiResponse apiResponse = professionService.getAll();
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 404).body(apiResponse);
     }
-    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','CLIENT','MASTER')")
+    //@PreAuthorize("hasAnyAuthority('SUPER_ADMIN','CLIENT','MASTER')")
     @GetMapping("/getAllActive")
     public ResponseEntity getAllActive(){
         ApiResponse apiResponse=professionService.getAllActive();

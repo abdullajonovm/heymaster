@@ -3,10 +3,8 @@ package uz.pdp.heymasterapp.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 import uz.pdp.heymasterapp.entity.Category;
 import uz.pdp.heymasterapp.entity.Profession;
-import uz.pdp.heymasterapp.entity.location.District;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +23,7 @@ public interface ProfessionRepository extends JpaRepository<Profession, Integer>
 
     Optional<Profession> findByName(String name);
 
-    @Query("select p from profession p where p.isActive = true")
+    @Query(value = "select * from profession p where p.is_active = true",nativeQuery = true)
     List<Profession>getAllByIsActiveTrue();
 
     @Query(value = "select * from profession p where p.category_id=:id",nativeQuery = true)

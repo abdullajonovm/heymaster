@@ -25,6 +25,7 @@ import uz.pdp.heymasterapp.repository.*;
 import uz.pdp.heymasterapp.security.JwtProvider;
 
 import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.Optional;
 
 @Service
@@ -74,7 +75,7 @@ public class AuthService implements UserDetailsService {
         Role role = roleRepository.findByRoleName(RoleEnum.CLIENT);
         user.setRoles(role);
         Device device = new Device();
-      //  device.setDeviceLanguage(registerDto.getDevice().getDeviceLanguage());
+        device.setDeviceId(registerDto.getDeviceId());
         user.setDevice(device);
         user.setGender(registerDto.getGender());
         user.setBirthDate(registerDto.getDate());
@@ -132,10 +133,10 @@ public class AuthService implements UserDetailsService {
         location.setRegion(regionOptional.get());
         user.setLocation(location);
         Device device = new Device();
-//        device.setDeviceId(registerDto.getDevice().getDeviceId());
+        device.setDeviceId(registerDto.getDeviceId());
 //        device.setDeviceLanguage(registerDto.getDevice().getDeviceLanguage());
         user.setDevice(device);
-       // user.setProfessionList(Arrays.asList(registerDto.getProfessionIdList()));
+//        user.setProfessionList(Arrays.asList(registerDt));
 
         userRepository.save(user);
         return new ApiResponse("Master successfully saved !",true);
