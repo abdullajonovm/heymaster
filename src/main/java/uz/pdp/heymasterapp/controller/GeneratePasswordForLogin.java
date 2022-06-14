@@ -65,8 +65,8 @@ public class GeneratePasswordForLogin  {
     }
 
 
-    public Integer generate() {
-        int smsCode = (int) ((Math.random() * 9000) + 900);
+    public  Integer generate() {
+        int smsCode = (int) ((Math.random() * 9000) +1000);
         return smsCode;
     }
 
