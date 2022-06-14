@@ -70,7 +70,7 @@ public class AttachmentController {
         return "Xatolik";
     }
 
-    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','CLIENT','MASTER')")
+   // @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','CLIENT','MASTER')")
     @GetMapping("/download/{id}")
     public void getFile(@PathVariable Long id, HttpServletResponse response) throws IOException {
         Optional<Attachment> optionalAttachment = attachmentRepository.findById(id);
@@ -83,7 +83,7 @@ public class AttachmentController {
                 response.setHeader("Content-Disposition",
                         "attachment; filename=" + attachment.getFileOriginalName());
                 response.setContentType(attachment.getContentType());
-                FileCopyUtils.copy(attachmentContent.getAsosiyContent(), response.getOutputStream());
+               FileCopyUtils.copy(attachmentContent.getAsosiyContent(), response.getOutputStream());
             }
         }
     }

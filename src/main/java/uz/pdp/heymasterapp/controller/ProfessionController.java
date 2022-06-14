@@ -6,7 +6,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import uz.pdp.heymasterapp.dto.ApiResponse;
 import uz.pdp.heymasterapp.dto.ProfessionDto;
+import uz.pdp.heymasterapp.entity.Category;
+import uz.pdp.heymasterapp.entity.Profession;
 import uz.pdp.heymasterapp.entity.location.District;
+import uz.pdp.heymasterapp.repository.CategoryRepository;
 import uz.pdp.heymasterapp.repository.ProfessionRepository;
 import uz.pdp.heymasterapp.service.ProfessionService;
 
@@ -21,6 +24,7 @@ public class ProfessionController {
     final ProfessionRepository professionRepository;
 
     final ProfessionService professionService;
+    final CategoryRepository categoryRepository;
 
     @PreAuthorize("hasAuthority('SUPER_ADMIN')")
     @GetMapping("/all")
@@ -68,11 +72,8 @@ public class ProfessionController {
     @PreAuthorize("hasAnyAuthority('MASTER','SUPER_ADMIN','CLIENT')")
     @GetMapping("/category/{id}")
     public ResponseEntity getByCategoryId(@PathVariable Integer id){
-        Optional<List<District>> optionalList = professionRepository.findByCategory_Id(id);
-        if (!optionalList.isPresent()) {
-            return ResponseEntity.ok().body("District not found");
-        }
-        return ResponseEntity.ok().body(optionalList.get());
+        List<Profession> byCate = professionRepository.findByCategory(id);
+        return ResponseEntity.ok(byCate);
     }
 
 }
