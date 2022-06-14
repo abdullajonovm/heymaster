@@ -15,7 +15,7 @@ public class CategoryController {
 
     final CategoryService categoryService;
 
-    @PreAuthorize(value = "hasAnyAuthority('SUPER_ADMIN')")
+    @PreAuthorize(value = "hasAnyAuthority('SUPER_ADMIN','CLIENT','MASTER')")
     @GetMapping("/all")
     public ResponseEntity getAll() {
         ApiResponse apiResponse = categoryService.getAll();

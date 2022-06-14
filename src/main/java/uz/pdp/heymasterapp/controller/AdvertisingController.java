@@ -10,7 +10,7 @@ import uz.pdp.heymasterapp.service.AdvertisingService;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/adversiting")
+@RequestMapping("/api/advertising")
 public class AdvertisingController {
     final AdvertisingService advertisingService;
 

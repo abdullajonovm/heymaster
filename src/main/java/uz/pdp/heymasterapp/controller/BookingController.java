@@ -16,7 +16,7 @@ public class BookingController {
     final BookingService bookingService;
 
     @PreAuthorize("hasAnyAuthority('SUPER_ADMIN_ADMIN','MASTER','CLIENT')")
-    @PostMapping("/booking/{id}")
+    @PostMapping("/{id}")
     public ResponseEntity add(@CurrentUser User user, @PathVariable Long id) {
         ApiResponse apiResponse = bookingService.add(user, id);
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 401).body(apiResponse);

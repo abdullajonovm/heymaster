@@ -25,6 +25,8 @@ import uz.pdp.heymasterapp.repository.*;
 import uz.pdp.heymasterapp.security.JwtProvider;
 
 import javax.validation.Valid;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Optional;
 
 @Service
@@ -130,6 +132,8 @@ public class AuthService implements UserDetailsService {
         Device device = new Device();
         device.setDeviceId(registerDto.getDeviceId());
         user.setDevice(device);
+       // user.setProfessionList(Arrays.asList(registerDto.getProfessionIdList()));
+
         userRepository.save(user);
         return new ApiResponse("Master successfully saved !",true);
 
