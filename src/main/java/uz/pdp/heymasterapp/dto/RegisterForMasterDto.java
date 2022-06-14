@@ -25,6 +25,7 @@ public class RegisterForMasterDto {
     private Integer regionId;
 
     private Integer districtId;
+    private String deviceLan;
 
     private Boolean gender;
 

@@ -20,6 +20,6 @@ public class Device {
 
     private String deviceId;
 
-    @Enumerated(EnumType.STRING)
-    private LanguageEnum DeviceLanguage=LanguageEnum.UZB;
+
+    private String deviceLan;
 }

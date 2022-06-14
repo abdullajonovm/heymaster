@@ -15,6 +15,7 @@ import uz.pdp.heymasterapp.dto.LoginDto;
 import uz.pdp.heymasterapp.dto.RegisterForClientDto;
 import uz.pdp.heymasterapp.dto.RegisterForMasterDto;
 import uz.pdp.heymasterapp.entity.Device;
+import uz.pdp.heymasterapp.entity.Profession;
 import uz.pdp.heymasterapp.entity.Role;
 import uz.pdp.heymasterapp.entity.User;
 import uz.pdp.heymasterapp.entity.enums.RoleEnum;
@@ -25,8 +26,7 @@ import uz.pdp.heymasterapp.repository.*;
 import uz.pdp.heymasterapp.security.JwtProvider;
 
 import javax.validation.Valid;
-import java.util.Arrays;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class AuthService implements UserDetailsService {
@@ -45,12 +45,14 @@ public class AuthService implements UserDetailsService {
     private final AuthenticationManager authenticationManager;
 
     private final JwtProvider jwtProvider;
+    private final ProfessionRepository professionRepository;
+
 
     public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder,
                        RoleRepository roleRepository,
                        LocationRepository locationRepository, DistrictRepository districtRepository,
                        RegionRepository regionRepository, DeviceRepository deviceRepository, PasswordEncoder passwordEncoder1, @Lazy AuthenticationManager authenticationManager,
-                       JwtProvider jwtProvider) {
+                       JwtProvider jwtProvider, ProfessionRepository professionRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.locationRepository = locationRepository;
@@ -60,6 +62,7 @@ public class AuthService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder1;
         this.authenticationManager = authenticationManager;
         this.jwtProvider = jwtProvider;
+        this.professionRepository = professionRepository;
     }
 
     public ApiResponse register(@Valid RegisterForClientDto registerDto) {
@@ -76,7 +79,9 @@ public class AuthService implements UserDetailsService {
         user.setRoles(role);
         Device device = new Device();
         device.setDeviceId(registerDto.getDeviceId());
+        device.setDeviceLan(registerDto.getDeviceLan());
         user.setDevice(device);
+        deviceRepository.save(device);
         user.setGender(registerDto.getGender());
         user.setBirthDate(registerDto.getDate());
         userRepository.save(user);
@@ -134,9 +139,19 @@ public class AuthService implements UserDetailsService {
         user.setLocation(location);
         Device device = new Device();
         device.setDeviceId(registerDto.getDeviceId());
-//        device.setDeviceLanguage(registerDto.getDevice().getDeviceLanguage());
+        device.setDeviceLan(registerDto.getDeviceLan());
+        deviceRepository.save(device);
         user.setDevice(device);
-//        user.setProfessionList(Arrays.asList(registerDt));
+        List<Integer> professionIdList = registerDto.getProfessionIdList();
+        List<Profession>professions=new ArrayList<>();
+        for (int i = 0; i < professionIdList.size(); i++) {
+            Optional<Profession> optional = professionRepository.findById(professionIdList.get(i));
+            if (!optional.isPresent()) return new ApiResponse("Profession not found",false);
+            Profession profession = optional.get();
+           professions.add(profession);
+        }
+        user.setProfessionList(professions);
+
 
         userRepository.save(user);
         return new ApiResponse("Master successfully saved !",true);

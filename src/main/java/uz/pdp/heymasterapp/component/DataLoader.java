@@ -63,7 +63,7 @@ public class DataLoader implements CommandLineRunner {
             Role roleName = roleRepository.findByRoleName(RoleEnum.SUPER_ADMIN);
             user.setRoles(roleName);
             Device device = new Device();
-            device.setDeviceId("fbK0lA8ATpu32zWIYYNH5W:APA91bEotIAHnGRuL44e-i7mnUz-wPIrKaVz1DVjIRjAmXXjnQK3TKJ5qUtfOrgyjjmXW68DdDgfVHVuo9FRTokiBg9mRwHpocQA8Qh04LCStVVr0VNWt4mplKpYED6CfuimSoE41933");
+            device.setDeviceId("fIEcLbSDQtOsXSFNubv3nP:APA91bFXlvAtZ_cqPlL8bOxNbcejf_T_1jVEZBaRCShb6IEPLntl6MFrJHhwOZsUee9ShHJniXbczH-lZcMdlATbBnT6pRFtRcFGQYtBAvKpEktWRuA-b2yuP40ZN_hsCKIZ-Httu43S");
             user.setDevice(device);
             userRepository.save(user);
 

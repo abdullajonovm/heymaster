@@ -15,7 +15,7 @@ import uz.pdp.heymasterapp.service.BookingService;
 public class BookingController {
     final BookingService bookingService;
 
-    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN_ADMIN','MASTER','CLIENT')")
+    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','MASTER','CLIENT')")
     @PostMapping("/{id}")
     public ResponseEntity add(@CurrentUser User user, @PathVariable Long id) {
         ApiResponse apiResponse = bookingService.add(user, id);

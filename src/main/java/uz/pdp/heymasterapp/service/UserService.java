@@ -154,12 +154,16 @@ public class UserService {
 
         user.setSalary(dto.getSalary());
 
-        ArrayList<Profession> professionList=new ArrayList();
-        for (Integer integer : dto.getProfessionIdList()) {
-            Profession byId = professionRepository.getById(integer);
-            professionList.add(byId);
+        List<Integer> professionIdList = dto.getProfessionIdList();
+        List<Profession>professions=new ArrayList<>();
+        for (int i = 0; i < professionIdList.size(); i++) {
+            Optional<Profession> optional1 = professionRepository.findById(professionIdList.get(i));
+            if (!optional.isPresent()) return new ApiResponse("Profession not found",false);
+            Profession profession = optional1.get();
+            professions.add(profession);
         }
-        user.setProfessionList(professionList);
+        user.setProfessionList(professions);
+
         userRepository.save(user);
         return new ApiResponse("Client profile changed to master",true);
     }
