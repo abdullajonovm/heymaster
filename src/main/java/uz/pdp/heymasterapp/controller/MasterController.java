@@ -72,10 +72,10 @@ public class MasterController {
         ApiResponse apiResponse=userService.deleteAttPhoto(id);
         return ResponseEntity.status(apiResponse.isSuccess()? 200:404).body(apiResponse);
     }
-    @PreAuthorize("hasAnyAuthority('MASTER','CLIENT')")
-    @PostMapping("client/to/master")
-    public ResponseEntity clientToMaster(@CurrentUser User user, @RequestBody RegisterForMasterDto dto){
-        ApiResponse apiResponse=userService.clientToMaster(user,dto);
+    @PreAuthorize("hasAnyAuthority('MASTER','SUPER_ADMIN')")
+    @PostMapping("master/to/client")
+    public ResponseEntity clientToMaster(@CurrentUser User user){
+        ApiResponse apiResponse=userService.masterToClient(user);
         return ResponseEntity.status(apiResponse.isSuccess()? 200:404).body(apiResponse);
     }
 

@@ -2,6 +2,7 @@ package uz.pdp.heymasterapp.dto;
 
 
 import lombok.Data;
+import uz.pdp.heymasterapp.entity.Device;
 
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
@@ -17,7 +18,7 @@ public class RegisterForMasterDto {
     @NotNull
     private  int experienceYear;
 
-    private String DeviceId;
+ //   private Device device;
 
     private Double salary;
 

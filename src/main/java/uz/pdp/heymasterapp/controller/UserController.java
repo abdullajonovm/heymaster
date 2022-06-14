@@ -6,6 +6,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import uz.pdp.heymasterapp.dto.ApiResponse;
 import uz.pdp.heymasterapp.dto.RegisterForClientDto;
+import uz.pdp.heymasterapp.dto.RegisterForMasterDto;
 import uz.pdp.heymasterapp.entity.User;
 import uz.pdp.heymasterapp.entity.location.District;
 import uz.pdp.heymasterapp.repository.UserRepository;
@@ -73,4 +74,11 @@ public class UserController {
         if (optional.isPresent()) return ResponseEntity.ok().body(optional.get());
         return ResponseEntity.ok().body("Not found");
     }
+    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','CLIENT')")
+    @PostMapping("/to/master")
+    public ResponseEntity clientToMaster(@CurrentUser User user, @RequestBody RegisterForMasterDto dto){
+        ApiResponse apiResponse=userService.clientToMaster(user,dto);
+        return ResponseEntity.status(apiResponse.isSuccess()? 200:404).body(apiResponse);
+    }
+
 }

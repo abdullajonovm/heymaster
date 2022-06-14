@@ -4,6 +4,7 @@ package uz.pdp.heymasterapp.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import uz.pdp.heymasterapp.entity.Device;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -23,7 +24,7 @@ public class RegisterForClientDto {
     private Boolean gender;
 
     private Date Date;
-    private String DeviceId;
+    //private Device device ;
 
 //   private Integer attachmentId;
 

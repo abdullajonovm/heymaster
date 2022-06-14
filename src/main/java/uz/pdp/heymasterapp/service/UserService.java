@@ -163,4 +163,12 @@ public class UserService {
         userRepository.save(user);
         return new ApiResponse("Client profile changed to master",true);
     }
+
+    public ApiResponse masterToClient(User user) {
+        Optional<User> optional = userRepository.findById(user.getId());
+        if (!optional.isPresent()) return new ApiResponse("Master not found",false);
+        user.setRoles(roleRepository.findByRoleName(RoleEnum.CLIENT));
+        userRepository.save(user);
+        return new ApiResponse("master client ga aylandi ",true);
+    }
 }

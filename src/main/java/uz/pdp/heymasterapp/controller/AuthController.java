@@ -9,6 +9,7 @@ import uz.pdp.heymasterapp.dto.LoginDto;
 import uz.pdp.heymasterapp.dto.RegisterForClientDto;
 import uz.pdp.heymasterapp.dto.RegisterForMasterDto;
 import uz.pdp.heymasterapp.entity.User;
+import uz.pdp.heymasterapp.entity.enums.LanguageEnum;
 import uz.pdp.heymasterapp.security.CurrentUser;
 import uz.pdp.heymasterapp.service.AuthService;
 
@@ -44,5 +45,6 @@ public class AuthController {
 
         return ResponseEntity.ok(user);
     }
+
 
 }

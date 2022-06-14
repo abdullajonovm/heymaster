@@ -25,8 +25,6 @@ import uz.pdp.heymasterapp.repository.*;
 import uz.pdp.heymasterapp.security.JwtProvider;
 
 import javax.validation.Valid;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Optional;
 
 @Service
@@ -42,6 +40,7 @@ public class AuthService implements UserDetailsService {
     final RegionRepository regionRepository;
 
     final DeviceRepository deviceRepository;
+    final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
 
     private final JwtProvider jwtProvider;
@@ -49,7 +48,7 @@ public class AuthService implements UserDetailsService {
     public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder,
                        RoleRepository roleRepository,
                        LocationRepository locationRepository, DistrictRepository districtRepository,
-                       RegionRepository regionRepository, DeviceRepository deviceRepository, @Lazy AuthenticationManager authenticationManager,
+                       RegionRepository regionRepository, DeviceRepository deviceRepository, PasswordEncoder passwordEncoder1, @Lazy AuthenticationManager authenticationManager,
                        JwtProvider jwtProvider) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
@@ -57,6 +56,7 @@ public class AuthService implements UserDetailsService {
         this.districtRepository = districtRepository;
         this.regionRepository = regionRepository;
         this.deviceRepository = deviceRepository;
+        this.passwordEncoder = passwordEncoder1;
         this.authenticationManager = authenticationManager;
         this.jwtProvider = jwtProvider;
     }
@@ -68,12 +68,13 @@ public class AuthService implements UserDetailsService {
             return new ApiResponse("This user already exist",false);
         }
         User user = new User();
+        user.setGeneratePassword(passwordEncoder.encode(registerDto.getPassword()));
         user.setPhoneNumber(registerDto.getPhoneNumber());
         user.setFullName(registerDto.getFullName());
         Role role = roleRepository.findByRoleName(RoleEnum.CLIENT);
         user.setRoles(role);
         Device device = new Device();
-        device.setDeviceId(registerDto.getDeviceId());
+      //  device.setDeviceLanguage(registerDto.getDevice().getDeviceLanguage());
         user.setDevice(device);
         user.setGender(registerDto.getGender());
         user.setBirthDate(registerDto.getDate());
@@ -113,6 +114,7 @@ public class AuthService implements UserDetailsService {
         if (optionalUser.isPresent())return new ApiResponse("This user already exist",false);
 
         User user = new User();
+        user.setGeneratePassword(passwordEncoder.encode(registerDto.getPassword()));
         user.setFullName(registerDto.getFullName());
         user.setPhoneNumber(registerDto.getPhoneNumber());
         Role role = roleRepository.findByRoleName(RoleEnum.MASTER);
@@ -130,7 +132,8 @@ public class AuthService implements UserDetailsService {
         location.setRegion(regionOptional.get());
         user.setLocation(location);
         Device device = new Device();
-        device.setDeviceId(registerDto.getDeviceId());
+//        device.setDeviceId(registerDto.getDevice().getDeviceId());
+//        device.setDeviceLanguage(registerDto.getDevice().getDeviceLanguage());
         user.setDevice(device);
        // user.setProfessionList(Arrays.asList(registerDto.getProfessionIdList()));
 

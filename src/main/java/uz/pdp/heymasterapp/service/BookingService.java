@@ -99,10 +99,10 @@ public class BookingService {
         return new ApiResponse("Active list",true,bookingList);
     }
 
-//    public ApiResponse history(User user) {
-//        List<Booking> history = bookingRepository.findByToWhomAndAcceptedTrueAndIsFinishedTrue(user.getId());
-//        return new ApiResponse("History",true,history);
-//    }
+    public ApiResponse history(User user) {
+        List<Booking> history = bookingRepository.findByToWhomAndAcceptedTrueAndIsFinishedTrue(user.getId());
+        return new ApiResponse("History",true,history);
+    }
 
     public ApiResponse finish(User user, Long id) {
         List<Booking> list = bookingRepository.findByToWhomAndAcceptedTrueAndIsFinishedFalse(user.getId());
@@ -146,4 +146,10 @@ public class BookingService {
         }
         return new ApiResponse("Buyurtma topilmadi",false);
     }
+
+//    public ApiResponse clientHistory(User user) {
+//        List<Booking> bookings = bookingRepository.findByCreatedByAndIsFinishedTrueAndAcceptedTrue(user.getId());
+//        return new ApiResponse("Booking list",true,bookings);
+//
+//    }
 }
