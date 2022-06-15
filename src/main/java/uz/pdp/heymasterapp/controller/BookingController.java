@@ -42,12 +42,12 @@ public class BookingController {
         ApiResponse apiResponse = bookingService.history(user);
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 401).body(apiResponse);
     }
-//    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','MASTER')")
-//    @GetMapping("/client/history")
-//    public ResponseEntity historyClient(@CurrentUser User user) {
-//        ApiResponse apiResponse = bookingService.clientHistory(user);
-//        return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 401).body(apiResponse);
-//    }
+    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','MASTER')")
+    @GetMapping("/client/history")
+    public ResponseEntity historyClient(@CurrentUser User user) {
+        ApiResponse apiResponse = bookingService.clientHistory(user);
+        return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 401).body(apiResponse);
+    }
     @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','MASTER')")
     @GetMapping("/finish/{id}")
     public ResponseEntity finish(@CurrentUser User user,@PathVariable Long id) {

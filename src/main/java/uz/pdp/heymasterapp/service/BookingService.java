@@ -19,14 +19,15 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class BookingService {
-    final SendNotification sendNotification;
+public class BookingService implements SendNotification{
+
     @Value("${key.for.Send.Notification}")
     private String Notification_key;
     final UserRepository userRepository;
     final BookingRepository bookingRepository;
-
     final NotificationRepository notificationRepository;
+
+
 
     SendNotificationDto sendNotificationDto = new SendNotificationDto();
 
@@ -52,7 +53,7 @@ public class BookingService {
                     notification.setCreatedBy(user.getId());
 
                     try {
-                        sendNotification.setSendNotification(sendNotificationDto, "key=" + Notification_key);
+                        setSendNotification(sendNotificationDto, "key=" + Notification_key);
                         notificationRepository.save(notification);
                     } catch (Exception e) {
                         throw new RuntimeException("notification not send!");
@@ -82,7 +83,7 @@ public class BookingService {
                 notification.setCreatedBy(user.getId());
 
                 try {
-                    sendNotification.setSendNotification(sendNotificationDto, "key=" + Notification_key);
+                    setSendNotification(sendNotificationDto, "key=" + Notification_key);
                     notificationRepository.save(notification);
                 } catch (Exception e) {
                     throw new RuntimeException("notification not send!");
@@ -147,9 +148,14 @@ public class BookingService {
         return new ApiResponse("Buyurtma topilmadi",false);
     }
 
-//    public ApiResponse clientHistory(User user) {
-//        List<Booking> bookings = bookingRepository.findByCreatedByAndIsFinishedTrueAndAcceptedTrue(user.getId());
-//        return new ApiResponse("Booking list",true,bookings);
-//
-//    }
+    @Override
+    public void setSendNotification(SendNotificationDto sendNotificationDto, String key) {
+
+    }
+
+    public ApiResponse clientHistory(User user) {
+        List<Booking> bookings = bookingRepository.findByCreatedByAndIsFinishedTrueAndAcceptedTrue(user.getId());
+        return new ApiResponse("Booking list",true,bookings);
+
+    }
 }

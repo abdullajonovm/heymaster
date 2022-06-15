@@ -20,9 +20,8 @@ import java.util.Collections;
 @RestController
 @RequestMapping("/api/notification")
 @RequiredArgsConstructor
-public class SendNotificationController {
+public class SendNotificationController implements SendNotification{
 
-    final SendNotification sendNotification;
     @Value("${key.for.Send.Notification}")
     private String Notification_key;
 
@@ -35,10 +34,15 @@ public class SendNotificationController {
         sendNotificationDto.setNotification(notification);
         sendNotificationDto.setRegistration_ids(Collections.singletonList(user.getDevice().getDeviceId()));
         try {
-            sendNotification.setSendNotification(sendNotificationDto, "key=" + Notification_key);
+            setSendNotification(sendNotificationDto, "key=" + Notification_key);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         return ResponseEntity.ok().body("ok");
+    }
+
+    @Override
+    public void setSendNotification(SendNotificationDto sendNotificationDto, String key) {
+
     }
 }
