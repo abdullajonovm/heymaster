@@ -79,6 +79,69 @@ public class DataLoader implements CommandLineRunner {
             user1.setDevice(device1);
             userRepository.save(user1);
 
+            User user2 = new User();
+            user2.setPhoneNumber("+998901281199");
+            user2.setRoles(roleRepository.findByRoleName(RoleEnum.MASTER));
+            user2.setGender(true);
+            user2.setFullName("Mirzabek");
+            user2.setBirthDate(new Date(1996-10-24));
+            user2.setTotalMark(12l);
+            user2.setGeneratePassword(passwordEncoder.encode("1111"));
+            Device device2 = new Device();
+            device2.setDeviceId("fbK0lA8ATpu32zWIYYNH5W:APA91bEotIAHnGRuL44e-i7mnUz-wPIrKaVz1DVjIRjAmXXjnQK3TKJ5qUtfOrgyjjmXW68DdDgfVHVuo9FRTokiBg9mRwHpocQA8Qh04LCStVVr0VNWt4mplKpYED6CfuimSoE41933");
+            user2.setDevice(device2);
+            userRepository.save(user2);
+
+            User user3 = new User();
+            user3.setPhoneNumber("+998990035369");
+            user3.setRoles(roleRepository.findByRoleName(RoleEnum.MASTER));
+            user3.setGender(true);
+            user3.setFullName("Muhammadqodir");
+            user3.setBirthDate(new Date(2002-11-10));
+            user3.setTotalMark(100l);
+            user3.setGeneratePassword(passwordEncoder.encode("1111"));
+            Device device3 = new Device();
+            device3.setDeviceId("fbK0lA8ATpu32zWIYYNH5W:APA91bEotIAHnGRuL44e-i7mnUz-wPIrKaVz1DVjIRjAmXXjnQK3TKJ5qUtfOrgyjjmXW68DdDgfVHVuo9FRTokiBg9mRwHpocQA8Qh04LCStVVr0VNWt4mplKpYED6CfuimSoE41933");
+            user3.setDevice(device3);
+            userRepository.save(user3);
+
+            User user4 = new User();
+            user4.setPhoneNumber("+998915085515");
+            user4.setRoles(roleRepository.findByRoleName(RoleEnum.CLIENT));
+            user4.setGender(true);
+            user4.setFullName("Feruz");
+            user4.setBirthDate(new Date(1999-9-14));
+            user4.setGeneratePassword(passwordEncoder.encode("1111"));
+            Device device4 = new Device();
+            device4.setDeviceId("fbK0lA8ATpu32zWIYYNH5W:APA91bEotIAHnGRuL44e-i7mnUz-wPIrKaVz1DVjIRjAmXXjnQK3TKJ5qUtfOrgyjjmXW68DdDgfVHVuo9FRTokiBg9mRwHpocQA8Qh04LCStVVr0VNWt4mplKpYED6CfuimSoE41933");
+            user4.setDevice(device4);
+            userRepository.save(user4);
+
+            User user5 = new User();
+            user5.setPhoneNumber("+998911122767");
+            user5.setRoles(roleRepository.findByRoleName(RoleEnum.CLIENT));
+            user5.setGender(true);
+            user5.setFullName("Shaxriyor");
+            user5.setBirthDate(new Date(2001-8-10));
+            user5.setGeneratePassword(passwordEncoder.encode("1111"));
+            Device device5 = new Device();
+            device5.setDeviceId("fbK0lA8ATpu32zWIYYNH5W:APA91bEotIAHnGRuL44e-i7mnUz-wPIrKaVz1DVjIRjAmXXjnQK3TKJ5qUtfOrgyjjmXW68DdDgfVHVuo9FRTokiBg9mRwHpocQA8Qh04LCStVVr0VNWt4mplKpYED6CfuimSoE41933");
+            user5.setDevice(device5);
+            userRepository.save(user5);
+
+            User user6 = new User();
+            user6.setPhoneNumber("+998978139363");
+            user6.setRoles(roleRepository.findByRoleName(RoleEnum.MASTER));
+            user6.setGender(true);
+            user6.setFullName("G`ayratjon");
+            user6.setBirthDate(new Date(1995-8-5));
+            user6.setTotalMark(30l);
+            user6.setGeneratePassword(passwordEncoder.encode("1111"));
+            Device device6 = new Device();
+            device6.setDeviceId("fbK0lA8ATpu32zWIYYNH5W:APA91bEotIAHnGRuL44e-i7mnUz-wPIrKaVz1DVjIRjAmXXjnQK3TKJ5qUtfOrgyjjmXW68DdDgfVHVuo9FRTokiBg9mRwHpocQA8Qh04LCStVVr0VNWt4mplKpYED6CfuimSoE41933");
+            user6.setDevice(device6);
+            userRepository.save(user6);
+
             Advertising advertising = new Advertising();
             advertising.setBody("Mexmash shurflari");
             advertising.setDiscount("mavjud emas");
