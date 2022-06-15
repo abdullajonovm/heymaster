@@ -86,6 +86,13 @@ public class DataLoader implements CommandLineRunner {
             user2.setFullName("Mirzabek");
             user2.setBirthDate(new Date(1996-10-24));
             user2.setTotalMark(12l);
+
+            List<Profession> list1 = new ArrayList<>();
+            list1.add(profession1);
+            list1.add(profession2);
+            list1.add(profession3);
+            user2.setProfessionList(list1);
+
             user2.setGeneratePassword(passwordEncoder.encode("1111"));
             Device device2 = new Device();
             device2.setDeviceId("fbK0lA8ATpu32zWIYYNH5W:APA91bEotIAHnGRuL44e-i7mnUz-wPIrKaVz1DVjIRjAmXXjnQK3TKJ5qUtfOrgyjjmXW68DdDgfVHVuo9FRTokiBg9mRwHpocQA8Qh04LCStVVr0VNWt4mplKpYED6CfuimSoE41933");
@@ -99,6 +106,13 @@ public class DataLoader implements CommandLineRunner {
             user3.setFullName("Muhammadqodir");
             user3.setBirthDate(new Date(2002-11-10));
             user3.setTotalMark(100l);
+
+            List<Profession> list2 = new ArrayList<>();
+            list2.add(profession);
+            list2.add(profession2);
+            list2.add(profession3);
+            user2.setProfessionList(list2);
+
             user3.setGeneratePassword(passwordEncoder.encode("1111"));
             Device device3 = new Device();
             device3.setDeviceId("fbK0lA8ATpu32zWIYYNH5W:APA91bEotIAHnGRuL44e-i7mnUz-wPIrKaVz1DVjIRjAmXXjnQK3TKJ5qUtfOrgyjjmXW68DdDgfVHVuo9FRTokiBg9mRwHpocQA8Qh04LCStVVr0VNWt4mplKpYED6CfuimSoE41933");
@@ -136,6 +150,13 @@ public class DataLoader implements CommandLineRunner {
             user6.setFullName("G`ayratjon");
             user6.setBirthDate(new Date(1995-8-5));
             user6.setTotalMark(30l);
+
+            List<Profession> list3 = new ArrayList<>();
+            list3.add(profession1);
+            list3.add(profession2);
+            list3.add(profession);
+            user2.setProfessionList(list3);
+
             user6.setGeneratePassword(passwordEncoder.encode("1111"));
             Device device6 = new Device();
             device6.setDeviceId("fbK0lA8ATpu32zWIYYNH5W:APA91bEotIAHnGRuL44e-i7mnUz-wPIrKaVz1DVjIRjAmXXjnQK3TKJ5qUtfOrgyjjmXW68DdDgfVHVuo9FRTokiBg9mRwHpocQA8Qh04LCStVVr0VNWt4mplKpYED6CfuimSoE41933");
