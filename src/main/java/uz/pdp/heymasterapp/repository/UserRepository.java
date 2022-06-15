@@ -24,7 +24,7 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
 
     @Query(value = "select * from users u where u.total_mark is not null  and u.is_active = " +
-            "true and  order by total_mark desc limit 3", nativeQuery = true)
+            "true   order by total_mark desc limit 3", nativeQuery = true)
     Set<User> topMasters();
 
     Optional<User> findByPhoneNumber(String phoneNumber);
