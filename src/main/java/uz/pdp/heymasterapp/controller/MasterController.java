@@ -78,6 +78,12 @@ public class MasterController {
         ApiResponse apiResponse=userService.masterToClient(user);
         return ResponseEntity.status(apiResponse.isSuccess()? 200:404).body(apiResponse);
     }
+    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','CLIENT','MASTER')")
+    @GetMapping("/{id}")
+    public ResponseEntity getOneMaster(@PathVariable Long id){
+        ApiResponse apiResponse=userService.getById(id);
+        return ResponseEntity.status(apiResponse.isSuccess()? 200:404).body(apiResponse);
+    }
 
 
 }

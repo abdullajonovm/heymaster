@@ -26,7 +26,7 @@ public class UserController {
     final UserService userService;
 
     @PreAuthorize(value = "hasAnyAuthority('CLIENT','SUPER_ADMIN', 'MASTER')")
-    @PutMapping("/edit/{id}")
+    @PutMapping("/editProfile")
     public ResponseEntity editeUserProfile(@CurrentUser User user, @RequestBody RegisterForClientDto dto) {
         ApiResponse response = userService.edit(user, dto);
         return ResponseEntity.status(response.isSuccess() ? 200 : 404).body(response);
@@ -80,5 +80,12 @@ public class UserController {
         ApiResponse apiResponse=userService.clientToMaster(user,dto);
         return ResponseEntity.status(apiResponse.isSuccess()? 200:404).body(apiResponse);
     }
+    @PreAuthorize("hasAnyAuthority('MASTER','SUPER_ADMIN','CLIENT')")
+    @PostMapping("/editProfilePhoto")
+    public ResponseEntity editProfile(@CurrentUser User user,@PathVariable Long id){
+        ApiResponse apiResponse=userService.editProfile(user,id);
+        return ResponseEntity.status(apiResponse.isSuccess()? 200:404).body(apiResponse);
+    }
+
 
 }

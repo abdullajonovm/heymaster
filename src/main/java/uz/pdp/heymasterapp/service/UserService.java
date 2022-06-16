@@ -175,4 +175,25 @@ public class UserService {
         userRepository.save(user);
         return new ApiResponse("master client ga aylandi ",true);
     }
+
+    public ApiResponse editProfile(User user, Long id) {
+        Optional<User> optional = userRepository.findById(user.getId());
+        if (optional.isPresent()){
+            Optional<Attachment> attachmentOptional = attachmentRepository.findById(id);
+            if (!attachmentOptional.isPresent()) return new ApiResponse("Photo not found",false);
+            user.setProfilePhoto(attachmentOptional.get());
+            userRepository.save(user);
+            return new ApiResponse("Profile photo edited ",true);
+        }
+        return new ApiResponse("User not found ",false);
+    }
+
+    public ApiResponse getById(Long id) {
+
+        Optional<User> optionalUser = userRepository.getByMasterId(id);
+        if (optionalUser.isPresent()){
+            return new ApiResponse("Mana ",true ,optionalUser.get());
+        }
+        return new ApiResponse("Master not found ",false );
+    }
 }
