@@ -85,5 +85,4 @@ public class MasterController {
         return ResponseEntity.status(apiResponse.isSuccess()? 200:404).body(apiResponse);
     }
 
-
 }

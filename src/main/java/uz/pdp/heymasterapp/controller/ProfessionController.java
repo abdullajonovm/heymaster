@@ -11,7 +11,9 @@ import uz.pdp.heymasterapp.entity.Profession;
 import uz.pdp.heymasterapp.entity.location.District;
 import uz.pdp.heymasterapp.repository.CategoryRepository;
 import uz.pdp.heymasterapp.repository.ProfessionRepository;
+import uz.pdp.heymasterapp.repository.UserRepository;
 import uz.pdp.heymasterapp.service.ProfessionService;
+import uz.pdp.heymasterapp.service.UserService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -25,6 +27,7 @@ public class ProfessionController {
 
     final ProfessionService professionService;
     final CategoryRepository categoryRepository;
+    final UserService userService;
 
     @PreAuthorize("hasAuthority('SUPER_ADMIN')")
     @GetMapping("/all")
@@ -75,5 +78,14 @@ public class ProfessionController {
         List<Profession> byCate = professionRepository.findByCategory(id);
         return ResponseEntity.ok(byCate);
     }
+
+    @PreAuthorize("hasAnyAuthority('MASTER','SUPER_ADMIN','CLIENT')")
+    @GetMapping("/findMastersByProfessionId/{id}")
+    public ResponseEntity findMasterByProfessionID(@PathVariable Integer id){
+        ApiResponse apiResponse = professionService.findMasterByProfessionId(id);
+        return ResponseEntity.ok(apiResponse);
+    }
+
+
 
 }

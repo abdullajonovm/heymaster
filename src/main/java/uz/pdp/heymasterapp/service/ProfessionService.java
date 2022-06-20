@@ -6,69 +6,72 @@ import uz.pdp.heymasterapp.dto.ApiResponse;
 import uz.pdp.heymasterapp.dto.ProfessionDto;
 import uz.pdp.heymasterapp.entity.Category;
 import uz.pdp.heymasterapp.entity.Profession;
+import uz.pdp.heymasterapp.entity.User;
 import uz.pdp.heymasterapp.repository.CategoryRepository;
 import uz.pdp.heymasterapp.repository.ProfessionRepository;
+import uz.pdp.heymasterapp.repository.UserRepository;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
 public class ProfessionService {
     final ProfessionRepository repository;
     final CategoryRepository categoryRepository;
+    final UserRepository userRepository;
+
     public ApiResponse getAll() {
-        return new ApiResponse("OK",true,repository.findAll());
+        return new ApiResponse("OK", true, repository.findAll());
     }
 
     public ApiResponse getOne(Integer id) {
         Optional<Profession> optional = repository.findById(id);
-        if (optional.isPresent()){
-            return new ApiResponse("Ok",true,optional.get());
+        if (optional.isPresent()) {
+            return new ApiResponse("Ok", true, optional.get());
         }
-        return new ApiResponse("Not found profession",false);
+        return new ApiResponse("Not found profession", false);
 
     }
 
     public ApiResponse getByChar(String name) {
         List<Category> categoryList = repository.getProfessionByCharacter(name);
-        return new ApiResponse("Ok",true,categoryList);
+        return new ApiResponse("Ok", true, categoryList);
     }
 
     public ApiResponse add(ProfessionDto professionDto) {
         Optional<Profession> optional = repository.findByName(professionDto.getName());
-        if (optional.isPresent()){
-            return new ApiResponse("This profession already exist",false);
+        if (optional.isPresent()) {
+            return new ApiResponse("This profession already exist", false);
         }
         Optional<Category> optionalCategory = categoryRepository.findById(professionDto.getCategoryId());
-        if (optional.isPresent()){
+        if (optional.isPresent()) {
             Profession profession = new Profession();
             profession.setName(profession.getName());
             profession.setCategory(optionalCategory.get());
             repository.save(profession);
-            return new ApiResponse("saved",true);
+            return new ApiResponse("saved", true);
 
         }
-        return new ApiResponse("Not found this category",false);
+        return new ApiResponse("Not found this category", false);
     }
 
     public ApiResponse edit(Integer id, ProfessionDto professionDto) {
         Optional<Profession> optionalProfession = repository.findById(id);
         if (!optionalProfession.isPresent()) return new ApiResponse("Not found this profession",
                 false);
-        if (optionalProfession.isPresent()){
-            return new ApiResponse("This profession already exist",false);
+        if (optionalProfession.isPresent()) {
+            return new ApiResponse("This profession already exist", false);
         }
         Optional<Category> optionalCategory = categoryRepository.findById(professionDto.getCategoryId());
-        if (optionalProfession.isPresent()){
+        if (optionalProfession.isPresent()) {
             Profession profession = new Profession();
             profession.setName(profession.getName());
             profession.setCategory(optionalCategory.get());
             repository.save(profession);
-            return new ApiResponse("edited !",true);
+            return new ApiResponse("edited !", true);
 
         }
-        return new ApiResponse("Not found this category",false);
+        return new ApiResponse("Not found this category", false);
 
     }
 
@@ -79,11 +82,36 @@ public class ProfessionService {
         Profession profession = optional.get();
         profession.setIsActive(false);
         repository.save(profession);
-        return new ApiResponse("Deleted",true);
+        return new ApiResponse("Deleted", true);
     }
 
     public ApiResponse getAllActive() {
         List<Profession> professionList = repository.getAllByIsActiveTrue();
-        return new ApiResponse("Ok",true,professionList);
+        return new ApiResponse("Ok", true, professionList);
+    }
+
+    public ApiResponse findMasterByProfessionId(Integer id) {
+        Optional<List<User>> allMasterByActiveIsTrue = userRepository.findAllMasterByActiveIsTrue();
+        if (!allMasterByActiveIsTrue.isPresent()){
+            return new ApiResponse("Umuman usta yoq", false);
+        }
+        List<User> userList = allMasterByActiveIsTrue.get();
+        List<User> findMasterByProfessionId = new ArrayList<>();
+        for (User user : userList) {
+            System.out.println("\n\n\n\n\nuser.getProfessionList().toString() = " + user.getProfessionList().toString());
+            System.out.println("user.getFullName() = " + user.getFullName());
+            for (Profession profession : user.getProfessionList()) {
+                System.out.println("\n\n\n\nprofession.getId() = " + profession.getId());
+                System.out.println("id = " + id);
+                if (profession.getId() == id) {
+                    System.out.println("\n\nbaskdnasbdkjasdkjasbdjansdjnasdkn");
+                    findMasterByProfessionId.add(user);
+                }
+            }
+        }
+
+        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\nfindMasterByProfessionId.toString() = " + findMasterByProfessionId.toString());
+        if (findMasterByProfessionId.isEmpty()) return new ApiResponse("Bu profession ustalari yoq", false);
+        return new ApiResponse("Mana", true, findMasterByProfessionId);
     }
 }

@@ -40,16 +40,12 @@ public class HomeService {
 
         Set<Profession> topProfessions = new HashSet<>();
 
-        //top 10 lini jonatish uchun yangi map ochib oldim
-//        Map<User, Double> topMasters = new HashMap<>();
-//        Set<User> topMasters = new HashSet<>();
         Set<User> topMasters = userRepository.topMasters();
         for (User user : topMasters) {
             for (Profession profession : user.getProfessionList()) {
                 topProfessions.add(profession);
             }
         }
-        System.out.println("\n\n\n\n\n\n\n=================================================\n");
         System.out.println(topProfessions);
         // top professionlar
         homPageDto.setTopProfessionList(topProfessions);

@@ -143,7 +143,7 @@ public class DataLoader implements CommandLineRunner {
             list2.add(profession);
             list2.add(profession2);
             list2.add(profession3);
-            user2.setProfessionList(list2);
+            user3.setProfessionList(list2);
 
             user3.setGeneratePassword(passwordEncoder.encode("1111"));
             Device device3 = new Device();
@@ -209,7 +209,7 @@ public class DataLoader implements CommandLineRunner {
             list3.add(profession1);
             list3.add(profession2);
             list3.add(profession);
-            user2.setProfessionList(list3);
+            user6.setProfessionList(list3);
 
             user6.setGeneratePassword(passwordEncoder.encode("1111"));
             Device device6 = new Device();

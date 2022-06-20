@@ -191,6 +191,7 @@ public class UserService {
     public ApiResponse getById(Long id) {
 
         Optional<User> optionalUser = userRepository.getByMasterId(id);
+
         if (optionalUser.isPresent()){
             return new ApiResponse("Mana ",true ,optionalUser.get());
         }
