@@ -17,6 +17,6 @@ import java.util.Set;
 public class HomPageDto {
     private List<Advertising> advertisingList;
     private List<Category> categoryList;
-    private Set<Profession> topProfessionList;
-    private Set<User> topMastersList;
+    private List<Profession> topProfessionList;
+    private List<User> topMastersList;
 }

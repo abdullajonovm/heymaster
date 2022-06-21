@@ -9,9 +9,7 @@ import uz.pdp.heymasterapp.entity.Profession;
 import uz.pdp.heymasterapp.entity.User;
 import uz.pdp.heymasterapp.repository.*;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -38,15 +36,16 @@ public class HomeService {
         homPageDto.setCategoryList(allActiveCategory);
 
 
-        Set<Profession> topProfessions = new HashSet<>();
+        TreeSet<Profession> professions = new TreeSet<>();
 
-        Set<User> topMasters = userRepository.topMasters();
+
+        List<Profession> topProfessions = new ArrayList<>();
+        List<User> topMasters = userRepository.topMasters();
         for (User user : topMasters) {
-            for (Profession profession : user.getProfessionList()) {
-                topProfessions.add(profession);
-            }
+            topProfessions.addAll(user.getProfessionList());
         }
-        System.out.println(topProfessions);
+        System.out.println("\n\n\n\n\n\n\ntopMasters.toString() = " + topMasters.toString());
+        System.out.println("\n\n\n\n\n"+topProfessions.toString());
         // top professionlar
         homPageDto.setTopProfessionList(topProfessions);
 

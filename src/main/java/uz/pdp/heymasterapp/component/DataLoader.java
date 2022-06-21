@@ -44,6 +44,8 @@ public class DataLoader implements CommandLineRunner {
             Category category = new Category(1, "Quruvchi", true);
             Category category1 = new Category(2, "Mashina ustasi", true);
             Category category2 = new Category(3, "Elektrik", true);
+            Category category3 = new Category(4, "", true);
+
             List<Category> list = new ArrayList<>(Arrays.asList(category, category1, category2));
             categoryRepository.saveAll(list);
             Profession profession = new Profession(1, "Beton kuyuvchi", category, true);
@@ -132,7 +134,7 @@ public class DataLoader implements CommandLineRunner {
             userRepository.save(user2);
 
             User user3 = new User();
-            user3.setPhoneNumber("+998990035369");
+            user3.setPhoneNumber("+998950035369");
             user3.setRoles(roleRepository.findByRoleName(RoleEnum.MASTER));
             user3.setGender(true);
             user3.setFullName("Muhammadqodir");
@@ -178,7 +180,7 @@ public class DataLoader implements CommandLineRunner {
             userRepository.save(user4);
 
             User user5 = new User();
-            user5.setPhoneNumber("+998911122767");
+            user5.setPhoneNumber("+998908151306");
             user5.setRoles(roleRepository.findByRoleName(RoleEnum.CLIENT));
             user5.setGender(true);
             user5.setFullName("Shaxriyor");
