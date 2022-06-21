@@ -1,6 +1,12 @@
 package uz.pdp.heymasterapp.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +21,7 @@ import uz.pdp.heymasterapp.service.AttachmentService;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -31,20 +38,19 @@ public class AttachmentController {
 
     final AttachmentService attachmentService;
 
-    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','CLIENT','MASTER')")
+//    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','CLIENT','MASTER')")
     @GetMapping("/info")
     public List<Attachment> getInfo() {
         List<Attachment> all = attachmentRepository.findAll();
         return all;
     }
-    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','CLIENT','MASTER')")
+//    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','CLIENT','MASTER')")
     @PostMapping("/upload")
     public String uploadFile(MultipartHttpServletRequest request) throws IOException {
 
         Iterator<String> fileNames = request.getFileNames();
 
         MultipartFile file = request.getFile(fileNames.next());
-
         if (file != null) {
             //file haqida malumot olish uchun
             String originalFilename = file.getOriginalFilename();
@@ -70,7 +76,7 @@ public class AttachmentController {
         return "Xatolik";
     }
 
-    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','CLIENT','MASTER')")
+//    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','CLIENT','MASTER')")
     @GetMapping("/download/{id}")
     public void getFile(@PathVariable Long id, HttpServletResponse response) throws IOException {
         Optional<Attachment> optionalAttachment = attachmentRepository.findById(id);
@@ -136,5 +142,6 @@ public class AttachmentController {
 //            FileCopyUtils.copy(fileInputStream, response.getOutputStream());
 //        }
 //    }
+
 
 }
