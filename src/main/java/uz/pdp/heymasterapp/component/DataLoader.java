@@ -231,6 +231,24 @@ public class DataLoader implements CommandLineRunner {
             advertising.setDiscount("mavjud emas");
             advertising.setTitle("Eng sifatlisi bizda");
             advertisingRepository.save(advertising);
+
+            Advertising advertising1 = new Advertising();
+            advertising1.setBody("imzo eshik-romlari");
+            advertising1.setDiscount("mavjud emas");
+            advertising1.setTitle("hayot biz bilan yanada yorqinroq");
+            advertisingRepository.save(advertising1);
+
+            Advertising advertising2 = new Advertising();
+            advertising2.setBody("Cofelletto ");
+            advertising2.setDiscount("mavjud emas");
+            advertising2.setTitle("kun biz bilan boshlanadi");
+            advertisingRepository.save(advertising2);
+
+            Advertising advertising3 = new Advertising();
+            advertising3.setBody("Xon-saroy ");
+            advertising3.setDiscount("mavjud emas");
+            advertising3.setTitle("Biz bilan xonlardek his qiling");
+            advertisingRepository.save(advertising3);
         }
     }
 }

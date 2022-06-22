@@ -23,7 +23,7 @@ public class Advertising extends AbsEntity {
 
     private String discount;
 
-    private Boolean isActive;
+    private Boolean isActive=true;
 
     @OneToOne
     private Attachment attachment;
