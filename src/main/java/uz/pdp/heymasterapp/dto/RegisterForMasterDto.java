@@ -10,12 +10,10 @@ import java.util.List;
 
 @Data
 public class RegisterForMasterDto {
-    @NotNull
     private  String phoneNumber;
-    @NotNull
+
     private  String fullName;
     
-    @NotNull
     private  int experienceYear;
 
     private String deviceId;

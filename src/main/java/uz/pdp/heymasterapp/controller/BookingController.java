@@ -63,6 +63,12 @@ public class BookingController {
         ApiResponse apiResponse = bookingService.clientBookings(user);
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 401).body(apiResponse);
     }
+    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','MASTER')")
+    @GetMapping("/master")
+    public ResponseEntity masterBooking(@CurrentUser User user) {
+        ApiResponse apiResponse = bookingService.masterBooking(user);
+        return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 401).body(apiResponse);
+    }
     @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','MASTER','CLIENT')")
     @GetMapping("/{id}")
     public ResponseEntity getById(@CurrentUser User user,@PathVariable Long id) {

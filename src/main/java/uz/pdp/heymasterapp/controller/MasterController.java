@@ -32,7 +32,7 @@ public class MasterController {
     }
 
     @PreAuthorize(value = "hasAnyAuthority('SUPER_ADMIN','MASTER')")
-    @PutMapping("/edit/{id}")
+    @PutMapping("/edit")
     public ResponseEntity editeUserProfile(@CurrentUser User user, @RequestBody RegisterForMasterDto dto) {
         ApiResponse response = userService.editMaster(user, dto);
         return ResponseEntity.status(response.isSuccess() ? 200 : 404).body(response);

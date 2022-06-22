@@ -110,11 +110,10 @@ public class UserService {
 
    public ApiResponse editMaster(User user, RegisterForMasterDto dto) {
         Optional<User> optionalUser = userRepository.findByPhoneNumber(dto.getPhoneNumber());
-        if (!optionalUser.isPresent()) return new ApiResponse("This number already exist ", false);
+        if (optionalUser.isPresent()) return new ApiResponse("This number already exist ", false);
         user.setFullName(dto.getFullName());
         user.setPhoneNumber(dto.getPhoneNumber());
         Location location = user.getLocation();
-
         Optional<District> districtOptional = districtRepository.findById(dto.getDistrictId());
         if (!districtOptional.isPresent()) return new ApiResponse("District not found", false);
         Optional<Region> regionOptional = regionRepository.findById(dto.getRegionId());
@@ -126,10 +125,12 @@ public class UserService {
         for (Integer integer : dto.getProfessionIdList()) {
             Profession profession = professionList.get(integer);
             professionList.add(profession);
-            System.out.println(professionList);
+
         }
         user.setProfessionList(professionList);
         user.setExperienceYear(dto.getExperienceYear());
+
+       // user.setDevice();
         userRepository.save(user);
         return new ApiResponse("Edited master accaunt ", true);
 

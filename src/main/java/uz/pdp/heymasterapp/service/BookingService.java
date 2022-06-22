@@ -164,4 +164,9 @@ public class BookingService{
         return new ApiResponse("Booking list",true,bookings);
 
     }
+
+    public ApiResponse masterBooking(User user) {
+        List<Booking> bookingList = bookingRepository.findByToWhom(user);
+        return  new ApiResponse("master booking list",true,bookingList);
+    }
 }
