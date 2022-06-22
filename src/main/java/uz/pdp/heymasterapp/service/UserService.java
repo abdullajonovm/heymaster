@@ -140,6 +140,7 @@ public class UserService {
 
 
     public ApiResponse clientToMaster(User user, RegisterForMasterDto dto) {
+        if (user.isAlreadyIsMaster()) return new ApiResponse("Siz avvaldan ustasiz ",false);
         Optional<User> optional = userRepository.findByPhoneNumber(user.getPhoneNumber());
         if (!optional.isPresent()) return new ApiResponse("User not found",false);
         user.setRoles(roleRepository.findByRoleName(RoleEnum.MASTER));
@@ -174,6 +175,7 @@ public class UserService {
     public ApiResponse masterToClient(User user) {
         Optional<User> optional = userRepository.findById(user.getId());
         if (!optional.isPresent()) return new ApiResponse("Master not found",false);
+        user.setAlreadyIsMaster(true);
         user.setRoles(roleRepository.findByRoleName(RoleEnum.CLIENT));
         userRepository.save(user);
         return new ApiResponse("master client ga aylandi ",true);

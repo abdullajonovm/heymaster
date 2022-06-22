@@ -66,7 +66,7 @@ public class User extends AbsEntity implements UserDetails {
     @ManyToMany
     private List<Profession> professionList;
 
-
+    private boolean alreadyIsMaster;
 
     @ManyToOne
     private Role roles;

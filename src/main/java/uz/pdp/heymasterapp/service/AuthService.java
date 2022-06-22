@@ -120,6 +120,7 @@ public class AuthService implements UserDetailsService {
         if (optionalUser.isPresent())return new ApiResponse("This user already exist",false);
 
         User user = new User();
+        user.setAlreadyIsMaster(true);
         user.setGeneratePassword(passwordEncoder.encode(registerDto.getPassword()));
         user.setFullName(registerDto.getFullName());
         user.setPhoneNumber(registerDto.getPhoneNumber());
