@@ -44,7 +44,7 @@ public class BookingController {
         ApiResponse apiResponse = bookingService.history(user);
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 401).body(apiResponse);
     }
-    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','MASTER')")
+    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','CLIENT')")
     @GetMapping("/client/history")
     public ResponseEntity historyClient(@CurrentUser User user) {
         ApiResponse apiResponse = bookingService.clientHistory(user);

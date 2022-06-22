@@ -109,8 +109,10 @@ public class UserService {
     }
 
    public ApiResponse editMaster(User user, RegisterForMasterDto dto) {
-        Optional<User> optionalUser = userRepository.findByPhoneNumber(dto.getPhoneNumber());
-        if (optionalUser.isPresent()) return new ApiResponse("This number already exist ", false);
+        if (user.getPhoneNumber()!= dto.getPhoneNumber()) {
+            Optional<User> optionalUser = userRepository.findByPhoneNumber(dto.getPhoneNumber());
+            if (optionalUser.isPresent()) return new ApiResponse("This number already exist ", false);
+        }
         user.setFullName(dto.getFullName());
         user.setPhoneNumber(dto.getPhoneNumber());
         Location location = user.getLocation();
