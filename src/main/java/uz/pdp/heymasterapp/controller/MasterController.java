@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.*;
 import uz.pdp.heymasterapp.dto.ApiResponse;
 import uz.pdp.heymasterapp.dto.RegisterForMasterDto;
 import uz.pdp.heymasterapp.entity.User;
+import uz.pdp.heymasterapp.entity.enums.RoleEnum;
 import uz.pdp.heymasterapp.entity.location.District;
+import uz.pdp.heymasterapp.repository.RoleRepository;
 import uz.pdp.heymasterapp.repository.UserRepository;
 import uz.pdp.heymasterapp.security.CurrentUser;
 import uz.pdp.heymasterapp.service.UserService;
@@ -22,6 +24,8 @@ public class MasterController {
 
     final UserService userService;
     final UserRepository userRepository;
+
+    final RoleRepository roleRepository;
 
     @PreAuthorize("hasAnyAuthority('MASTER','SUPER_ADMIN','CLIENT')")
     @GetMapping("/search/{name}")
@@ -96,6 +100,14 @@ public class MasterController {
     @GetMapping("/{id}")
     public ResponseEntity getOneMaster(@PathVariable Long id){
         ApiResponse apiResponse=userService.getById(id);
+        return ResponseEntity.status(apiResponse.isSuccess()? 200:404).body(apiResponse);
+    }
+    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','CLIENT','MASTER')")
+    @GetMapping("/roleToMaster")
+    public ResponseEntity setRole(@CurrentUser User user){
+        user.setRoles(roleRepository.findByRoleName(RoleEnum.MASTER));
+        userRepository.save(user);
+        ApiResponse apiResponse = new ApiResponse("Success", true);
         return ResponseEntity.status(apiResponse.isSuccess()? 200:404).body(apiResponse);
     }
 
