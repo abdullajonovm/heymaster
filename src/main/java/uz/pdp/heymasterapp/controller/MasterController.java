@@ -30,6 +30,20 @@ public class MasterController {
         if (optional.isPresent()) return ResponseEntity.ok().body(optional.get());
         return ResponseEntity.ok().body("Not found");
     }
+    @PreAuthorize("hasAnyAuthority('MASTER','SUPER_ADMIN','CLIENT')")
+    @GetMapping("/search/region/{id}")
+    public ResponseEntity getMaster(@PathVariable Integer id){
+        Optional<List<User>> optional = userRepository.getMasterByRegionId(id);
+        if (optional.isPresent()) return ResponseEntity.ok().body(optional.get());
+        return ResponseEntity.ok().body("Not found");
+    }
+    @PreAuthorize("hasAnyAuthority('MASTER','SUPER_ADMIN','CLIENT')")
+    @GetMapping("/search/district/{id}")
+    public ResponseEntity getMasterByDistrictId(@PathVariable Integer id){
+        Optional<List<User>> optional = userRepository.getMasterByDistrictId(id);
+        if (optional.isPresent()) return ResponseEntity.ok().body(optional.get());
+        return ResponseEntity.ok().body("Not found");
+    }
 
     @PreAuthorize(value = "hasAnyAuthority('SUPER_ADMIN','MASTER')")
     @PutMapping("/edit")
@@ -84,5 +98,6 @@ public class MasterController {
         ApiResponse apiResponse=userService.getById(id);
         return ResponseEntity.status(apiResponse.isSuccess()? 200:404).body(apiResponse);
     }
+
 
 }

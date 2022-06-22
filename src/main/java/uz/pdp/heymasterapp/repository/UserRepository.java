@@ -37,6 +37,10 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
     @Query(value = "select * from users u where u.full_name like '%:name%' and u.roles_id=2 ",nativeQuery = true)
     Optional<List<District>> getMasterByFullName(@Param("name") String name);
+    @Query(value = "select * from users u ,location l where u.location_id=l.id and l.region_id =:i_id and u.roles_id=2 ",nativeQuery = true)
+    Optional<List<User>> getMasterByRegionId(@Param("i_id") Integer id);
+    @Query(value = "select * from users u ,location l where u.location_id=l.id and l.district_id =:i_id and u.roles_id=2",nativeQuery = true)
+    Optional<List<User>> getMasterByDistrictId(@Param("i_id") Integer id);
     @Query(value = "select * from users u where u.full_name like '%:name%' and u.roles_id=1",nativeQuery = true)
     Optional<List<District>> getClientByFullName(@Param("name") String name);
 
