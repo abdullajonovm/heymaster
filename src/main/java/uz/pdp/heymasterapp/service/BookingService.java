@@ -3,6 +3,7 @@ package uz.pdp.heymasterapp.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import uz.pdp.heymasterapp.dto.AcceptDto;
 import uz.pdp.heymasterapp.dto.ApiResponse;
 import uz.pdp.heymasterapp.dto.SendNotificationDto;
 import uz.pdp.heymasterapp.entity.Booking;
@@ -68,18 +69,24 @@ public class BookingService{
         return new ApiResponse("Master not found", false);
     }
 
-    public ApiResponse accept(Long id, User user) {
+    public ApiResponse accept(AcceptDto dto, User user) {
         for (Booking booking : bookingRepository.findByToWhom(user)) {
 
-            if (booking.getId() == id) {
-                booking.setAccepted(true);
+            if (booking.getId() == dto.getId()) {
+                booking.setAccepted(dto.getStatus());
                 bookingRepository.save(booking);
                 Optional<User> optionalUser = userRepository.findById(booking.getCreatedBy());
                 if (!optionalUser.isPresent()) return new ApiResponse("User not found", false);
                 Notification notification = new Notification();
 
-                notification.setBody("Sizning buyurtmangiz usta " + user.getFullName() +
-                        " tomonidan qabul qilindi");
+                if (dto.getStatus()){
+                    notification.setBody("Sizning buyurtmangiz usta " + user.getFullName() +
+                            " tomonidan qabul qilindi");
+                }
+                else {
+                    notification.setBody("Sizning buyurtmangiz usta  " + user.getFullName() +
+                            " tomonidan  rad etildi ");
+                }
                 sendNotificationDto.setNotification(notification);
                 sendNotificationDto.setRegistration_ids(Collections.singletonList(optionalUser.get()
                         .getDevice().getDeviceId()));

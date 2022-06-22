@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import uz.pdp.heymasterapp.dto.AcceptDto;
 import uz.pdp.heymasterapp.dto.ApiResponse;
 import uz.pdp.heymasterapp.entity.User;
 import uz.pdp.heymasterapp.security.CurrentUser;
@@ -25,9 +26,9 @@ public class BookingController {
     }
 
     @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','MASTER')")
-    @GetMapping("/accept/{id}")
-    public ResponseEntity accept(@PathVariable Long id, @CurrentUser User user) {
-        ApiResponse apiResponse = bookingService.accept(id, user);
+    @PostMapping("/accept")
+    public ResponseEntity accept(@RequestBody AcceptDto dto, @CurrentUser User user) {
+        ApiResponse apiResponse = bookingService.accept(dto, user);
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 401).body(apiResponse);
     }
 
