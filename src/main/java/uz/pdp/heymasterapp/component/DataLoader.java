@@ -81,15 +81,14 @@ public class DataLoader implements CommandLineRunner {
             Location location = new Location();
             location.setRegion(regionRepository.findById(7).get());
             location.setDistrict(districtRepository.findById(107).get());
-
             user.setLocation(location);
-
             userRepository.save(user);
 
             User user1 = new User();
             user1.setPhoneNumber("+998123456789");
             user1.setRoles(roleRepository.findByRoleName(RoleEnum.CLIENT));
             user1.setGender(true);
+            user1.setGeneratePassword(passwordEncoder.encode("1234"));
             user1.setFullName("client ");
             user1.setBirthDate(new Date(2001 - 10 - 24));
             user1.setGeneratePassword(passwordEncoder.encode("1111"));

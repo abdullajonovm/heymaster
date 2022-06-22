@@ -73,7 +73,7 @@ public class MasterController {
         return ResponseEntity.status(apiResponse.isSuccess()? 200:404).body(apiResponse);
     }
     @PreAuthorize("hasAnyAuthority('MASTER','SUPER_ADMIN')")
-    @PostMapping("master/to/client")
+    @PostMapping("/to/client")
     public ResponseEntity clientToMaster(@CurrentUser User user){
         ApiResponse apiResponse=userService.masterToClient(user);
         return ResponseEntity.status(apiResponse.isSuccess()? 200:404).body(apiResponse);
