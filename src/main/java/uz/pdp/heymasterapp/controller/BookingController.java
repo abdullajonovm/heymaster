@@ -25,7 +25,7 @@ public class BookingController {
     }
 
     @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','MASTER')")
-    @GetMapping("/accept")
+    @GetMapping("/accept/{id}")
     public ResponseEntity accept(@PathVariable Long id, @CurrentUser User user) {
         ApiResponse apiResponse = bookingService.accept(id, user);
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 401).body(apiResponse);
