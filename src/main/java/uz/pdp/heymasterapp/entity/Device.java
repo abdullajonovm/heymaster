@@ -7,6 +7,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import uz.pdp.heymasterapp.entity.enums.LanguageEnum;
 
 import javax.persistence.*;
+import java.util.AbstractList;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor

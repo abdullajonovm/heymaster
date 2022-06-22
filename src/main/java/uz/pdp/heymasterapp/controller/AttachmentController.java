@@ -92,6 +92,7 @@ public class AttachmentController {
                FileCopyUtils.copy(attachmentContent.getAsosiyContent(), response.getOutputStream());
             }
         }
+
     }
 
     @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','CLIENT','MASTER')")

@@ -44,7 +44,7 @@ public class BookingService{
 
                     Notification notification = new Notification();
 
-                    notification.setBody(user.getFullName() + " sizga buyurtma qoldirdi ");
+                    notification.setBody("Sizga  " +user.getFullName() + " tomonidan  buyurtma qoldirdi ");
 
                     sendNotificationDto.setNotification(notification);
                     sendNotificationDto.setRegistration_ids(Collections.singletonList(optionalUser.get()
@@ -78,7 +78,8 @@ public class BookingService{
                 if (!optionalUser.isPresent()) return new ApiResponse("User not found", false);
                 Notification notification = new Notification();
 
-                notification.setBody("Sizning buyurtmangiz usta " + user.getFullName() + " tomonidan qabul qilindi");
+                notification.setBody("Sizning buyurtmangiz usta " + user.getFullName() +
+                        " tomonidan qabul qilindi");
                 sendNotificationDto.setNotification(notification);
                 sendNotificationDto.setRegistration_ids(Collections.singletonList(optionalUser.get()
                         .getDevice().getDeviceId()));
@@ -121,6 +122,13 @@ public class BookingService{
                 sendNotificationDto.setRegistration_ids(Collections.
                         singletonList(client.get().getDevice().getDeviceId()));
                 notification.setToWhom(client.get());
+                notification.setCreatedBy(user.getId());
+                try {
+                    sendNotification.setSendNotification(sendNotificationDto, "key=" + Notification_key);
+                    notificationRepository.save(notification);
+                } catch (Exception e) {
+                    throw new RuntimeException("notification not send!");
+                }
                 return new ApiResponse("Ish yakunlandi ",true);
             }
         }
