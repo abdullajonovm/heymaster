@@ -117,10 +117,12 @@ public class AttachmentController {
             attachment.setProfilePhoto(true);
             Attachment save = attachmentRepository.save(attachment);
             Attachment profilePhoto = user.getProfilePhoto();
-            user.setProfilePhoto(attachment);
+            user.setProfilePhoto(save);
             userRepository.save(user);
-            profilePhoto.setProfilePhoto(false);
-            attachmentRepository.save(profilePhoto);
+            if (profilePhoto != null) {
+                profilePhoto.setProfilePhoto(false);
+                attachmentRepository.save(profilePhoto);
+            }
 
             //file ni byte [] saqlaymiz
 
