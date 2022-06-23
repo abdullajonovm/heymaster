@@ -15,13 +15,17 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import uz.pdp.heymasterapp.dto.ApiResponse;
 import uz.pdp.heymasterapp.entity.Attachment;
 import uz.pdp.heymasterapp.entity.AttachmentContent;
+import uz.pdp.heymasterapp.entity.User;
 import uz.pdp.heymasterapp.repository.AttachmentContentRepository;
 import uz.pdp.heymasterapp.repository.AttachmentRepository;
+import uz.pdp.heymasterapp.repository.UserRepository;
+import uz.pdp.heymasterapp.security.CurrentUser;
 import uz.pdp.heymasterapp.service.AttachmentService;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -38,15 +42,25 @@ public class AttachmentController {
 
     final AttachmentService attachmentService;
 
-//    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','CLIENT','MASTER')")
+    final UserRepository userRepository;
+
+    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','CLIENT','MASTER')")
     @GetMapping("/info")
     public List<Attachment> getInfo() {
         List<Attachment> all = attachmentRepository.findAll();
         return all;
     }
-//    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','CLIENT','MASTER')")
+
+    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','CLIENT','MASTER')")
+    @GetMapping("/userAllphotos")
+    public List<Attachment> getMasterPhotos(@CurrentUser User user) {
+        List<Attachment> attachments = user.getAttachments();
+        return attachments;
+    }
+
+    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','CLIENT','MASTER')")
     @PostMapping("/upload")
-    public String uploadFile(MultipartHttpServletRequest request) throws IOException {
+    public ApiResponse uploadFile(MultipartHttpServletRequest request, @CurrentUser User user) throws IOException {
 
         Iterator<String> fileNames = request.getFileNames();
 
@@ -63,6 +77,11 @@ public class AttachmentController {
             attachment.setContentType(contentType);
 
             Attachment save = attachmentRepository.save(attachment);
+            List<Attachment> attachments = user.getAttachments();
+            attachments.add(save);
+            user.setAttachments(attachments);
+            userRepository.save(user);
+
 
             //file ni byte [] saqlaymiz
 
@@ -71,12 +90,58 @@ public class AttachmentController {
             attachmentContent.setAsosiyContent(file.getBytes());
 
             AttachmentContent save1 = attachmentContentRepository.save(attachmentContent);
-            return "Fayl saqlandi. ID si: " + save.getId();
+            return new ApiResponse("" + attachment.getId(), true);
         }
-        return "Xatolik";
+        return new ApiResponse("Xatolik", false);
     }
 
-//    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','CLIENT','MASTER')")
+
+    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','CLIENT','MASTER')")
+    @PostMapping("/upload/profilphoto")
+    public ApiResponse uploadProfilPhoto(MultipartHttpServletRequest request, @CurrentUser User user) throws IOException {
+
+        Long photoId = user.getProfilePhoto().getId();
+        if (photoId != null) {
+            Optional<Attachment> byId = attachmentRepository.findById(photoId);
+            if (byId.isPresent()) {
+                attachmentRepository.deleteById(photoId);
+            }
+        }
+
+
+        Iterator<String> fileNames = request.getFileNames();
+
+        MultipartFile file = request.getFile(fileNames.next());
+        if (file != null) {
+            //file haqida malumot olish uchun
+            String originalFilename = file.getOriginalFilename();
+            long size = file.getSize();
+            String contentType = file.getContentType();
+            Attachment attachment = new Attachment();
+
+            attachment.setFileOriginalName(originalFilename);
+            attachment.setSize(size);
+            attachment.setContentType(contentType);
+            attachment.setProfilePhoto(true);
+            Attachment save = attachmentRepository.save(attachment);
+            user.setProfilePhoto(attachment);
+            userRepository.save(user);
+
+
+            //file ni byte [] saqlaymiz
+
+            AttachmentContent attachmentContent = new AttachmentContent();
+            attachmentContent.setAttachment(save);
+            attachmentContent.setAsosiyContent(file.getBytes());
+
+            AttachmentContent save1 = attachmentContentRepository.save(attachmentContent);
+            return new ApiResponse("Bu rasm profile photo bo'ldi", true, attachment.getId());
+        }
+        return new ApiResponse("Xatolik", false);
+    }
+
+
+    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','CLIENT','MASTER')")
     @GetMapping("/download/{id}")
     public void getFile(@PathVariable Long id, HttpServletResponse response) throws IOException {
         Optional<Attachment> optionalAttachment = attachmentRepository.findById(id);
@@ -89,7 +154,7 @@ public class AttachmentController {
                 response.setHeader("Content-Disposition",
                         "attachment; filename=" + attachment.getFileOriginalName());
                 response.setContentType(attachment.getContentType());
-               FileCopyUtils.copy(attachmentContent.getAsosiyContent(), response.getOutputStream());
+                FileCopyUtils.copy(attachmentContent.getAsosiyContent(), response.getOutputStream());
             }
         }
 
