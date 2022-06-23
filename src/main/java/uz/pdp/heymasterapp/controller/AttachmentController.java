@@ -100,14 +100,6 @@ public class AttachmentController {
     @PostMapping("/upload/profilphoto")
     public ApiResponse uploadProfilPhoto(MultipartHttpServletRequest request, @CurrentUser User user) throws IOException {
 
-        Long photoId = user.getProfilePhoto().getId();
-        if (photoId != null) {
-            Optional<Attachment> byId = attachmentRepository.findById(photoId);
-            if (byId.isPresent()) {
-                attachmentRepository.deleteById(photoId);
-            }
-        }
-
 
         Iterator<String> fileNames = request.getFileNames();
 
@@ -124,9 +116,11 @@ public class AttachmentController {
             attachment.setContentType(contentType);
             attachment.setProfilePhoto(true);
             Attachment save = attachmentRepository.save(attachment);
+            Attachment profilePhoto = user.getProfilePhoto();
             user.setProfilePhoto(attachment);
             userRepository.save(user);
-
+            profilePhoto.setProfilePhoto(false);
+            attachmentRepository.save(profilePhoto);
 
             //file ni byte [] saqlaymiz
 
