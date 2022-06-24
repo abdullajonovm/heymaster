@@ -12,7 +12,7 @@ import uz.pdp.heymasterapp.entity.User;
 import uz.pdp.heymasterapp.security.CurrentUser;
 import uz.pdp.heymasterapp.service.RateService;
 
-@Controller
+@RestController
 @RequestMapping("/api/rate")
 @RequiredArgsConstructor
 public class RateController {
