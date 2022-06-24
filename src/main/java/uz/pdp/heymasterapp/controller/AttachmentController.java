@@ -52,7 +52,7 @@ public class AttachmentController {
     }
 
     @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','CLIENT','MASTER')")
-    @GetMapping("/userAllphotos")
+    @GetMapping("/userAllPhotos")
     public List<Attachment> getMasterPhotos(@CurrentUser User user) {
         List<Attachment> attachments = user.getAttachments();
         return attachments;
@@ -97,7 +97,7 @@ public class AttachmentController {
 
 
     @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','CLIENT','MASTER')")
-    @PostMapping("/upload/profilphoto")
+    @PostMapping("/upload/profilePhoto")
     public ApiResponse uploadProfilPhoto(MultipartHttpServletRequest request, @CurrentUser User user) throws IOException {
 
 
