@@ -18,7 +18,7 @@ public class AttachmentContent {
 
     private byte[] asosiyContent;//asosiy content
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Attachment attachment;
 
 

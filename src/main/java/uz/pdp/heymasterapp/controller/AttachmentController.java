@@ -144,5 +144,11 @@ public class AttachmentController {
 //        }
 //    }
 
+    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','MASTER')")
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity delete(@PathVariable Long id){
+        ApiResponse apiResponse=attachmentService.delete(id);
+        return  ResponseEntity.ok(apiResponse);
+    }
 
 }

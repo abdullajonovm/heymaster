@@ -82,6 +82,8 @@ public class BookingService{
                 if (dto.getStatus()){
                     notification.setBody("Sizning buyurtmangiz usta " + user.getFullName() +
                             " tomonidan qabul qilindi");
+                    user.setBusy(true);
+                    userRepository.save(user);
                 }
                 else {
                     notification.setBody("Sizning buyurtmangiz usta  " + user.getFullName() +
@@ -121,6 +123,8 @@ public class BookingService{
         for (Booking booking : list) {
             if (booking.getId()==id){
                 booking.setIsFinished(true);
+                user.setBusy(false);
+                userRepository.save(user);
                 Optional<User> client = userRepository.findById(booking.getCreatedBy());
                 bookingRepository.save(booking);
                 Notification notification = new Notification();

@@ -13,6 +13,7 @@ import uz.pdp.heymasterapp.repository.AttachmentRepository;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -52,5 +53,16 @@ public class AttachmentService {
             }
         }
         return apiResponse;
+    }
+
+    public ApiResponse delete(Long id) {
+        Optional<Attachment> optionalAttachment = attachmentRepository.findById(id);
+        if (optionalAttachment.isPresent()){
+
+            attachmentContentRepository.deleteById(id);
+
+            return new ApiResponse("Rasm o'chirildi",true);
+        }
+        return new ApiResponse("Rasm topilmadi",false);
     }
 }

@@ -20,7 +20,7 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
     @Query(value = "select * from users u where u.roles_id=1  and u.is_active=true ", nativeQuery = true)
     Optional<List<User>>findAllClientByActiveIsTrue();
-    @Query(value = "select * from users u where roles_id=2 and u.is_active=true", nativeQuery = true)
+    @Query(value = "select * from users u where roles_id=2 and u.is_active=true and u.is_busy=false", nativeQuery = true)
     Optional<List<User>>findAllMasterByActiveIsTrue();
 
 
