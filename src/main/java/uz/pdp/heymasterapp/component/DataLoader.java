@@ -57,7 +57,7 @@ public class DataLoader implements CommandLineRunner {
                 Category category5 = new Category(6, "Bog' xodimlari", true, "https://img.freepik.com/free-vector/set-garden-workers-with-garden-tools-equipment_533582-45.jpg?w=2000");
 
 
-                List<Category> list = new ArrayList<>(Arrays.asList(category, category1, category2));
+                List<Category> list = new ArrayList<>(Arrays.asList(category, category1, category2, category3, category4, category5));
                 categoryRepository.saveAll(list);
                 Profession profession = new Profession(1, "Beton kuyuvchi", category, true, "https://www.familyhandyman.com/wp-content/uploads/2020/09/diy-concrete-GettyImages-478979080.jpg");
                 Profession profession1 = new Profession(2, "G'isht terivchi", category, true, "https://d3sux4fmh2nu8u.cloudfront.net/Pictures/1024x536/8/1/6/1863816_bricklayers_625023_crop.jpg");
