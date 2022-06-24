@@ -9,7 +9,7 @@ import uz.pdp.heymasterapp.dto.ApiResponse;
 import uz.pdp.heymasterapp.dto.RateDto;
 import uz.pdp.heymasterapp.service.RateService;
 
-@Controller
+@RestController
 @RequestMapping("/api/rate")
 @RequiredArgsConstructor
 public class RateController {
