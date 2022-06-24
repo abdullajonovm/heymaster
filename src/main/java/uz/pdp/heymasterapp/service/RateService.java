@@ -65,4 +65,10 @@ public class RateService {
         return byId.map(rate -> new ApiResponse("Mana", true, rate)).orElseGet(() ->
                 new ApiResponse("Bunday id dagi rate mavjud emas", false));
     }
+
+    public ApiResponse getAllByMaster(User user) {
+
+        Optional<List<Rate>> allByToWhom = rateRepository.findAllByToWhom(user);
+        return new ApiResponse("Ok",true,allByToWhom.get());
+    }
 }
