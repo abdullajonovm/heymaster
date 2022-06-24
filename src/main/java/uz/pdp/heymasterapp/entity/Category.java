@@ -21,4 +21,12 @@ public class Category {
     private String name;
 
     private Boolean isActive=true;
+
+    private String photoUrl;
+
+    public Category(Integer id, String name, Boolean isActive) {
+        Id = id;
+        this.name = name;
+        this.isActive = isActive;
+    }
 }
