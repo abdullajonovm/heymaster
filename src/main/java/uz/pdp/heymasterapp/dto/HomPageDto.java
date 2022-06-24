@@ -8,8 +8,7 @@ import uz.pdp.heymasterapp.entity.Category;
 import uz.pdp.heymasterapp.entity.Profession;
 import uz.pdp.heymasterapp.entity.User;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,6 +16,6 @@ import java.util.Set;
 public class HomPageDto {
     private List<Advertising> advertisingList;
     private List<Category> categoryList;
-    private List<Profession> topProfessionList;
+    private LinkedHashSet<Profession> topProfessionList;
     private List<User> topMastersList;
 }

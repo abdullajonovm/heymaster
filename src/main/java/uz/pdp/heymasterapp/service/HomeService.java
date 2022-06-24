@@ -35,19 +35,17 @@ public class HomeService {
         List<Category> allActiveCategory = categoryRepository.findAllByIsActiveTrue();
         homPageDto.setCategoryList(allActiveCategory);
 
+        LinkedHashSet<Profession> professions = new LinkedHashSet<>();
 
-        TreeSet<Profession> professions = new TreeSet<>();
-
-
-        List<Profession> topProfessions = new ArrayList<>();
+//        List<Profession> topProfessions = new ArrayList<>();
         List<User> topMasters = userRepository.topMasters();
+
         for (User user : topMasters) {
-            topProfessions.addAll(user.getProfessionList());
+            professions.addAll(user.getProfessionList());
         }
-        System.out.println("\n\n\n\n\n\n\ntopMasters.toString() = " + topMasters.toString());
-        System.out.println("\n\n\n\n\n"+topProfessions.toString());
+
         // top professionlar
-        homPageDto.setTopProfessionList(topProfessions);
+        homPageDto.setTopProfessionList(professions);
 
         // top masterlar
         homPageDto.setTopMastersList(topMasters);
