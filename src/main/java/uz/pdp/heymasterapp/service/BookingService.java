@@ -51,8 +51,6 @@ public class BookingService{
                     sendNotificationDto.setNotification(notification);
                     sendNotificationDto.setRegistration_ids(Collections.singletonList(optionalUser.get()
                             .getDevice().getDeviceId()));
-//                    sendNotificationDto.setRegistration_ids(Collections.singletonList("foNyTMpnSpGThdbNI7xsBH:APA91bFz_mQQrl1w2eEJFIGqk-FNdEHu1p-kHIw_QMBw_Ccjb0GHLY-g4I9hHccxPeIZjqDDd24" +
-//                            "_2yKPd2WbjOwMEfm9dSY4y6CKS-Qhbv8LNOmfwQf-z7NOvuMiyxMvLhEKQU9U6e47"));
                     notification.setToWhom(user1);
                     notification.setCreatedBy(user.getId());
 
