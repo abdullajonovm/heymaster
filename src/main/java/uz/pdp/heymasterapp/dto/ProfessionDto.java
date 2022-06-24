@@ -16,4 +16,5 @@ public class ProfessionDto {
     @NotEmpty(message = "you need choose category !")
     private Integer categoryId;
 
+    private String photoUrl;
 }

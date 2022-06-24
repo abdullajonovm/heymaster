@@ -46,8 +46,9 @@ public class ProfessionService {
         Optional<Category> optionalCategory = categoryRepository.findById(professionDto.getCategoryId());
         if (optional.isPresent()) {
             Profession profession = new Profession();
-            profession.setName(profession.getName());
+            profession.setName(professionDto.getName());
             profession.setCategory(optionalCategory.get());
+            profession.setPhotoUrl(professionDto.getPhotoUrl());
             repository.save(profession);
             return new ApiResponse("saved", true);
 
@@ -59,14 +60,13 @@ public class ProfessionService {
         Optional<Profession> optionalProfession = repository.findById(id);
         if (!optionalProfession.isPresent()) return new ApiResponse("Not found this profession",
                 false);
-        if (optionalProfession.isPresent()) {
-            return new ApiResponse("This profession already exist", false);
-        }
+
         Optional<Category> optionalCategory = categoryRepository.findById(professionDto.getCategoryId());
-        if (optionalProfession.isPresent()) {
-            Profession profession = new Profession();
+        if (optionalCategory.isPresent()) {
+            Profession profession = optionalProfession.get();
             profession.setName(profession.getName());
             profession.setCategory(optionalCategory.get());
+            profession.setPhotoUrl(professionDto.getPhotoUrl());
             repository.save(profession);
             return new ApiResponse("edited !", true);
 
@@ -98,19 +98,13 @@ public class ProfessionService {
         List<User> userList = allMasterByActiveIsTrue.get();
         List<User> findMasterByProfessionId = new ArrayList<>();
         for (User user : userList) {
-            System.out.println("\n\n\n\n\nuser.getProfessionList().toString() = " + user.getProfessionList().toString());
-            System.out.println("user.getFullName() = " + user.getFullName());
             for (Profession profession : user.getProfessionList()) {
-                System.out.println("\n\n\n\nprofession.getId() = " + profession.getId());
-                System.out.println("id = " + id);
                 if (profession.getId() == id) {
-                    System.out.println("\n\nbaskdnasbdkjasdkjasbdjansdjnasdkn");
                     findMasterByProfessionId.add(user);
                 }
             }
         }
 
-        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\nfindMasterByProfessionId.toString() = " + findMasterByProfessionId.toString());
         if (findMasterByProfessionId.isEmpty()) return new ApiResponse("Bu profession ustalari yoq", false);
         return new ApiResponse("Mana", true, findMasterByProfessionId);
     }
