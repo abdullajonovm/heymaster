@@ -24,7 +24,7 @@ Profession {
 
     private Boolean isActive=true;
 
-    private String professionPhoto;
+    private String photoUrl;
 
     public Profession(Integer id, String name, Category category, Boolean isActive) {
         Id = id;
