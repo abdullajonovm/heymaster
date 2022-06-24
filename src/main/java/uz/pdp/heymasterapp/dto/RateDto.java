@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class RateDto {
     private Long toWhomId;
-    private Long rety;
+    private Long rating;
     private String feedback;
 }

@@ -22,7 +22,7 @@ public class RateService {
     final UserRepository userRepository;
 
 
-    public ApiResponse addRate(RateDto rateDto) {
+    public ApiResponse addRate(RateDto rateDto, User client) {
         Optional<User> byId = userRepository.findById(rateDto.getToWhomId());
         if (!byId.isPresent()) {
             return new ApiResponse("To Whom id xato berilgan. " + rateDto.getToWhomId() + " bunday id dagi user mavjud emas", false);
@@ -32,15 +32,16 @@ public class RateService {
         if (role.getRoleName().name().equals(RoleEnum.MASTER.name())) {
 
                 Rate rate = new Rate();
-                rate.setRating(rateDto.getRety());
+                rate.setRating(rateDto.getRating());
                 rate.setFeedback(rateDto.getFeedback());
                 rate.setToWhom(user);
+                rate.setCreatedBy(client.getCreatedBy());
 //                rate.setCreatedBy(userRepository.findById(2l).get());
                 rateRepository.save(rate);
 
                 //userga rate bergandan shu userni totalMarkiga rateDtoda kelgan reyting balni qoshib qoydik
                 Long totalMark = user.getTotalMark();
-                totalMark += rateDto.getRety();
+                totalMark += rateDto.getRating();
 
                 user.setTotalMark(totalMark);
                 Long rateCount = user.getPeopleReitedCount() + 1;
@@ -64,5 +65,10 @@ public class RateService {
         Optional<Rate> byId = rateRepository.findById(id);
         return byId.map(rate -> new ApiResponse("Mana", true, rate)).orElseGet(() ->
                 new ApiResponse("Bunday id dagi rate mavjud emas", false));
+    }
+
+    public ApiResponse getMasterRate(User user) {
+        Optional<List<Rate>> optionalList = rateRepository.findAllByToWhom(user);
+        return new ApiResponse("ok",true,optionalList.get());
     }
 }
