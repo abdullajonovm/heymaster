@@ -38,6 +38,7 @@ public class BookingService{
             for (User user1 : allMasterByActiveIsTrue.get()) {
                 if (user1.getId() == id) {
                     Booking booking = new Booking();
+                    booking.setFrom(user);
                     booking.setToWhom(user1);
                     booking.setCreatedBy(user.getId());
                     Optional<User> optionalUser = userRepository.findById(id);

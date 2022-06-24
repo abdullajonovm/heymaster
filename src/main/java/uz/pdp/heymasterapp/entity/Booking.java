@@ -25,4 +25,6 @@ public class Booking extends AbsEntity{
 
     private Boolean isFinished=false;
 
+    @ManyToOne
+    private User from;
 }
