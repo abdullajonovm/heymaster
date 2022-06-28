@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import uz.pdp.heymasterapp.dto.ApiResponse;
+import uz.pdp.heymasterapp.dto.MasterEditDto;
 import uz.pdp.heymasterapp.dto.RegisterForMasterDto;
 import uz.pdp.heymasterapp.entity.User;
 import uz.pdp.heymasterapp.entity.enums.RoleEnum;
@@ -51,7 +52,7 @@ public class MasterController {
 
     @PreAuthorize(value = "hasAnyAuthority('SUPER_ADMIN','MASTER')")
     @PutMapping("/edit")
-    public ResponseEntity editeUserProfile(@CurrentUser User user, @RequestBody RegisterForMasterDto dto) {
+    public ResponseEntity editeUserProfile(@CurrentUser User user, @RequestBody MasterEditDto dto) {
         ApiResponse response = userService.editMaster(user, dto);
         return ResponseEntity.status(response.isSuccess() ? 200 : 404).body(response);
     }
