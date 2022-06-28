@@ -62,29 +62,38 @@ public class UserController {
 
     @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','CLIENT', 'MASTER')")
     @GetMapping("/deleteAttPhoto/{id}")
-    public ResponseEntity delete(@PathVariable Long id){
-        ApiResponse apiResponse=userService.deleteAttPhoto(id);
-        return ResponseEntity.status(apiResponse.isSuccess()? 200:404).body(apiResponse);
+    public ResponseEntity delete(@PathVariable Long id) {
+        ApiResponse apiResponse = userService.deleteAttPhoto(id);
+        return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 404).body(apiResponse);
     }
 
     @PreAuthorize("hasAnyAuthority('MASTER','SUPER_ADMIN','CLIENT')")
     @GetMapping("/search/{name}")
-    public ResponseEntity getMaster(@PathVariable String name){
+    public ResponseEntity getMaster(@PathVariable String name) {
         Optional<List<District>> optional = userRepository.getClientByFullName(name);
         if (optional.isPresent()) return ResponseEntity.ok().body(optional.get());
         return ResponseEntity.ok().body("Not found");
     }
+
     @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','CLIENT')")
     @PostMapping("/to/master")
-    public ResponseEntity clientToMaster(@CurrentUser User user, @RequestBody RegisterForMasterDto dto){
-        ApiResponse apiResponse=userService.clientToMaster(user,dto);
-        return ResponseEntity.status(apiResponse.isSuccess()? 200:404).body(apiResponse);
+    public ResponseEntity clientToMaster(@CurrentUser User user, @RequestBody RegisterForMasterDto dto) {
+        ApiResponse apiResponse = userService.clientToMaster(user, dto);
+        return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 404).body(apiResponse);
     }
+
     @PreAuthorize("hasAnyAuthority('MASTER','SUPER_ADMIN','CLIENT')")
     @PostMapping("/editProfilePhoto")
-    public ResponseEntity editProfile(@CurrentUser User user,@PathVariable Long id){
-        ApiResponse apiResponse=userService.editProfile(user,id);
-        return ResponseEntity.status(apiResponse.isSuccess()? 200:404).body(apiResponse);
+    public ResponseEntity editProfile(@CurrentUser User user, @PathVariable Long id) {
+        ApiResponse apiResponse = userService.editProfile(user, id);
+        return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 404).body(apiResponse);
+    }
+
+    @PreAuthorize("hasAnyAuthority('MASTER','SUPER_ADMIN','CLIENT')")
+    @PostMapping("/editProfileNumber/{number}")
+    public ResponseEntity editNumber(@CurrentUser User user, @PathVariable String number) {
+        ApiResponse apiResponse = userService.editProfileNumber(user, number);
+        return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 404).body(apiResponse);
     }
 
 

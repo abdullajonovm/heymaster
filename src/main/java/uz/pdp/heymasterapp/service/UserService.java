@@ -196,4 +196,12 @@ public class UserService {
         }
         return new ApiResponse("Master not found ",false );
     }
+
+    public ApiResponse editProfileNumber(User user, String number) {
+        Optional<User> optionalUser = userRepository.findByPhoneNumber(number);
+        if (!optionalUser.isPresent()) return new ApiResponse("raqam mavjud",false);
+        user.setPhoneNumber(number);
+        userRepository.save(user);
+        return new ApiResponse("Edit number ",true);
+    }
 }
