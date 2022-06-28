@@ -46,7 +46,7 @@ public class ProfessionService {
         Optional<Category> optionalCategory = categoryRepository.findById(professionDto.getCategoryId());
         if (optional.isPresent()) {
             Profession profession = new Profession();
-            profession.setName(profession.getName());
+            profession.setName(professionDto.getName());
             profession.setCategory(optionalCategory.get());
             repository.save(profession);
             return new ApiResponse("saved", true);

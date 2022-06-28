@@ -1,5 +1,6 @@
 package uz.pdp.heymasterapp.controller;
 
+import com.google.protobuf.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -45,16 +46,18 @@ public class BookingController {
         ApiResponse apiResponse = bookingService.history(user);
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 401).body(apiResponse);
     }
+
     @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','CLIENT')")
     @GetMapping("/client/history")
     public ResponseEntity historyClient(@CurrentUser User user) {
         ApiResponse apiResponse = bookingService.clientHistory(user);
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 401).body(apiResponse);
     }
+
     @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','MASTER')")
     @GetMapping("/finish/{id}")
-    public ResponseEntity finish(@CurrentUser User user,@PathVariable Long id) {
-        ApiResponse apiResponse = bookingService.finish(user,id);
+    public ResponseEntity finish(@CurrentUser User user, @PathVariable Long id) {
+        ApiResponse apiResponse = bookingService.finish(user, id);
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 401).body(apiResponse);
     }
 
@@ -64,19 +67,41 @@ public class BookingController {
         ApiResponse apiResponse = bookingService.clientBookings(user);
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 401).body(apiResponse);
     }
+
     @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','MASTER')")
     @GetMapping("/master")
     public ResponseEntity masterBooking(@CurrentUser User user) {
         ApiResponse apiResponse = bookingService.masterBooking(user);
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 401).body(apiResponse);
     }
+
     @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','MASTER','CLIENT')")
     @GetMapping("/{id}")
-    public ResponseEntity getById(@CurrentUser User user,@PathVariable Long id) {
-        ApiResponse apiResponse = bookingService.getById(user,id);
+    public ResponseEntity getById(@CurrentUser User user, @PathVariable Long id) {
+        ApiResponse apiResponse = bookingService.getById(user, id);
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 401).body(apiResponse);
     }
 
+//    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','MASTER')")
+//    @DeleteMapping("/master/allDelete")
+//    public ResponseEntity deleteAll(@CurrentUser User user) {
+//        ApiResponse apiResponse = bookingService.delete(user);
+//        return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 401).body(apiResponse);
+//    }
+//
+//    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','CLIENT')")
+//    @DeleteMapping("/client/allDelete")
+//    public ResponseEntity deleteAllClientBooking(@CurrentUser User user) {
+//        ApiResponse apiResponse = bookingService.deleteClientBooking(user);
+//        return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 401).body(apiResponse);
+//    }
+
+//    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN','MASTER','CLIENT')")
+//    @DeleteMapping("/client/allDelete")
+//    public ResponseEntity (@CurrentUser User user) {
+//        ApiResponse apiResponse = bookingService.deleteClientBooking(user);
+//        return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 401).body(apiResponse);
+//    }
 
 
 }

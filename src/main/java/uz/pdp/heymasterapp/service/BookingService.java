@@ -85,6 +85,7 @@ public class BookingService{
                     userRepository.save(user);
                 }
                 else {
+                   // booking.s
                     notification.setBody("Sizning buyurtmangiz usta  " + user.getFullName() +
                             " tomonidan  rad etildi ");
                 }
@@ -187,4 +188,15 @@ public class BookingService{
         List<Booking> bookingList = bookingRepository.findByToWhom(user);
         return  new ApiResponse("master booking list",true,bookingList);
     }
+
+//    public ApiResponse delete(User user) {
+//        bookingRepository.deleteAllByToWhom(user);
+//        return new ApiResponse("Delete ",true);
+//    }
+//
+//    public ApiResponse deleteClientBooking(User user) {
+//
+//        bookingRepository.deleteAllByCreatedBy(user.getId());
+//        return new ApiResponse("Delete",true);
+//    }
 }

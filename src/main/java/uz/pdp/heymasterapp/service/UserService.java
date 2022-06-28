@@ -43,7 +43,6 @@ public class UserService {
 //        Optional<Attachment> attachmentOptional = attachmentRepository.findById(dto.getAttachmentId());
 //        if (!attachmentOptional.isPresent()) return new ApiResponse("Profile photo not found ",false);
 //        user.setProfilePhoto(attachmentOptional.get());
-        user.setPhoneNumber(dto.getPhoneNumber());
         userRepository.save(user);
 
         return new ApiResponse("Edited", true);
@@ -114,7 +113,6 @@ public class UserService {
             if (optionalUser.isPresent()) return new ApiResponse("This number already exist ", false);
         }
         user.setFullName(dto.getFullName());
-        user.setPhoneNumber(dto.getPhoneNumber());
         Location location = user.getLocation();
         Optional<District> districtOptional = districtRepository.findById(dto.getDistrictId());
         if (!districtOptional.isPresent()) return new ApiResponse("District not found", false);
