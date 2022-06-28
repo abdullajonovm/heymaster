@@ -3,6 +3,7 @@ package uz.pdp.heymasterapp.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import uz.pdp.heymasterapp.dto.ApiResponse;
+import uz.pdp.heymasterapp.dto.MasterEditDto;
 import uz.pdp.heymasterapp.dto.RegisterForClientDto;
 import uz.pdp.heymasterapp.dto.RegisterForMasterDto;
 import uz.pdp.heymasterapp.entity.Attachment;
@@ -108,13 +109,9 @@ public class UserService {
         return new ApiResponse("Ok", true, userList);
     }
 
-   public ApiResponse editMaster(User user, RegisterForMasterDto dto) {
-        if (!user.getPhoneNumber().equals( dto.getPhoneNumber()) ){
-            Optional<User> optionalUser = userRepository.findByPhoneNumber(dto.getPhoneNumber());
-            if (optionalUser.isPresent()) return new ApiResponse("This number already exist ", false);
-        }
+   public ApiResponse editMaster(User user, MasterEditDto dto) {
+
         user.setFullName(dto.getFullName());
-        user.setPhoneNumber(dto.getPhoneNumber());
         Location location = user.getLocation();
         Optional<District> districtOptional = districtRepository.findById(dto.getDistrictId());
         if (!districtOptional.isPresent()) return new ApiResponse("District not found", false);
@@ -123,13 +120,12 @@ public class UserService {
         location.setDistrict(districtOptional.get());
         location.setRegion(regionOptional.get());
         user.setLocation(location);
-        List<Profession> professionList = user.getProfessionList();
-        for (Integer integer : dto.getProfessionIdList()) {
-            Profession profession = professionList.get(integer);
-            professionList.add(profession);
-
-        }
-        user.setProfessionList(professionList);
+        List<Profession> professions = new ArrayList<>();
+       for (Integer integer : dto.getProfessionList()) {
+           Optional<Profession> byId = professionRepository.findById(integer);
+           byId.ifPresent(professions::add);
+       }
+        user.setProfessionList(professions);
         user.setExperienceYear(dto.getExperienceYear());
 
        // user.setDevice();
