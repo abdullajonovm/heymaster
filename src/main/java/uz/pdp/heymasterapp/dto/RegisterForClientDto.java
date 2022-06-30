@@ -17,8 +17,8 @@ public class RegisterForClientDto {
 
 //    @Pattern(regexp = "/^[+][998]{3}\\d{9}",message = "+998901234567  korinishida kiritih kerak")
     private  String phoneNumber;
-    @NotNull
     private  String fullName;
+
     private String password;
 
     private Boolean gender;

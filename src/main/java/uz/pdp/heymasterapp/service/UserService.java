@@ -36,14 +36,7 @@ public class UserService {
     final AttachmentRepository attachmentRepository;
 
     public ApiResponse edit(User user, RegisterForClientDto dto) {
-        Optional<User> optionalUser = userRepository.findByPhoneNumber(dto.getPhoneNumber());
-        if (!optionalUser.isPresent()) return new ApiResponse("This number already exist ", false);
         user.setFullName(dto.getFullName());
-        user.setBirthDate(dto.getDate());
-        user.setGender(dto.getGender());
-//        Optional<Attachment> attachmentOptional = attachmentRepository.findById(dto.getAttachmentId());
-//        if (!attachmentOptional.isPresent()) return new ApiResponse("Profile photo not found ",false);
-//        user.setProfilePhoto(attachmentOptional.get());
         userRepository.save(user);
 
         return new ApiResponse("Edited", true);
@@ -127,9 +120,8 @@ public class UserService {
         user.setProfessionList(professions);
         user.setExperienceYear(dto.getExperienceYear());
 
-       // user.setDevice();
         userRepository.save(user);
-        return new ApiResponse("Edited master accaunt ", true);
+        return new ApiResponse("Edited master account ", true);
 
     }
 
