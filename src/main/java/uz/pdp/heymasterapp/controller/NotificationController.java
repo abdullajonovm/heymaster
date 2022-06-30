@@ -24,10 +24,11 @@ public class NotificationController {
     final NotificationRepository repository;
     ApiResponse apiResponse=new ApiResponse();
 
-    @PreAuthorize("hasAnyAuthority('CLIENT')")
-    @GetMapping("/user/all")
+    @PreAuthorize("hasAnyAuthority('CLIENT','MASTER')")
+    @GetMapping("/all")
     public ResponseEntity getAllClient(@CurrentUser User user){
-        Optional<List<Notification>> optionalList = repository.findAllByCreatedBy(user.getId());
+        Optional<List<Notification>> optionalList = repository.
+                findAllByToWhomAndToWhom_Roles_Id(user,user.getRoles().getId());
         if (optionalList.isPresent()){
             apiResponse.setSuccess(true);
             apiResponse.setObject(optionalList.get());
@@ -40,19 +41,5 @@ public class NotificationController {
         return ResponseEntity.ok(apiResponse);
     }
 
-    @PreAuthorize("hasAnyAuthority('MASTER')")
-    @GetMapping("/master/all")
-    public ResponseEntity getAllMaster(@CurrentUser User user){
-        Optional<List<Notification>> optionalList = repository.findAllByToWhom(user);
-        if (optionalList.isPresent()){
-            apiResponse.setSuccess(true);
-            apiResponse.setObject(optionalList.get());
-            apiResponse.setMessage("ok");
-            return ResponseEntity.ok(apiResponse);
-        }
-        apiResponse.setSuccess(false);
 
-        apiResponse.setMessage("not notification ");
-        return ResponseEntity.ok(apiResponse);
-    }
 }

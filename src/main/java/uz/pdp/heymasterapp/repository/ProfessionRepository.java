@@ -18,8 +18,8 @@ public interface ProfessionRepository extends JpaRepository<Profession, Integer>
 //
 //    Optional<Category> findByName(String name);
 
-    @Query(value = "select c from profession c where c.name LIKE %:name%")
-    List<Category> getProfessionByCharacter(@Param("name") String name);
+   // @Query(value = "select c from profession c where c.name LIKE %:name%")
+    List<Profession> findByNameLike(String name);
 
     Optional<Profession> findByName(String name);
 

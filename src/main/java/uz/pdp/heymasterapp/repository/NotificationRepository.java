@@ -11,6 +11,6 @@ import java.util.Optional;
 @Repository
 public interface NotificationRepository extends JpaRepository<Notification, Long> {
 
-    Optional<List<Notification>>findAllByCreatedBy(Long createdBy);
-    Optional<List<Notification>>findAllByToWhom(User toWhom);
+    Optional<List<Notification>>findAllByToWhomAndToWhom_Roles_Id(User toWhom, Integer toWhom_roles_id);
+
 }

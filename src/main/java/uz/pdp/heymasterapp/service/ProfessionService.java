@@ -34,8 +34,12 @@ public class ProfessionService {
     }
 
     public ApiResponse getByChar(String name) {
-        List<Category> categoryList = repository.getProfessionByCharacter(name);
-        return new ApiResponse("Ok", true, categoryList);
+
+       // name="%a";
+        List<Profession> professionList = repository.findByNameLike("%"+name+"%");
+       name=null;
+        return new ApiResponse("Ok", true,professionList);
+
     }
 
     public ApiResponse add(ProfessionDto professionDto) {
