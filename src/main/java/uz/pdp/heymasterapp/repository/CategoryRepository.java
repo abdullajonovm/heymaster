@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
 
-    @Query(value = "select c from category c where c.name LIKE %:name%")
+    @Query(value = "select * from category c where c.name LIKE %:name%", nativeQuery = true)
     List<Category> getCategoryByNameCharacters(@Param("name") String name);
 
 

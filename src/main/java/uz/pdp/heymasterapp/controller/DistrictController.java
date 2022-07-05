@@ -36,8 +36,7 @@ public class DistrictController {
     @PreAuthorize("hasAnyAuthority('MASTER','SUPER_ADMIN','CLIENT')")
     @GetMapping("/search/{name}")
     public ResponseEntity getDistrictByName(@PathVariable String name){
-        Optional<List<District>> optional = repository.getDistrictByNameCharacters(name);
-        if (optional.isPresent()) return ResponseEntity.ok().body(optional.get());
-        return ResponseEntity.ok().body("Not found");
+      List<District> districtList = repository.getDistrictByNameCharacters(name);
+      return ResponseEntity.ok().body(districtList);
     }
 }

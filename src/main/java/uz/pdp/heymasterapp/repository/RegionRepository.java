@@ -21,9 +21,9 @@ public interface RegionRepository extends JpaRepository<Region, Integer> {
     @Query("select r.nameUz from regions  r ")
     List<Region>getAllUzName();
 
-    @Query("select r.nameUz from regions  r ")
-    List<Region>getAllRuName();
-    @Query(value = "select c from regions c where c.nameUz LIKE %:name%")
-    Optional<List<Region>> getDistrictByNameCharacters(@Param("name") String name);
+//    @Query("select r.nameUz from regions  r ")
+//    List<Region>getAllRuName();
+    @Query(value = "select * from regions c where c.nameUz LIKE %:name%", nativeQuery = true)
+    List<Region> getDistrictByNameCharacters(@Param("name") String name);
 
 }

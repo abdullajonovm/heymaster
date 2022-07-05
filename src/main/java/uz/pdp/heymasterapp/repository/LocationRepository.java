@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface LocationRepository extends JpaRepository<Location, Integer> {
 
-    @Query(value = "select c from category c where c.name LIKE %:name%")
+    @Query(value = "select * from category c where c.name LIKE %:name%", nativeQuery = true)
     List<Category> getCategoryByNameCharacters(@Param("name") String name);
 
 

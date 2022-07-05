@@ -26,6 +26,6 @@ public interface DistrictRepository extends JpaRepository<District, Integer> {
 
     Optional<List<District>>findByRegionId(Integer region_id);
 
-    @Query(value = "select c from districts c where c.nameUz LIKE %:name%")
-    Optional<List<District>> getDistrictByNameCharacters(@Param("name") String name);
+    @Query(value = "select * from districts c where c.nameUz LIKE %:name%", nativeQuery = true)
+    List<District> getDistrictByNameCharacters(@Param("name") String name);
 }

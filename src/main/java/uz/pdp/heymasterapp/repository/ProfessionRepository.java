@@ -18,7 +18,7 @@ public interface ProfessionRepository extends JpaRepository<Profession, Integer>
 //
 //    Optional<Category> findByName(String name);
 
-   // @Query(value = "select c from profession c where c.name LIKE %:name%")
+    @Query(value = "select * from profession c where c.name LIKE %:name%", nativeQuery = true)
     List<Profession> findByNameLike(String name);
 
     Optional<Profession> findByName(String name);
