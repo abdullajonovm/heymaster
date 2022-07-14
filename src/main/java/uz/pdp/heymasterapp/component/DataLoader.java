@@ -82,7 +82,7 @@ public class DataLoader implements CommandLineRunner {
                 User user = new User();
                 user.setPhoneNumber("+998943234311");
                 user.setFullName("Azizbek Abdulaxatov");
-                Role roleName = roleRepository.findByRoleName(RoleEnum.SUPER_ADMIN);
+                Role roleName = role2;
                 user.setRoles(roleName);
                 Device device = new Device();
                 device.setDeviceId(" foNyTMpnSpGThdbNI7xsBH:APA91bFz_mQQrl1w2eEJFIGqk-FNdEHu1p-kHIw_QMBw_" +
@@ -96,11 +96,10 @@ public class DataLoader implements CommandLineRunner {
                 userRepository.save(user);
 
                 User user1 = new User();
-                user1.setPhoneNumber("+998123456789");
-                user1.setRoles(roleRepository.findByRoleName(RoleEnum.CLIENT));
+                user1.setPhoneNumber("+998994216148");
+                user1.setRoles(role1);
                 user1.setGender(true);
-                user1.setGeneratePassword(passwordEncoder.encode("1234"));
-                user1.setFullName("client ");
+                user1.setFullName("Demo account");
                 user1.setBirthDate(new Date(2001 - 10 - 24));
                 user1.setGeneratePassword(passwordEncoder.encode("1111"));
                 Device device1 = new Device();
@@ -117,7 +116,7 @@ public class DataLoader implements CommandLineRunner {
 
                 User user2 = new User();
                 user2.setPhoneNumber("+998901281199");
-                user2.setRoles(roleRepository.findByRoleName(RoleEnum.MASTER));
+                user2.setRoles(role1);
                 user2.setGender(true);
                 user2.setFullName("Mirzabek");
                 user2.setBirthDate(new Date(1996 - 10 - 24));
@@ -145,7 +144,7 @@ public class DataLoader implements CommandLineRunner {
 
                 User user3 = new User();
                 user3.setPhoneNumber("+998950035369");
-                user3.setRoles(roleRepository.findByRoleName(RoleEnum.MASTER));
+                user3.setRoles(role1);
                 user3.setGender(true);
                 user3.setFullName("Muhammadqodir");
                 user3.setBirthDate(new Date(2002 - 11 - 10));
@@ -172,7 +171,7 @@ public class DataLoader implements CommandLineRunner {
 
                 User user4 = new User();
                 user4.setPhoneNumber("+998915085515");
-                user4.setRoles(roleRepository.findByRoleName(RoleEnum.CLIENT));
+                user4.setRoles(role);
                 user4.setGender(true);
                 user4.setFullName("Feruz");
                 user4.setBirthDate(new Date(1999 - 9 - 14));
@@ -191,7 +190,7 @@ public class DataLoader implements CommandLineRunner {
 
                 User user5 = new User();
                 user5.setPhoneNumber("+998908151306");
-                user5.setRoles(roleRepository.findByRoleName(RoleEnum.CLIENT));
+                user5.setRoles(role);
                 user5.setGender(true);
                 user5.setFullName("Shaxriyor");
                 user5.setBirthDate(new Date(2001 - 8 - 10));
@@ -210,7 +209,7 @@ public class DataLoader implements CommandLineRunner {
 
                 User user6 = new User();
                 user6.setPhoneNumber("+998978139363");
-                user6.setRoles(roleRepository.findByRoleName(RoleEnum.MASTER));
+                user6.setRoles(role1);
                 user6.setGender(true);
                 user6.setFullName("G`ayratjon");
                 user6.setBirthDate(new Date(1995 - 8 - 5));
@@ -245,7 +244,7 @@ public class DataLoader implements CommandLineRunner {
                 Advertising advertising1 = new Advertising();
                 advertising1.setBody("imzo eshik-romlari");
                 advertising1.setDiscount("mavjud emas");
-                advertising1.setTitle("hayot biz bilan yanada yorqinroq");
+                advertising1.setTitle("hayot   yanada yorqinroq");
                 advertisingRepository.save(advertising1);
 
                 Advertising advertising2 = new Advertising();
