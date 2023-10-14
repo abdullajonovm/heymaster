@@ -1,0 +1,36 @@
+#spring.datasource.url=jdbc:postgresql://localhost:5432/andqxai
+server:
+  port: 9090
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/heymaster
+    username: postgres
+    password: root123
+  profiles:
+    active: #activeProfile#
+  sql:
+    init:
+      mode: always
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    defer-datasource-initialization: true
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+#  config:
+#    activate:
+#      on-profile: spring.profiles.active@
+springdoc:
+  swagger-ui:
+    path: /swagger-ui
+    enabled: true
+  api-docs:
+    path: /v3/api-docs/
+key:
+  for:
+    Send:
+      SMS: AccessKey xsTieTlZpZJjxyexNB2LK8PzJ
+      Notification: AAAAxBapAx8:APA91bEEyEDsDsqPSgnQ5m7OkJKR9LUTRQarnfXH65KNUtuMX4NemaJDwgsOkhT9UKNTxd0fkYlWu7yAv6v8R7jBQc-x2bXrHpNBkQC2YwUy7VX885mpsLhZuosg_AvQTFN72LLrmnTC
